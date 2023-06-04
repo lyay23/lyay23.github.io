@@ -1,3 +1,6 @@
+http://example.com/lib/three/README.html
+http://example.com/lib/three/package.json
+http://example.com/lib/three/renovate.json
 http://example.com/resources/index.html
 http://example.com/about/index-1.html
 http://example.com/about/index.html
