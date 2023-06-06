@@ -164,6 +164,48 @@
 ]]></content>
   </entry>
   <entry>
+    <title>spring笔记</title>
+    <url>/2023/05/25/Spring/</url>
+    <content><![CDATA[<h1 id="spring笔记"><a href="#spring笔记" class="headerlink" title="spring笔记"></a>spring笔记</h1><h4 id="黑马程序员SSM框架教程-Spring-SpringMVC-Maven高级-SpringBoot-MyBatisPlus"><a href="#黑马程序员SSM框架教程-Spring-SpringMVC-Maven高级-SpringBoot-MyBatisPlus" class="headerlink" title="黑马程序员SSM框架教程_Spring+SpringMVC+Maven高级+SpringBoot+MyBatisPlus"></a>黑马程序员SSM框架教程_Spring+SpringMVC+Maven高级+SpringBoot+MyBatisPlus</h4><span id="more"></span>
+
+
+
+<h5 id="一、初识spring————–spring-io"><a href="#一、初识spring————–spring-io" class="headerlink" title="一、初识spring————–spring.io"></a>一、初识spring————–<a href="%E5%AE%98%E7%BD%91">spring.io</a></h5><p><img src="E:\typora\图\Spring\image-20230316164101841.png"></p>
+<p>   Ioc:控制反转</p>
+<p>​        *使用对象时，由主动new产生的对象转换为外部提供的对象，此过程中对象创建控制权由程序转移到外部，    spring提供了一个容器，称为Ioc容器，用来充当Ioc思想的外部</p>
+<p>DI依赖注入</p>
+<p>​     *在容器中建立bean与bean之间的依赖关系的整个过程称为依赖注入</p>
+<p><strong>核心概念</strong>：充分解耦</p>
+<ul>
+<li><p>​     使用Ioc容器管理bean（Ioc）</p>
+</li>
+<li><p>​     在Ioc容器内将依赖关系bean进行关系绑定  （DI）</p>
+</li>
+</ul>
+<h5 id="二、入门案列"><a href="#二、入门案列" class="headerlink" title="二、入门案列"></a>二、入门案列</h5><h6 id="IoC入门案例"><a href="#IoC入门案例" class="headerlink" title="IoC入门案例"></a>IoC入门案例</h6><p>1.在pom.xml中配置Spring</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;<span class="number">5.2</span><span class="number">.11</span>.RELEASE&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;<span class="number">4.11</span>&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>2.在applicationContext.xml中配置Bean</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="line">       xmlns:xsi=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span><br><span class="line">    &lt;bean id=<span class="string">&quot;bookDao&quot;</span> class=<span class="string">&quot;com.itheima.dao.impl.BookDaoImpl&quot;</span>&gt;&lt;/bean&gt;</span><br><span class="line">    &lt;bean id=<span class="string">&quot;bookService&quot;</span> class=<span class="string">&quot;com.itheima.service.impl.BookServiceImpl&quot;</span>&gt;&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+
+<p>3.获取ioc容器</p>
+<p><img src="E:\typora\图\Spring\image-20230316173927374.png"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima;</span><br><span class="line"><span class="keyword">import</span> com.itheima.service.BookService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">App2</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//3.获取Ioc容器</span></span><br><span class="line">        ApplicationContext ly=<span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line"><span class="comment">//        BookDao bookDao = (BookDao) ly.getBean(&quot;bookDao&quot;);</span></span><br><span class="line"><span class="comment">//        bookDao.save();</span></span><br><span class="line">        <span class="type">BookService</span> <span class="variable">bookService</span> <span class="operator">=</span> (BookService) ly.getBean(<span class="string">&quot;bookService&quot;</span>);</span><br><span class="line">        bookService.save();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>main</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima;</span><br><span class="line"><span class="keyword">import</span> com.itheima.service.BookService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">App2</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//3.获取Ioc容器</span></span><br><span class="line">        ApplicationContext ly=<span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line"><span class="comment">//        BookDao bookDao = (BookDao) ly.getBean(&quot;bookDao&quot;);</span></span><br><span class="line"><span class="comment">//        bookDao.save();</span></span><br><span class="line">        <span class="type">BookService</span> <span class="variable">bookService</span> <span class="operator">=</span> (BookService) ly.getBean(<span class="string">&quot;bookService&quot;</span>);</span><br><span class="line">        bookService.save();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="Io入门案例"><a href="#Io入门案例" class="headerlink" title="Io入门案例"></a>Io入门案例</h6><p>业务层</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.itheima.dao.BookDao;</span><br><span class="line"><span class="keyword">import</span> com.itheima.dao.impl.BookDaoImpl;</span><br><span class="line"><span class="keyword">import</span> com.itheima.service.BookService;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BookServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">BookService</span> &#123;</span><br><span class="line"> <span class="comment">//5.删除业务层中使用new的方式创建的Dao</span></span><br><span class="line">   <span class="comment">// private BookDao bookDao=  new BookDaoImpl();</span></span><br><span class="line">    <span class="keyword">private</span> BookDao bookDao;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">save</span><span class="params">()</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;book servlet save----&quot;</span>);</span><br><span class="line">    bookDao.save();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//6.提供对应的set方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBookDao</span><span class="params">(BookDao bookDao)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.bookDao = bookDao;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="line">       xmlns:xsi=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span><br><span class="line">    &lt;bean id=<span class="string">&quot;bookDao&quot;</span> class=<span class="string">&quot;com.itheima.dao.impl.BookDaoImpl&quot;</span>&gt;&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;bean id=<span class="string">&quot;bookService&quot;</span> class=<span class="string">&quot;com.itheima.service.impl.BookServiceImpl&quot;</span>&gt;</span><br><span class="line">&lt;!--         配置servlet和dao的关系--&gt;</span><br><span class="line">&lt;!--        property标签表示配置当前bean的属性--&gt;</span><br><span class="line">&lt;!--        name属性表示配置哪一个具体属性--&gt;</span><br><span class="line">&lt;!--        ref表示参照哪一个bean--&gt;</span><br><span class="line">        &lt;property name=<span class="string">&quot;bookDao&quot;</span> ref=<span class="string">&quot;bookDao&quot;</span>&gt;&lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Spring/image-20230316164101842.png" alt="image-20230316182531574"></p>
+<h5 id="三、-bean的实例化"><a href="#三、-bean的实例化" class="headerlink" title="三、 bean的实例化"></a>三、 bean的实例化</h5>]]></content>
+  </entry>
+  <entry>
     <title>Maven笔记</title>
     <url>/2023/05/25/Maven/</url>
     <content><![CDATA[<h1 id="day01-Maven"><a href="#day01-Maven" class="headerlink" title="day01-Maven"></a>day01-Maven</h1><h2 id="一-Maven简介"><a href="#一-Maven简介" class="headerlink" title="一.Maven简介"></a>一.Maven简介</h2><h3 id="1-Maven是什么？"><a href="#1-Maven是什么？" class="headerlink" title="1.Maven是什么？"></a>1.Maven是什么？</h3><span id="more"></span>
@@ -400,6 +442,26 @@
 ]]></content>
   </entry>
   <entry>
+    <title>jsp的使用</title>
+    <url>/2023/05/25/javaWeb_jsp/</url>
+    <content><![CDATA[<h1 id="jsp使用"><a href="#jsp使用" class="headerlink" title="jsp使用"></a>jsp使用</h1><span id="more"></span>
+
+
+
+<h3 id="一-JSP脚本分类"><a href="#一-JSP脚本分类" class="headerlink" title="一.JSP脚本分类"></a>一.JSP脚本分类</h3><p>​           1.&lt;%…%&gt;内容会放入   _jspServlet()方法中   ——  页面输出</p>
+<p>​            2.&lt;%&#x3D;…%&gt;内容会放入out.print()中，作为  out.print()的参数  ——out.print(“hello”)</p>
+<p>​           3.&lt;%!…%&gt;内容会放入  _jspServlet()方法之外，被类直接包含 ——可以写类，定义字符串</p>
+<h3 id="二-EL表达式-Expression-Language-获取数据"><a href="#二-EL表达式-Expression-Language-获取数据" class="headerlink" title="二.EL表达式(Expression Language)获取数据"></a>二.EL表达式(Expression Language)获取数据</h3><p>​       语法： ${expression}</p>
+<p>​                   eg: ${brands}获取域中存储kay为brands的数据</p>
+<h3 id="三-JSTL标签，使用标签代替jsp上面的代码"><a href="#三-JSTL标签，使用标签代替jsp上面的代码" class="headerlink" title="三.JSTL标签，使用标签代替jsp上面的代码"></a>三.JSTL标签，使用标签代替jsp上面的代码</h3><p>​       <img src="E:\typora\图\Snipaste_2022-11-14_21-48-55.png"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>你好李阳</title>
+    <url>/2023/05/25/%E4%BD%A0%E5%A5%BD%E6%9D%8E%E9%98%B3/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>javaweb大二复习</title>
     <url>/2023/05/25/javaweb%E5%A4%A7%E4%BA%8C%E5%A4%8D%E4%B9%A0/</url>
     <content><![CDATA[<h1 id="javaweb大二复习"><a href="#javaweb大二复习" class="headerlink" title="javaweb大二复习"></a>javaweb大二复习</h1><h2 id=""><a href="#" class="headerlink" title=""></a></h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&lt;!-- more --&gt;</span><br></pre></td></tr></table></figure>
@@ -463,67 +525,5 @@
 <h3 id="11简述jsp静态注释和动态注释的区别及用法"><a href="#11简述jsp静态注释和动态注释的区别及用法" class="headerlink" title="11简述jsp静态注释和动态注释的区别及用法"></a>11简述jsp静态注释和动态注释的区别及用法</h3><p>1.静态注释：<!--  -->,这种注释方法是对jsp中的静态代码进行的注释，是html的原生注释，这种注释方式会将其所注释的内容原封不动的发送到浏览器，通过查看源码即可看到所注释的内容。<br>   对动态代码加静态注释会产生错误</p>
 <p>2.jsp特有的注释：其使用的语法是&lt;%–  –%&gt;.这种注释方式，tomcat会进行处理，不会将其发送到浏览器中。</p>
 <h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3>]]></content>
-  </entry>
-  <entry>
-    <title>spring笔记</title>
-    <url>/2023/05/25/Spring/</url>
-    <content><![CDATA[<h1 id="spring笔记"><a href="#spring笔记" class="headerlink" title="spring笔记"></a>spring笔记</h1><h4 id="黑马程序员SSM框架教程-Spring-SpringMVC-Maven高级-SpringBoot-MyBatisPlus"><a href="#黑马程序员SSM框架教程-Spring-SpringMVC-Maven高级-SpringBoot-MyBatisPlus" class="headerlink" title="黑马程序员SSM框架教程_Spring+SpringMVC+Maven高级+SpringBoot+MyBatisPlus"></a>黑马程序员SSM框架教程_Spring+SpringMVC+Maven高级+SpringBoot+MyBatisPlus</h4><span id="more"></span>
-
-
-
-<h5 id="一、初识spring————–spring-io"><a href="#一、初识spring————–spring-io" class="headerlink" title="一、初识spring————–spring.io"></a>一、初识spring————–<a href="%E5%AE%98%E7%BD%91">spring.io</a></h5><p><img src="E:\typora\图\Spring\image-20230316164101841.png"></p>
-<p>   Ioc:控制反转</p>
-<p>​        *使用对象时，由主动new产生的对象转换为外部提供的对象，此过程中对象创建控制权由程序转移到外部，    spring提供了一个容器，称为Ioc容器，用来充当Ioc思想的外部</p>
-<p>DI依赖注入</p>
-<p>​     *在容器中建立bean与bean之间的依赖关系的整个过程称为依赖注入</p>
-<p><strong>核心概念</strong>：充分解耦</p>
-<ul>
-<li><p>​     使用Ioc容器管理bean（Ioc）</p>
-</li>
-<li><p>​     在Ioc容器内将依赖关系bean进行关系绑定  （DI）</p>
-</li>
-</ul>
-<h5 id="二、入门案列"><a href="#二、入门案列" class="headerlink" title="二、入门案列"></a>二、入门案列</h5><h6 id="IoC入门案例"><a href="#IoC入门案例" class="headerlink" title="IoC入门案例"></a>IoC入门案例</h6><p>1.在pom.xml中配置Spring</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;<span class="number">5.2</span><span class="number">.11</span>.RELEASE&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;<span class="number">4.11</span>&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>2.在applicationContext.xml中配置Bean</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="line">       xmlns:xsi=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span><br><span class="line">    &lt;bean id=<span class="string">&quot;bookDao&quot;</span> class=<span class="string">&quot;com.itheima.dao.impl.BookDaoImpl&quot;</span>&gt;&lt;/bean&gt;</span><br><span class="line">    &lt;bean id=<span class="string">&quot;bookService&quot;</span> class=<span class="string">&quot;com.itheima.service.impl.BookServiceImpl&quot;</span>&gt;&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
-
-<p>3.获取ioc容器</p>
-<p><img src="E:\typora\图\Spring\image-20230316173927374.png"></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima;</span><br><span class="line"><span class="keyword">import</span> com.itheima.service.BookService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">App2</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//3.获取Ioc容器</span></span><br><span class="line">        ApplicationContext ly=<span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line"><span class="comment">//        BookDao bookDao = (BookDao) ly.getBean(&quot;bookDao&quot;);</span></span><br><span class="line"><span class="comment">//        bookDao.save();</span></span><br><span class="line">        <span class="type">BookService</span> <span class="variable">bookService</span> <span class="operator">=</span> (BookService) ly.getBean(<span class="string">&quot;bookService&quot;</span>);</span><br><span class="line">        bookService.save();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>main</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima;</span><br><span class="line"><span class="keyword">import</span> com.itheima.service.BookService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">App2</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//3.获取Ioc容器</span></span><br><span class="line">        ApplicationContext ly=<span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line"><span class="comment">//        BookDao bookDao = (BookDao) ly.getBean(&quot;bookDao&quot;);</span></span><br><span class="line"><span class="comment">//        bookDao.save();</span></span><br><span class="line">        <span class="type">BookService</span> <span class="variable">bookService</span> <span class="operator">=</span> (BookService) ly.getBean(<span class="string">&quot;bookService&quot;</span>);</span><br><span class="line">        bookService.save();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h6 id="Io入门案例"><a href="#Io入门案例" class="headerlink" title="Io入门案例"></a>Io入门案例</h6><p>业务层</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.itheima.dao.BookDao;</span><br><span class="line"><span class="keyword">import</span> com.itheima.dao.impl.BookDaoImpl;</span><br><span class="line"><span class="keyword">import</span> com.itheima.service.BookService;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BookServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">BookService</span> &#123;</span><br><span class="line"> <span class="comment">//5.删除业务层中使用new的方式创建的Dao</span></span><br><span class="line">   <span class="comment">// private BookDao bookDao=  new BookDaoImpl();</span></span><br><span class="line">    <span class="keyword">private</span> BookDao bookDao;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">save</span><span class="params">()</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;book servlet save----&quot;</span>);</span><br><span class="line">    bookDao.save();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//6.提供对应的set方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBookDao</span><span class="params">(BookDao bookDao)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.bookDao = bookDao;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="line">       xmlns:xsi=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span><br><span class="line">    &lt;bean id=<span class="string">&quot;bookDao&quot;</span> class=<span class="string">&quot;com.itheima.dao.impl.BookDaoImpl&quot;</span>&gt;&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;bean id=<span class="string">&quot;bookService&quot;</span> class=<span class="string">&quot;com.itheima.service.impl.BookServiceImpl&quot;</span>&gt;</span><br><span class="line">&lt;!--         配置servlet和dao的关系--&gt;</span><br><span class="line">&lt;!--        property标签表示配置当前bean的属性--&gt;</span><br><span class="line">&lt;!--        name属性表示配置哪一个具体属性--&gt;</span><br><span class="line">&lt;!--        ref表示参照哪一个bean--&gt;</span><br><span class="line">        &lt;property name=<span class="string">&quot;bookDao&quot;</span> ref=<span class="string">&quot;bookDao&quot;</span>&gt;&lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/Spring/image-20230316164101842.png" alt="image-20230316182531574"></p>
-<h5 id="三、-bean的实例化"><a href="#三、-bean的实例化" class="headerlink" title="三、 bean的实例化"></a>三、 bean的实例化</h5>]]></content>
-  </entry>
-  <entry>
-    <title>jsp的使用</title>
-    <url>/2023/05/25/javaWeb_jsp/</url>
-    <content><![CDATA[<h1 id="jsp使用"><a href="#jsp使用" class="headerlink" title="jsp使用"></a>jsp使用</h1><span id="more"></span>
-
-
-
-<h3 id="一-JSP脚本分类"><a href="#一-JSP脚本分类" class="headerlink" title="一.JSP脚本分类"></a>一.JSP脚本分类</h3><p>​           1.&lt;%…%&gt;内容会放入   _jspServlet()方法中   ——  页面输出</p>
-<p>​            2.&lt;%&#x3D;…%&gt;内容会放入out.print()中，作为  out.print()的参数  ——out.print(“hello”)</p>
-<p>​           3.&lt;%!…%&gt;内容会放入  _jspServlet()方法之外，被类直接包含 ——可以写类，定义字符串</p>
-<h3 id="二-EL表达式-Expression-Language-获取数据"><a href="#二-EL表达式-Expression-Language-获取数据" class="headerlink" title="二.EL表达式(Expression Language)获取数据"></a>二.EL表达式(Expression Language)获取数据</h3><p>​       语法： ${expression}</p>
-<p>​                   eg: ${brands}获取域中存储kay为brands的数据</p>
-<h3 id="三-JSTL标签，使用标签代替jsp上面的代码"><a href="#三-JSTL标签，使用标签代替jsp上面的代码" class="headerlink" title="三.JSTL标签，使用标签代替jsp上面的代码"></a>三.JSTL标签，使用标签代替jsp上面的代码</h3><p>​       <img src="E:\typora\图\Snipaste_2022-11-14_21-48-55.png"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>你好李阳</title>
-    <url>/2023/05/25/%E4%BD%A0%E5%A5%BD%E6%9D%8E%E9%98%B3/</url>
-    <content><![CDATA[]]></content>
   </entry>
 </search>
