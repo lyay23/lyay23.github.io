@@ -1170,7 +1170,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #7467c6;
+  background: #ffe5ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2343,6 +2343,12 @@ ul.breadcrumb li + li:last-child {
 }
 .site-meta {
   padding: 20px 0;
+  background-image: url("/images/blogHead.jpg");
+}
+@media (min-width: 992px) {
+  .site-meta {
+    background-image: url("/images/blogHead.jpg");
+  }
 }
 .brand {
   padding: 0;
