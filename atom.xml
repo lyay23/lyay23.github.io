@@ -68,23 +68,6 @@
   </entry>
   
   <entry>
-    <title>jsp的使用</title>
-    <link href="http://example.com/2023/05/25/javaWeb_jsp/"/>
-    <id>http://example.com/2023/05/25/javaWeb_jsp/</id>
-    <published>2023-05-25T07:34:21.000Z</published>
-    <updated>2023-06-05T05:08:23.267Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="jsp使用"><a href="#jsp使用" class="headerlink" title="jsp使用"></a>jsp使用</h1><span id="more"></span><h3 id="一-JSP脚本分类"><a href="#一-JSP脚本分类" class="headerlink" title="一.JSP脚本分类"></a>一.JSP脚本分类</h3><p>​           1.&lt;%…%&gt;内容会放入   _jspServlet()方法中   ——  页面输出</p><p>​            2.&lt;%&#x3D;…%&gt;内容会放入out.print()中，作为  out.print()的参数  ——out.print(“hello”)</p><p>​           3.&lt;%!…%&gt;内容会放入  _jspServlet()方法之外，被类直接包含 ——可以写类，定义字符串</p><h3 id="二-EL表达式-Expression-Language-获取数据"><a href="#二-EL表达式-Expression-Language-获取数据" class="headerlink" title="二.EL表达式(Expression Language)获取数据"></a>二.EL表达式(Expression Language)获取数据</h3><p>​       语法： ${expression}</p><p>​                   eg: ${brands}获取域中存储kay为brands的数据</p><h3 id="三-JSTL标签，使用标签代替jsp上面的代码"><a href="#三-JSTL标签，使用标签代替jsp上面的代码" class="headerlink" title="三.JSTL标签，使用标签代替jsp上面的代码"></a>三.JSTL标签，使用标签代替jsp上面的代码</h3><p>​       <img src="E:\typora\图\Snipaste_2022-11-14_21-48-55.png"></p>]]></content>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;jsp使用&quot;&gt;&lt;a href=&quot;#jsp使用&quot; class=&quot;headerlink&quot; title=&quot;jsp使用&quot;&gt;&lt;/a&gt;jsp使用&lt;/h1&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>spring笔记</title>
     <link href="http://example.com/2023/05/25/Spring/"/>
     <id>http://example.com/2023/05/25/Spring/</id>
@@ -95,6 +78,23 @@
     
     
     <summary type="html">&lt;h1 id=&quot;spring笔记&quot;&gt;&lt;a href=&quot;#spring笔记&quot; class=&quot;headerlink&quot; title=&quot;spring笔记&quot;&gt;&lt;/a&gt;spring笔记&lt;/h1&gt;&lt;h4 id=&quot;黑马程序员SSM框架教程-Spring-SpringMVC-Maven高级-SpringBoot-MyBatisPlus&quot;&gt;&lt;a href=&quot;#黑马程序员SSM框架教程-Spring-SpringMVC-Maven高级-SpringBoot-MyBatisPlus&quot; class=&quot;headerlink&quot; title=&quot;黑马程序员SSM框架教程_Spring+SpringMVC+Maven高级+SpringBoot+MyBatisPlus&quot;&gt;&lt;/a&gt;黑马程序员SSM框架教程_Spring+SpringMVC+Maven高级+SpringBoot+MyBatisPlus&lt;/h4&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>jsp的使用</title>
+    <link href="http://example.com/2023/05/25/javaWeb_jsp/"/>
+    <id>http://example.com/2023/05/25/javaWeb_jsp/</id>
+    <published>2023-05-25T07:34:21.000Z</published>
+    <updated>2023-06-05T05:08:23.267Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="jsp使用"><a href="#jsp使用" class="headerlink" title="jsp使用"></a>jsp使用</h1><span id="more"></span><h3 id="一-JSP脚本分类"><a href="#一-JSP脚本分类" class="headerlink" title="一.JSP脚本分类"></a>一.JSP脚本分类</h3><p>​           1.&lt;%…%&gt;内容会放入   _jspServlet()方法中   ——  页面输出</p><p>​            2.&lt;%&#x3D;…%&gt;内容会放入out.print()中，作为  out.print()的参数  ——out.print(“hello”)</p><p>​           3.&lt;%!…%&gt;内容会放入  _jspServlet()方法之外，被类直接包含 ——可以写类，定义字符串</p><h3 id="二-EL表达式-Expression-Language-获取数据"><a href="#二-EL表达式-Expression-Language-获取数据" class="headerlink" title="二.EL表达式(Expression Language)获取数据"></a>二.EL表达式(Expression Language)获取数据</h3><p>​       语法： ${expression}</p><p>​                   eg: ${brands}获取域中存储kay为brands的数据</p><h3 id="三-JSTL标签，使用标签代替jsp上面的代码"><a href="#三-JSTL标签，使用标签代替jsp上面的代码" class="headerlink" title="三.JSTL标签，使用标签代替jsp上面的代码"></a>三.JSTL标签，使用标签代替jsp上面的代码</h3><p>​       <img src="E:\typora\图\Snipaste_2022-11-14_21-48-55.png"></p>]]></content>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;jsp使用&quot;&gt;&lt;a href=&quot;#jsp使用&quot; class=&quot;headerlink&quot; title=&quot;jsp使用&quot;&gt;&lt;/a&gt;jsp使用&lt;/h1&gt;</summary>
     
     
     
