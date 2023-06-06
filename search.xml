@@ -126,44 +126,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>javaweb-黑马笔记</title>
-    <url>/2023/05/25/JavaWeb/</url>
-    <content><![CDATA[<h1 id="javaweb–黑马笔记"><a href="#javaweb–黑马笔记" class="headerlink" title="javaweb–黑马笔记"></a>javaweb–黑马笔记</h1><span id="more"></span>
-
-
-
-<h5 id="一、学习路线"><a href="#一、学习路线" class="headerlink" title="一、学习路线"></a>一、学习路线</h5><p><img src="/%E5%9B%BE/javaweb--heima/image-20230419152717191.png" alt="image-20230419152717191"></p>
-<h5 id="二、web介绍"><a href="#二、web介绍" class="headerlink" title="二、web介绍"></a>二、web介绍</h5><h6 id="一、什么是Web？"><a href="#一、什么是Web？" class="headerlink" title="一、什么是Web？"></a>一、什么是Web？</h6><p>web:全球广域网，也称万维网（www world wide web)，能够通过浏览器访问的网站</p>
-<h6 id="二、web访问工作流程"><a href="#二、web访问工作流程" class="headerlink" title="二、web访问工作流程"></a>二、web访问工作流程</h6><p>用户在浏览器发送域名请求，浏览器向前端服务器发送请求，前端服务器收到请求后会将前端代码相应到浏览器，浏览器解析前端发送的代码，从而展示出前端样式，当浏览器解析到前端发送的请求路径，就会访问部署在后端的java程序，后端程序会访问数据库，数据获取之后会响应给后端服务器，后端服务器再将数据响应给浏览器</p>
-<p><img src="/%E5%9B%BE/javaweb--heima/image-20230419154526105.png" alt="image-20230419154526105"></p>
-<h6 id="三、web组成"><a href="#三、web组成" class="headerlink" title="三、web组成"></a>三、web组成</h6><p>Html:负责页面结构（页面元素和内容）</p>
-<p>Css:负责网页的表现（页面元素的外观，位置等页面样式，如：颜色，大小等）</p>
-<p>JavaScript:负责网页的的行为（交互效果）</p>
-<h6 id="四、js"><a href="#四、js" class="headerlink" title="四、js"></a>四、js</h6><p><img src="/%E5%9B%BE/javaweb--heima/image-20230422202720089.png" alt="image-20230422202720089"></p>
-<p>函数</p>
-<p><img src="/%E5%9B%BE/javaweb--heima/image-20230422204846551.png" alt="image-20230422204846551"></p>
-<p>json</p>
-<p><img src="/%E5%9B%BE/javaweb--heima/image-20230422205518035.png" alt="image-20230422205518035"></p>
-<p>BOM</p>
-<p><img src="/%E5%9B%BE/javaweb--heima/image-20230422205849679.png" alt="image-20230422205849679"></p>
-<p>获取元素</p>
-<p>根据id获取 document.getElementById(‘ ‘)</p>
-<p>根据标签获取  document.getElementsByTagName(‘ ‘)</p>
-<p>根据name属性获取表签 document.getElementByName(‘ ‘)</p>
-<p>根据class属性获取  document.getElemetByName(‘ ‘)</p>
-<h5 id="五、vue"><a href="#五、vue" class="headerlink" title="五、vue"></a>五、vue</h5><p><img src="/%E5%9B%BE/javaweb--heima/image-20230425184810810.png" alt="image-20230425184810810"></p>
-<h5 id="六、ajax"><a href="#六、ajax" class="headerlink" title="六、ajax"></a>六、ajax</h5><p>概念：Asynchronous JavaScript And XML，异步的javascripe和xml</p>
-<p>作用：</p>
-<ul>
-<li>​     数据交换：通过ajax可以给服务器发送请求，并获取服务器的响应的数据</li>
-<li>异步交互：可以在不重新加载整个页面的情况下，与服务器交换数据并更新部分网页技术:如 搜索联想，用户名校验</li>
-</ul>
-<p> Axios</p>
-<p><img src="/%E5%9B%BE/javaweb--heima/image-20230505171524405.png" alt="image-20230505171524405"></p>
-<h3 id="java后端路线"><a href="#java后端路线" class="headerlink" title="java后端路线"></a>java后端路线</h3><h5 id="一、maven"><a href="#一、maven" class="headerlink" title="一、maven"></a>一、maven</h5><p><img src="/%E5%9B%BE/javaweb--heima/image-20230516172514702.png" alt="image-20230516172514702"></p>
-]]></content>
-  </entry>
-  <entry>
     <title>Maven笔记</title>
     <url>/2023/05/25/Maven/</url>
     <content><![CDATA[<h1 id="day01-Maven"><a href="#day01-Maven" class="headerlink" title="day01-Maven"></a>day01-Maven</h1><h2 id="一-Maven简介"><a href="#一-Maven简介" class="headerlink" title="一.Maven简介"></a>一.Maven简介</h2><h3 id="1-Maven是什么？"><a href="#1-Maven是什么？" class="headerlink" title="1.Maven是什么？"></a>1.Maven是什么？</h3><span id="more"></span>
@@ -400,6 +362,44 @@
 ]]></content>
   </entry>
   <entry>
+    <title>javaweb-黑马笔记</title>
+    <url>/2023/05/25/JavaWeb/</url>
+    <content><![CDATA[<h1 id="javaweb–黑马笔记"><a href="#javaweb–黑马笔记" class="headerlink" title="javaweb–黑马笔记"></a>javaweb–黑马笔记</h1><span id="more"></span>
+
+
+
+<h5 id="一、学习路线"><a href="#一、学习路线" class="headerlink" title="一、学习路线"></a>一、学习路线</h5><p><img src="/%E5%9B%BE/javaweb--heima/image-20230419152717191.png" alt="image-20230419152717191"></p>
+<h5 id="二、web介绍"><a href="#二、web介绍" class="headerlink" title="二、web介绍"></a>二、web介绍</h5><h6 id="一、什么是Web？"><a href="#一、什么是Web？" class="headerlink" title="一、什么是Web？"></a>一、什么是Web？</h6><p>web:全球广域网，也称万维网（www world wide web)，能够通过浏览器访问的网站</p>
+<h6 id="二、web访问工作流程"><a href="#二、web访问工作流程" class="headerlink" title="二、web访问工作流程"></a>二、web访问工作流程</h6><p>用户在浏览器发送域名请求，浏览器向前端服务器发送请求，前端服务器收到请求后会将前端代码相应到浏览器，浏览器解析前端发送的代码，从而展示出前端样式，当浏览器解析到前端发送的请求路径，就会访问部署在后端的java程序，后端程序会访问数据库，数据获取之后会响应给后端服务器，后端服务器再将数据响应给浏览器</p>
+<p><img src="/%E5%9B%BE/javaweb--heima/image-20230419154526105.png" alt="image-20230419154526105"></p>
+<h6 id="三、web组成"><a href="#三、web组成" class="headerlink" title="三、web组成"></a>三、web组成</h6><p>Html:负责页面结构（页面元素和内容）</p>
+<p>Css:负责网页的表现（页面元素的外观，位置等页面样式，如：颜色，大小等）</p>
+<p>JavaScript:负责网页的的行为（交互效果）</p>
+<h6 id="四、js"><a href="#四、js" class="headerlink" title="四、js"></a>四、js</h6><p><img src="/%E5%9B%BE/javaweb--heima/image-20230422202720089.png" alt="image-20230422202720089"></p>
+<p>函数</p>
+<p><img src="/%E5%9B%BE/javaweb--heima/image-20230422204846551.png" alt="image-20230422204846551"></p>
+<p>json</p>
+<p><img src="/%E5%9B%BE/javaweb--heima/image-20230422205518035.png" alt="image-20230422205518035"></p>
+<p>BOM</p>
+<p><img src="/%E5%9B%BE/javaweb--heima/image-20230422205849679.png" alt="image-20230422205849679"></p>
+<p>获取元素</p>
+<p>根据id获取 document.getElementById(‘ ‘)</p>
+<p>根据标签获取  document.getElementsByTagName(‘ ‘)</p>
+<p>根据name属性获取表签 document.getElementByName(‘ ‘)</p>
+<p>根据class属性获取  document.getElemetByName(‘ ‘)</p>
+<h5 id="五、vue"><a href="#五、vue" class="headerlink" title="五、vue"></a>五、vue</h5><p><img src="/%E5%9B%BE/javaweb--heima/image-20230425184810810.png" alt="image-20230425184810810"></p>
+<h5 id="六、ajax"><a href="#六、ajax" class="headerlink" title="六、ajax"></a>六、ajax</h5><p>概念：Asynchronous JavaScript And XML，异步的javascripe和xml</p>
+<p>作用：</p>
+<ul>
+<li>​     数据交换：通过ajax可以给服务器发送请求，并获取服务器的响应的数据</li>
+<li>异步交互：可以在不重新加载整个页面的情况下，与服务器交换数据并更新部分网页技术:如 搜索联想，用户名校验</li>
+</ul>
+<p> Axios</p>
+<p><img src="/%E5%9B%BE/javaweb--heima/image-20230505171524405.png" alt="image-20230505171524405"></p>
+<h3 id="java后端路线"><a href="#java后端路线" class="headerlink" title="java后端路线"></a>java后端路线</h3><h5 id="一、maven"><a href="#一、maven" class="headerlink" title="一、maven"></a>一、maven</h5><p><img src="/%E5%9B%BE/javaweb--heima/image-20230516172514702.png" alt="image-20230516172514702"></p>
+]]></content>
+  </entry>
+  <entry>
     <title>spring笔记</title>
     <url>/2023/05/25/Spring/</url>
     <content><![CDATA[<h1 id="spring笔记"><a href="#spring笔记" class="headerlink" title="spring笔记"></a>spring笔记</h1><h4 id="黑马程序员SSM框架教程-Spring-SpringMVC-Maven高级-SpringBoot-MyBatisPlus"><a href="#黑马程序员SSM框架教程-Spring-SpringMVC-Maven高级-SpringBoot-MyBatisPlus" class="headerlink" title="黑马程序员SSM框架教程_Spring+SpringMVC+Maven高级+SpringBoot+MyBatisPlus"></a>黑马程序员SSM框架教程_Spring+SpringMVC+Maven高级+SpringBoot+MyBatisPlus</h4><span id="more"></span>
@@ -455,11 +455,6 @@
 <p>​                   eg: ${brands}获取域中存储kay为brands的数据</p>
 <h3 id="三-JSTL标签，使用标签代替jsp上面的代码"><a href="#三-JSTL标签，使用标签代替jsp上面的代码" class="headerlink" title="三.JSTL标签，使用标签代替jsp上面的代码"></a>三.JSTL标签，使用标签代替jsp上面的代码</h3><p>​       <img src="E:\typora\图\Snipaste_2022-11-14_21-48-55.png"></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>你好李阳</title>
-    <url>/2023/05/25/%E4%BD%A0%E5%A5%BD%E6%9D%8E%E9%98%B3/</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>javaweb大二复习</title>
@@ -525,5 +520,10 @@
 <h3 id="11简述jsp静态注释和动态注释的区别及用法"><a href="#11简述jsp静态注释和动态注释的区别及用法" class="headerlink" title="11简述jsp静态注释和动态注释的区别及用法"></a>11简述jsp静态注释和动态注释的区别及用法</h3><p>1.静态注释：<!--  -->,这种注释方法是对jsp中的静态代码进行的注释，是html的原生注释，这种注释方式会将其所注释的内容原封不动的发送到浏览器，通过查看源码即可看到所注释的内容。<br>   对动态代码加静态注释会产生错误</p>
 <p>2.jsp特有的注释：其使用的语法是&lt;%–  –%&gt;.这种注释方式，tomcat会进行处理，不会将其发送到浏览器中。</p>
 <h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3>]]></content>
+  </entry>
+  <entry>
+    <title>你好李阳</title>
+    <url>/2023/05/25/%E4%BD%A0%E5%A5%BD%E6%9D%8E%E9%98%B3/</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
