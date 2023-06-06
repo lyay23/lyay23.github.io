@@ -1,3 +1,4 @@
+http://example.com/guestbook/index.html
 http://example.com/tages/index.html
 http://example.com/lib/pace/README.html
 http://example.com/2023/05/25/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
