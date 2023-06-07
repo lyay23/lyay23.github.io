@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="李阳&amp;博客">
 <meta property="og:description" content="c语言1.初识C语言c语言是结构化的程序设计—-顺序结构，选择结构，循环结构">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/%E5%9B%BE/images/image-20230402145454188.png">
-<meta property="og:image" content="http://example.com/%E5%9B%BE/c/image-20230523100459368-1684807509870-1.png">
-<meta property="og:image" content="http://example.com/%E5%9B%BE/c/image-20230523103200606.png">
+<meta property="og:image" content="http://example.com/2023/05/25/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20230402145454188.png">
+<meta property="og:image" content="http://example.com/2023/05/25/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20230523100459368-1684807509870-1.png">
+<meta property="og:image" content="http://example.com/2023/05/25/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20230523103200606.png">
 <meta property="article:published_time" content="2023-05-25T07:34:21.000Z">
-<meta property="article:modified_time" content="2023-06-05T05:08:39.569Z">
+<meta property="article:modified_time" content="2023-06-07T06:20:11.583Z">
 <meta property="article:author" content="李阳">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/%E5%9B%BE/images/image-20230402145454188.png">
+<meta name="twitter:image" content="http://example.com/2023/05/25/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20230402145454188.png">
 
 <link rel="canonical" href="http://example.com/2023/05/25/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-05 13:08:39" itemprop="dateModified" datetime="2023-06-05T13:08:39+08:00">2023-06-05</time>
+                <time title="修改时间：2023-06-07 14:20:11" itemprop="dateModified" datetime="2023-06-07T14:20:11+08:00">2023-06-07</time>
               </span>
 
           
@@ -358,7 +358,7 @@
 
 <p>**  \0  表示字符串的结束符</p>
 <p>1.strlen()–字符串统计函数  string length–计算字符串长度</p>
-<p><img src="/%E5%9B%BE/images/image-20230402145454188.png"></p>
+<p><img src="/2023/05/25/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20230402145454188.png"></p>
 <p>eg:arr2的abc后面放着一个随机值–直到0为止</p>
 <h5 id="二、循环语句"><a href="#二、循环语句" class="headerlink" title="二、循环语句"></a>二、循环语句</h5><h6 id="1、if–else"><a href="#1、if–else" class="headerlink" title="1、if–else"></a>1、if–else</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> input = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;你要好好学习吗(1/0)&quot;</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;input);</span><br><span class="line">	<span class="keyword">if</span> (input == <span class="number">1</span>)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;要好好学习&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;不要&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -375,7 +375,7 @@
 
 <h5 id="五、异或非"><a href="#五、异或非" class="headerlink" title="五、异或非"></a>五、异或非</h5><p><strong>^</strong>  异或：对应的二进制相同则为0，相异则为1</p>
 <p><strong>给你们句口诀与：全一则一 或：有一则一 异或：有一则一全一则零</strong></p>
-<h5 id="六、常见关键字"><a href="#六、常见关键字" class="headerlink" title="六、常见关键字"></a>六、常见关键字</h5><p><img src="/%E5%9B%BE/c/image-20230523100459368-1684807509870-1.png" alt="image-20230523100459368"></p>
+<h5 id="六、常见关键字"><a href="#六、常见关键字" class="headerlink" title="六、常见关键字"></a>六、常见关键字</h5><p><img src="/2023/05/25/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20230523100459368-1684807509870-1.png" alt="image-20230523100459368"></p>
 <h6 id="typedef关键字"><a href="#typedef关键字" class="headerlink" title="typedef关键字"></a>typedef关键字</h6><p>typedef:类型定义，这里理解为类型重命名</p>
 <p>例:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">int</span> unit;</span><br><span class="line"><span class="type">int</span> main</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> num =<span class="number">0</span>;</span><br><span class="line">uint num1=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -385,7 +385,7 @@
 <p>2.修饰全局变量-称为静态全局变量 </p>
 <p>3.修饰函数-称为静态函数</p>
 <p>①</p>
-<p><img src="/%E5%9B%BE/c/image-20230523103200606.png" alt="image-20230523103200606"></p>
+<p><img src="/2023/05/25/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20230523103200606.png" alt="image-20230523103200606"></p>
 <p>修饰局部变量时改变了变量存储位置，修饰全局变量时这个属性变成内部链接属性，其他源文件不能使用</p>
 <h6 id="register关键字–寄存器"><a href="#register关键字–寄存器" class="headerlink" title="register关键字–寄存器"></a>register关键字–寄存器</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">register</span> <span class="type">int</span> num=<span class="number">3</span><span class="comment">//register建议3存放在寄存器中</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -531,7 +531,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -579,7 +579,7 @@
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共7.2k字</span>
+  <span class="post-count">博客全站共7.1k字</span>
   <span class="post-meta-divider">|</span>
   本站总访问量<span id="busuanzi_value_site_pv"></span>次
   <span class="post-meta-divider">|</span>
