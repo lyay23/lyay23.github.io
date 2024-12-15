@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4781349 */
-  src: url('//at.alicdn.com/t/c/font_4781349_g5xu4pmdw0v.woff2?t=1734253980440') format('woff2'),
-       url('//at.alicdn.com/t/c/font_4781349_g5xu4pmdw0v.woff?t=1734253980440') format('woff'),
-       url('//at.alicdn.com/t/c/font_4781349_g5xu4pmdw0v.ttf?t=1734253980440') format('truetype');
+  src: url('//at.alicdn.com/t/c/font_4781349_7gahg48cyld.woff2?t=1734254392334') format('woff2'),
+       url('//at.alicdn.com/t/c/font_4781349_7gahg48cyld.woff?t=1734254392334') format('woff'),
+       url('//at.alicdn.com/t/c/font_4781349_7gahg48cyld.ttf?t=1734254392334') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-github:before {
+  content: "\ecb5";
 }
 
 .icon-taiyang:before {
@@ -28,4 +32,3 @@
 .icon-xingxing:before {
   content: "\e870";
 }
-
