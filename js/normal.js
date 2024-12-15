@@ -1,12 +1,1 @@
-if (document.querySelector('#bber-talk')) {
-      var swiper = new Swiper('.swiper-container', {
-        direction: 'vertical', // 垂直切换选项
-        loop: true,
-        autoplay: {
-        delay: 3000,
-        pauseOnMouseEnter: true
-      },
-      });
-    }
-
-
+var swiper;document.querySelector("#bber-talk")&&(swiper=new Swiper(".swiper-container",{direction:"vertical",loop:!0,autoplay:{delay:3e3,pauseOnMouseEnter:!0}}));

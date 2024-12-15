@@ -1014,86 +1014,6 @@
       </tags>
   </entry>
   <entry>
-    <title>力扣</title>
-    <url>/posts/6ead9846/</url>
-    <content><![CDATA[<h2 id="力扣之初体验">力扣之初体验</h2>
-<span id="more"></span>
-<h5 id="1-两数之和">1.两数之和</h5>
-<p>给定一个整数数组 <code>nums</code> 和一个整数目标值 <code>target</code>，请你在该数组中找出 <strong>和为目标值</strong> <em><code>target</code></em> 的那 <strong>两个</strong> 整数，并返回它们的数组下标。</p>
-<p>你可以假设每种输入只会对应一个答案，并且你不能使用两次相同的元素。</p>
-<p>你可以按任意顺序返回答案。</p>
-<p><strong>示例 1：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [2,7,11,15], target = 9</span><br><span class="line">输出：[0,1]</span><br><span class="line">解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。</span><br></pre></td></tr></table></figure>
-<p><strong>示例 2：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [3,2,4], target = 6</span><br><span class="line">输出：[1,2]</span><br></pre></td></tr></table></figure>
-<p><strong>示例 3：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [3,3], target = 6</span><br><span class="line">输出：[0,1] </span><br></pre></td></tr></table></figure>
-<p><strong>提示：</strong></p>
-<ul>
-<li><code>2 &lt;= nums.length &lt;= 104</code></li>
-<li><code>-109 &lt;= nums[i] &lt;= 109</code></li>
-<li><code>-109 &lt;= target &lt;= 109</code></li>
-<li><strong>只会存在一个有效答案</strong></li>
-</ul>
-<p>**进阶：**你可以想出一个时间复杂度小于 <code>O(n2)</code> 的算法吗？</p>
-<h6 id="题解">题解</h6>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>* <span class="title function_">twoSum</span><span class="params">(<span class="type">int</span>* nums, <span class="type">int</span> numsSize, <span class="type">int</span> target, <span class="type">int</span>* returnSize)</span> {</span><br><span class="line">    <span class="type">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; numsSize; i++) {</span><br><span class="line">        <span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; numsSize; j++) {</span><br><span class="line">            <span class="keyword">if</span> (nums[i] + nums[j] == target) {</span><br><span class="line">                <span class="type">int</span> *arr = (<span class="type">int</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * <span class="number">2</span>);</span><br><span class="line">                arr[<span class="number">0</span>] = i;</span><br><span class="line">                arr[<span class="number">1</span>] = j;</span><br><span class="line">                *returnSize = <span class="number">2</span>;</span><br><span class="line">                <span class="keyword">return</span> arr;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        </span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 考虑不存在的情况，但本题中不会出现</span></span><br><span class="line">    *returnSize = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-<p>时间复杂度<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="5.832ex" height="2.452ex" role="img" focusable="false" viewbox="0 -833.9 2577.6 1083.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D442" d="M740 435Q740 320 676 213T511 42T304 -22Q207 -22 138 35T51 201Q50 209 50 244Q50 346 98 438T227 601Q351 704 476 704Q514 704 524 703Q621 689 680 617T740 435ZM637 476Q637 565 591 615T476 665Q396 665 322 605Q242 542 200 428T157 216Q157 126 200 73T314 19Q404 19 485 98T608 313Q637 408 637 476Z"/></g><g data-mml-node="mo" transform="translate(763,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"/></g><g data-mml-node="msup" transform="translate(1152,0)"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"/></g><g data-mml-node="mn" transform="translate(633,363) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"/></g></g><g data-mml-node="mo" transform="translate(2188.6,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"/></g></g></g></svg></mjx-container></p>
-<p>这里为暴力循环，第一层先遍历i，然后遍历j当找到相同时创建一个新数组</p>
-<h5 id="2-两数相加">2.两数相加</h5>
-<p>给你两个 <strong>非空</strong> 的链表，表示两个非负的整数。它们每位数字都是按照 <strong>逆序</strong> 的方式存储的，并且每个节点只能存储 <strong>一位</strong> 数字。</p>
-<p>请你将两个数相加，并以相同形式返回一个表示和的链表。</p>
-<p>你可以假设除了数字 0 之外，这两个数都不会以 0 开头。</p>
-<p><strong>示例 1：</strong></p>
-<p><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2021/01/02/addtwonumber1.jpg" alt="img"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：l1 = [2,4,3], l2 = [5,6,4]</span><br><span class="line">输出：[7,0,8]</span><br><span class="line">解释：342 + 465 = 807.</span><br></pre></td></tr></table></figure>
-<p><strong>示例 2：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：l1 = [0], l2 = [0]</span><br><span class="line">输出：[0]</span><br></pre></td></tr></table></figure>
-<p><strong>示例 3：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]</span><br><span class="line">输出：[8,9,9,9,0,0,0,1]</span><br></pre></td></tr></table></figure>
-<p><strong>提示：</strong></p>
-<ul>
-<li>每个链表中的节点数在范围 <code>[1, 100]</code> 内</li>
-<li><code>0 &lt;= Node.val &lt;= 9</code></li>
-<li>题目数据保证列表表示的数字不含前导零</li>
-</ul>
-<h6 id="题解-2">题解</h6>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode {</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct ListNode *next;</span></span><br><span class="line"><span class="comment"> * };</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">addTwoNumbers</span><span class="params">(<span class="keyword">struct</span> ListNode* l1, <span class="keyword">struct</span> ListNode* l2)</span> {</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">newNode</span> =</span><span class="literal">NULL</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">head</span> =</span><span class="literal">NULL</span>;</span><br><span class="line">    <span class="type">int</span> sum=<span class="number">0</span>,carry=<span class="number">0</span>;<span class="comment">//进位</span></span><br><span class="line">    <span class="keyword">while</span>(l1 || l2)</span><br><span class="line">    {</span><br><span class="line">      <span class="type">int</span> a= l1 ? l1-&gt;val:<span class="number">0</span>;</span><br><span class="line">      <span class="type">int</span> b= l2 ? l2-&gt;val:<span class="number">0</span>;</span><br><span class="line">      sum =a+b+carry;</span><br><span class="line">      <span class="keyword">if</span>(!head)</span><br><span class="line">      {</span><br><span class="line">        head =newNode =(<span class="keyword">struct</span> ListNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">        newNode -&gt;val=sum%<span class="number">10</span>;</span><br><span class="line">        newNode -&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">      }<span class="keyword">else</span></span><br><span class="line">      {</span><br><span class="line">        newNode -&gt;next=(<span class="keyword">struct</span> ListNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">        newNode-&gt;next-&gt;val=sum%<span class="number">10</span>;</span><br><span class="line">        newNode=newNode-&gt;next;</span><br><span class="line">        newNode-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">      }</span><br><span class="line">      carry=sum/<span class="number">10</span>;</span><br><span class="line">      <span class="keyword">if</span>(l1)</span><br><span class="line">      {</span><br><span class="line">        l1=l1-&gt;next;</span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">if</span>(l2)</span><br><span class="line">      {</span><br><span class="line">        l2=l2-&gt;next;</span><br><span class="line">      }</span><br><span class="line">     }</span><br><span class="line">    <span class="keyword">if</span>(carry&gt;<span class="number">0</span>)</span><br><span class="line">     {</span><br><span class="line">      newNode-&gt;next =(<span class="keyword">struct</span> ListNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">      newNode-&gt;next-&gt;val=carry;</span><br><span class="line">      newNode= newNode-&gt;next;</span><br><span class="line">      newNode-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-<h5 id="3-无重复字符的最长子串">3.无重复字符的最长子串</h5>
-<p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长子串</strong>的长度。</p>
-<p><strong>示例 1:</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: s = "abcabcbb"</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。</span><br></pre></td></tr></table></figure>
-<p><strong>示例 2:</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: s = "bbbbb"</span><br><span class="line">输出: 1</span><br><span class="line">解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。</span><br></pre></td></tr></table></figure>
-<p><strong>示例 3:</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: s = "pwwkew"</span><br><span class="line">输出: 3</span><br><span class="line">解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。</span><br><span class="line">     请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。</span><br></pre></td></tr></table></figure>
-<p><strong>提示：</strong></p>
-<ul>
-<li><code>0 &lt;= s.length &lt;= 5 * 104</code></li>
-<li><code>s</code> 由英文字母、数字、符号和空格组成</li>
-</ul>
-<h6 id="题解-滑动窗口解决">题解-滑动窗口解决</h6>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">lengthOfLongestSubstring</span><span class="params">(<span class="type">char</span>* s)</span> {</span><br><span class="line">    <span class="type">int</span> i,len=<span class="number">0</span>,max=<span class="number">0</span>,start=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> index[<span class="number">255</span>]={<span class="number">0</span>};</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;s[i]!=<span class="string">'\0'</span>;i++)</span><br><span class="line">    {</span><br><span class="line">       <span class="keyword">if</span>(index[s[i]]&gt;start)<span class="comment">//如果不是第一次出现</span></span><br><span class="line">       {</span><br><span class="line">        len=i-start;</span><br><span class="line">        start=index[s[i]];</span><br><span class="line">        <span class="keyword">if</span>(len&gt;max)</span><br><span class="line">        {</span><br><span class="line">            max=len;</span><br><span class="line">        }</span><br><span class="line">       }</span><br><span class="line">       index[s[i]]=i+<span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    len=<span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="keyword">if</span>(len-start&gt;max){</span><br><span class="line">        <span class="keyword">return</span> len-start;</span><br><span class="line">    }<span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-<p>个人理解：</p>
-<ol>
-<li>首先定义了一个空数组，255个字节代表255的char类型</li>
-<li>进入for循环，这里我们以pwwkew为例</li>
-<li>首先index[s[i]]代表index的第多少元素位置，例如p的阿史克马的位置</li>
-<li>p第一次出现，p的位置为0，不大于0，不会进入循环，然后将index[s[0]]的位置改为p的实际位置 1</li>
-<li>同理，w位置为2，此时i为1</li>
-<li>w，进入循环，Len =2-0=2；start=2(因为此时未执行到index[s[i]]=i+1;所以start还是上一次的值），max=2;</li>
-<li>…</li>
-<li>w时，Len=5-3=3；start=2,max=3</li>
-</ol>
-]]></content>
-      <categories>
-        <category>力扣</category>
-      </categories>
-      <tags>
-        <tag>力扣刷题</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>javaweb</title>
     <url>/posts/6e827460/</url>
     <content><![CDATA[<h1>javaweb笔记</h1>
@@ -1568,6 +1488,86 @@
       </categories>
       <tags>
         <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>力扣</title>
+    <url>/posts/6ead9846/</url>
+    <content><![CDATA[<h2 id="力扣之初体验">力扣之初体验</h2>
+<span id="more"></span>
+<h5 id="1-两数之和">1.两数之和</h5>
+<p>给定一个整数数组 <code>nums</code> 和一个整数目标值 <code>target</code>，请你在该数组中找出 <strong>和为目标值</strong> <em><code>target</code></em> 的那 <strong>两个</strong> 整数，并返回它们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案，并且你不能使用两次相同的元素。</p>
+<p>你可以按任意顺序返回答案。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [2,7,11,15], target = 9</span><br><span class="line">输出：[0,1]</span><br><span class="line">解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [3,2,4], target = 6</span><br><span class="line">输出：[1,2]</span><br></pre></td></tr></table></figure>
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：nums = [3,3], target = 6</span><br><span class="line">输出：[0,1] </span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>2 &lt;= nums.length &lt;= 104</code></li>
+<li><code>-109 &lt;= nums[i] &lt;= 109</code></li>
+<li><code>-109 &lt;= target &lt;= 109</code></li>
+<li><strong>只会存在一个有效答案</strong></li>
+</ul>
+<p>**进阶：**你可以想出一个时间复杂度小于 <code>O(n2)</code> 的算法吗？</p>
+<h6 id="题解">题解</h6>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>* <span class="title function_">twoSum</span><span class="params">(<span class="type">int</span>* nums, <span class="type">int</span> numsSize, <span class="type">int</span> target, <span class="type">int</span>* returnSize)</span> {</span><br><span class="line">    <span class="type">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; numsSize; i++) {</span><br><span class="line">        <span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; numsSize; j++) {</span><br><span class="line">            <span class="keyword">if</span> (nums[i] + nums[j] == target) {</span><br><span class="line">                <span class="type">int</span> *arr = (<span class="type">int</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * <span class="number">2</span>);</span><br><span class="line">                arr[<span class="number">0</span>] = i;</span><br><span class="line">                arr[<span class="number">1</span>] = j;</span><br><span class="line">                *returnSize = <span class="number">2</span>;</span><br><span class="line">                <span class="keyword">return</span> arr;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        </span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 考虑不存在的情况，但本题中不会出现</span></span><br><span class="line">    *returnSize = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>时间复杂度<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="5.832ex" height="2.452ex" role="img" focusable="false" viewbox="0 -833.9 2577.6 1083.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D442" d="M740 435Q740 320 676 213T511 42T304 -22Q207 -22 138 35T51 201Q50 209 50 244Q50 346 98 438T227 601Q351 704 476 704Q514 704 524 703Q621 689 680 617T740 435ZM637 476Q637 565 591 615T476 665Q396 665 322 605Q242 542 200 428T157 216Q157 126 200 73T314 19Q404 19 485 98T608 313Q637 408 637 476Z"/></g><g data-mml-node="mo" transform="translate(763,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"/></g><g data-mml-node="msup" transform="translate(1152,0)"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"/></g><g data-mml-node="mn" transform="translate(633,363) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"/></g></g><g data-mml-node="mo" transform="translate(2188.6,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"/></g></g></g></svg></mjx-container></p>
+<p>这里为暴力循环，第一层先遍历i，然后遍历j当找到相同时创建一个新数组</p>
+<h5 id="2-两数相加">2.两数相加</h5>
+<p>给你两个 <strong>非空</strong> 的链表，表示两个非负的整数。它们每位数字都是按照 <strong>逆序</strong> 的方式存储的，并且每个节点只能存储 <strong>一位</strong> 数字。</p>
+<p>请你将两个数相加，并以相同形式返回一个表示和的链表。</p>
+<p>你可以假设除了数字 0 之外，这两个数都不会以 0 开头。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2021/01/02/addtwonumber1.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：l1 = [2,4,3], l2 = [5,6,4]</span><br><span class="line">输出：[7,0,8]</span><br><span class="line">解释：342 + 465 = 807.</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：l1 = [0], l2 = [0]</span><br><span class="line">输出：[0]</span><br></pre></td></tr></table></figure>
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]</span><br><span class="line">输出：[8,9,9,9,0,0,0,1]</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<ul>
+<li>每个链表中的节点数在范围 <code>[1, 100]</code> 内</li>
+<li><code>0 &lt;= Node.val &lt;= 9</code></li>
+<li>题目数据保证列表表示的数字不含前导零</li>
+</ul>
+<h6 id="题解-2">题解</h6>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode {</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct ListNode *next;</span></span><br><span class="line"><span class="comment"> * };</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">addTwoNumbers</span><span class="params">(<span class="keyword">struct</span> ListNode* l1, <span class="keyword">struct</span> ListNode* l2)</span> {</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">newNode</span> =</span><span class="literal">NULL</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">head</span> =</span><span class="literal">NULL</span>;</span><br><span class="line">    <span class="type">int</span> sum=<span class="number">0</span>,carry=<span class="number">0</span>;<span class="comment">//进位</span></span><br><span class="line">    <span class="keyword">while</span>(l1 || l2)</span><br><span class="line">    {</span><br><span class="line">      <span class="type">int</span> a= l1 ? l1-&gt;val:<span class="number">0</span>;</span><br><span class="line">      <span class="type">int</span> b= l2 ? l2-&gt;val:<span class="number">0</span>;</span><br><span class="line">      sum =a+b+carry;</span><br><span class="line">      <span class="keyword">if</span>(!head)</span><br><span class="line">      {</span><br><span class="line">        head =newNode =(<span class="keyword">struct</span> ListNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">        newNode -&gt;val=sum%<span class="number">10</span>;</span><br><span class="line">        newNode -&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">      }<span class="keyword">else</span></span><br><span class="line">      {</span><br><span class="line">        newNode -&gt;next=(<span class="keyword">struct</span> ListNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">        newNode-&gt;next-&gt;val=sum%<span class="number">10</span>;</span><br><span class="line">        newNode=newNode-&gt;next;</span><br><span class="line">        newNode-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">      }</span><br><span class="line">      carry=sum/<span class="number">10</span>;</span><br><span class="line">      <span class="keyword">if</span>(l1)</span><br><span class="line">      {</span><br><span class="line">        l1=l1-&gt;next;</span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">if</span>(l2)</span><br><span class="line">      {</span><br><span class="line">        l2=l2-&gt;next;</span><br><span class="line">      }</span><br><span class="line">     }</span><br><span class="line">    <span class="keyword">if</span>(carry&gt;<span class="number">0</span>)</span><br><span class="line">     {</span><br><span class="line">      newNode-&gt;next =(<span class="keyword">struct</span> ListNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">      newNode-&gt;next-&gt;val=carry;</span><br><span class="line">      newNode= newNode-&gt;next;</span><br><span class="line">      newNode-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h5 id="3-无重复字符的最长子串">3.无重复字符的最长子串</h5>
+<p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长子串</strong>的长度。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: s = "abcabcbb"</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: s = "bbbbb"</span><br><span class="line">输出: 1</span><br><span class="line">解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。</span><br></pre></td></tr></table></figure>
+<p><strong>示例 3:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: s = "pwwkew"</span><br><span class="line">输出: 3</span><br><span class="line">解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。</span><br><span class="line">     请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>0 &lt;= s.length &lt;= 5 * 104</code></li>
+<li><code>s</code> 由英文字母、数字、符号和空格组成</li>
+</ul>
+<h6 id="题解-滑动窗口解决">题解-滑动窗口解决</h6>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">lengthOfLongestSubstring</span><span class="params">(<span class="type">char</span>* s)</span> {</span><br><span class="line">    <span class="type">int</span> i,len=<span class="number">0</span>,max=<span class="number">0</span>,start=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> index[<span class="number">255</span>]={<span class="number">0</span>};</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;s[i]!=<span class="string">'\0'</span>;i++)</span><br><span class="line">    {</span><br><span class="line">       <span class="keyword">if</span>(index[s[i]]&gt;start)<span class="comment">//如果不是第一次出现</span></span><br><span class="line">       {</span><br><span class="line">        len=i-start;</span><br><span class="line">        start=index[s[i]];</span><br><span class="line">        <span class="keyword">if</span>(len&gt;max)</span><br><span class="line">        {</span><br><span class="line">            max=len;</span><br><span class="line">        }</span><br><span class="line">       }</span><br><span class="line">       index[s[i]]=i+<span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    len=<span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="keyword">if</span>(len-start&gt;max){</span><br><span class="line">        <span class="keyword">return</span> len-start;</span><br><span class="line">    }<span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>个人理解：</p>
+<ol>
+<li>首先定义了一个空数组，255个字节代表255的char类型</li>
+<li>进入for循环，这里我们以pwwkew为例</li>
+<li>首先index[s[i]]代表index的第多少元素位置，例如p的阿史克马的位置</li>
+<li>p第一次出现，p的位置为0，不大于0，不会进入循环，然后将index[s[0]]的位置改为p的实际位置 1</li>
+<li>同理，w位置为2，此时i为1</li>
+<li>w，进入循环，Len =2-0=2；start=2(因为此时未执行到index[s[i]]=i+1;所以start还是上一次的值），max=2;</li>
+<li>…</li>
+<li>w时，Len=5-3=3；start=2,max=3</li>
+</ol>
+]]></content>
+      <categories>
+        <category>力扣</category>
+      </categories>
+      <tags>
+        <tag>力扣刷题</tag>
       </tags>
   </entry>
   <entry>
