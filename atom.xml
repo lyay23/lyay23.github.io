@@ -6,7 +6,7 @@
   <link href="http://lyay23.github.io/atom.xml" rel="self"/>
   
   <link href="http://lyay23.github.io/"/>
-  <updated>2024-12-16T04:39:09.160Z</updated>
+  <updated>2024-12-16T07:23:10.255Z</updated>
   <id>http://lyay23.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://lyay23.github.io/posts/e255a10a/"/>
     <id>http://lyay23.github.io/posts/e255a10a/</id>
     <published>2024-12-16T06:00:00.000Z</published>
-    <updated>2024-12-16T04:39:09.160Z</updated>
+    <updated>2024-12-16T07:23:10.255Z</updated>
     
     <content type="html"><![CDATA[<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><p>​                                                                                                                                                                                    —参考王道考研</p><h1 id="一、计算机网络体系结构"><a href="#一、计算机网络体系结构" class="headerlink" title="一、计算机网络体系结构"></a>一、计算机网络体系结构</h1><p>本章主要考察选择题与简单计算题</p><blockquote><p>408要求</p><h3 id="一）计算机网络基本概念"><a href="#一）计算机网络基本概念" class="headerlink" title="(一）计算机网络基本概念"></a>(一）计算机网络基本概念</h3><p>1．计算机网络的定义、组成勹功能</p><p>2．计算机网络的分类</p><p>3．计算机网络主要性能指标</p><h3 id="（二）计算机网络体系结构"><a href="#（二）计算机网络体系结构" class="headerlink" title="（二）计算机网络体系结构"></a>（二）计算机网络体系结构</h3><p>1．计算机网络分层结构</p><p>2.计算机网络协议、接口、服务等概念</p><p>3.ISO ／OSI参考模型和 TCP／IP 模型</p></blockquote><h2 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h2><h3 id="1-1什么是计算机网络"><a href="#1-1什么是计算机网络" class="headerlink" title="1.1什么是计算机网络"></a>1.1什么是计算机网络</h3><p>计算机网络(Computer networking）是一个将众多<strong>分散的</strong>、<strong>自治的</strong>计算机系统通过通信设备与线路连接起来，由功能完善的软件实现<strong>资源共享</strong>和<strong>信息传递</strong>的系统</p><p>简而言之：计算机网络就是一些互联的、自治的计算机系统集合</p>]]></content>
     
