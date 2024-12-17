@@ -20,8 +20,8 @@ http://lyay23.github.io/posts/c7b053e8/
 http://lyay23.github.io/posts/9ec06885/
 http://lyay23.github.io/lib/pace/README.html
 http://lyay23.github.io/lib/three/README.html
-http://lyay23.github.io/lib/three/renovate.json
 http://lyay23.github.io/lib/three/package.json
+http://lyay23.github.io/lib/three/renovate.json
 http://lyay23.github.io/
 http://lyay23.github.io/tags/408/
 http://lyay23.github.io/tags/C%E8%AF%AD%E8%A8%80/
