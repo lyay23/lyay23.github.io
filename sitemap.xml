@@ -241,14 +241,14 @@
   </url>
   
   <url>
-    <loc>http://lyay23.github.io/tags/java/</loc>
+    <loc>http://lyay23.github.io/tags/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/</loc>
     <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://lyay23.github.io/tags/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/</loc>
+    <loc>http://lyay23.github.io/tags/java/</loc>
     <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -292,6 +292,13 @@
   </url>
   
   <url>
+    <loc>http://lyay23.github.io/categories/%E5%8A%9B%E6%89%A3/</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://lyay23.github.io/categories/java/</loc>
     <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -300,13 +307,6 @@
   
   <url>
     <loc>http://lyay23.github.io/categories/javaweb/</loc>
-    <lastmod>2024-12-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://lyay23.github.io/categories/%E5%8A%9B%E6%89%A3/</loc>
     <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
