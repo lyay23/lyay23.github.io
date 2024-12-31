@@ -2311,72 +2311,134 @@
   <entry>
     <title>痕迹</title>
     <url>/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/</url>
-    <content><![CDATA[<h1>这里是李阳的日记本</h1>
-<details class="folding-tag" green><summary> 写在前面 </summary>
+    <content><![CDATA[<h1 id="这里是李阳的日记本"><a href="#这里是李阳的日记本" class="headerlink" title="这里是李阳的日记本"></a>这里是李阳的日记本</h1><details class="folding-tag" green><summary> 写在前面 </summary>
               <div class="content">
               <p>写在前面：</p><p>这几天突然在想以后的我会是什么样的我，碌碌无为平庸一事无成的我，还是…</p><p>我不知道，我不敢想，我也很害怕想，不过我不得不继续想，我想成为一个很好的人</p><p>至少以后会想起这一段很有意思的这段时间我不会后悔、恼怒</p><p>我想变成外向的人，想改自己每天晚上反思的缺点</p><p>我的目标：</p><p>想考研，想让爸爸妈妈早点不用上班，想带他们旅游，想为他们买手表，想给他们换新手机，想给我姐买很贵的化妆品，想为我的外甥 外甥女买很多零食很多玩具</p><p>想开一家餐饮店，我喜欢给别人做饭，不开也行，</p><p>想赚很多钱，这样爸爸妈妈不再受苦</p><p>想认识很多很多很多新朋友</p><p>想不再自卑下去</p><p>… …</p><p>我想为了更好的自己，也为了我所在意的人</p><p>所以：</p><p>请向前走</p>
               </div>
             </details>
 <details class="folding-tag" blue><summary> 春 </summary>
               <div class="content">
-              <details class="folding-tag" blue><summary> 春 </summary>              <div class="content">              <p>新的一年，新的开始，我愿意做出以下规划：</p><ol><li>四级必须过，两次机会把握好</li><li>单词每天坚持背，可以背的不多，不够好但是一定要背</li><li>开学要学习高数啦</li><li>学习算法，大概每周都要写笔记</li><li>学习javaweb，专业课不能忘记哦</li><li>408分4个季度，每三个月学习一门，必须要做好笔记，你要写一篇全世界最厉害的408笔记</li><li>练字，可以不连续，但是一定要练</li><li>给妈妈换新手机</li><li>… …剩下的我还没想好，先到这里吧</li></ol><blockquote><p>李阳，请你一定要好好努力。要加油哦</p></blockquote>              </div>            </details><details class="folding-tag" blue><summary> 冬 </summary>              <div class="content">              <p>本来很想写点东西，来好好告别一下属于我的一年</p><p>不过想了想，有得亦有失</p><p>… …</p><p>就这样吧</p>              </div>            </details>
+              <details class="folding-tag" blue><summary> 春 </summary>              <div class="content">              <p>新的一年，新的开始，我愿意做出以下规划：</p><ol><li>四级必须过，两次机会把握好</li><li>单词每天坚持背，可以背的不多，不够好但是一定要背</li><li>开学要学习高数啦</li><li>学习算法，大概每周都要写笔记</li><li>学习javaweb，专业课不能忘记哦</li><li>408分4个季度，每三个月学习一门，必须要做好笔记，你要写一篇全世界最厉害的408笔记</li><li>练字，可以不连续，但是一定要练</li><li>给妈妈换新手机</li><li>… …剩下的我还没想好，先到这里吧</li></ol>              </div>            </details><details class="folding-tag" blue><summary> 冬 </summary>              <div class="content">              <p>本来很想写点东西，来好好告别一下属于我的一年</p><p>不过想了想，有得亦有失</p><p>… …</p><p>就这样吧</p>              </div>            </details>
               </div>
             </details>
+<div class="timeline blue"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2025</p>
+</div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>01-01</p>
+</div></div><div class="timeline-item-content"><p>古德猫宁！一日之计在于晨</p>
+<div class="checkbox"><input type="checkbox">
+            <p>7点半的闹钟起来背mysql的书</p>
+            </div>
+
+<div class="checkbox"><input type="checkbox">
+            <p>11点半吃饭，什么时候背完什么时候吃饭</p>
+            </div>
+
+<div class="checkbox"><input type="checkbox">
+            <p>今天下午可以玩一会，不过你要先默写9个mysql的简答题</p>
+            </div>
+
+<div class="checkbox"><input type="checkbox">
+            <p>继续javaweb</p>
+            </div>
+
+<div class="checkbox"><input type="checkbox">
+            <p>晚上继续默写</p>
+            </div>
+
+<div class="checkbox"><input type="checkbox">
+            <p>练字</p>
+            </div>
+
+<div class="checkbox"><input type="checkbox">
+            <p>11点半睡觉</p>
+            </div>
+
+
+
+</div></div></div>
 <div class="timeline undefined"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2024</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>12-31</p>
 </div></div><div class="timeline-item-content"><div class="checkbox 8点的闹钟起来"><input type="checkbox">
             <p>9点正式开始学习，学到11点半的javaweb</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>12点吃完饭</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>然后背旧单词</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>继续javaweb</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>抽出一个小时或者半个小时整理mysql笔记</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>7点钟回来准备吃饭</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>8点半练字</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>11点半写日记</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>11点40洗澡，准备睡觉啦</p>
             </div>
+
+<details class="folding-tag" blue><summary> 时间 </summary>
+              <div class="content">
+              <p>卧槽，谁昨天晚上趁我睡着把我的闹钟往后调了两个小时</p><p>害我今天9点半才一觉睡醒</p><p>到底是谁！😭😭😭😭</p><p>好吧，其实是我昨天忘记调闹钟了</p><p>10点准时开始学习</p><p><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241231215905565.png" alt="image-20241231215905565" style="zoom:25%;"></p><p>不要问我头发怎么尖尖的，问就是晚上洗头了，</p><p>每次晚上洗头早上睡醒头发都很像开盲盒，不过没有一次是好看的，天天炸毛</p><p>那天头发后脑勺还被我睡成压缩包了，不过照样到处走，李阳，这学校是没你在意的人了吗</p><p>不过这样的头发你还能出门，真有你的👍👍</p><hr><p>为来的女朋友请放心，今年跨年还是一个人，也没给女孩子说过话</p><p>今天又是在图书馆学了一天，还背了单词呢，我又有小进步了哦</p><p>芜湖~看我今天练的字</p><p><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241231220524411.png" alt="image-20241231220524411" style="zoom:25%;"></p><p><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241231220542167.png" alt="image-20241231220542167" style="zoom:25%;"></p><p>好像比之前有进步耶耶耶！</p><p>拜拜啦，我要准备洗澡睡觉啦，</p><p>明年见！</p>
+              </div>
+            </details>
+
+
+
+
+
 </div></div></div>
 <div class="timeline undefined"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2024</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>12-30</p>
 </div></div><div class="timeline-item-content"><div class="checkbox"><input type="checkbox">
             <p>早上睡醒复习旧单词，然后起来去图书馆</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>学习javaweb，抽空背30个新单词</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>晚上时间来练字</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>加油加油加油李阳</p>
             </div>
+
+
+
 <details class="folding-tag" blue><summary> 冬 </summary>
               <div class="content">
               <p>冬</p><p>今天表现也还行，字也练了，单词背完了，就javaweb做的不够好，明天要惩罚你早起了哦，早点解决问题</p><p><code>今天开心的事</code></p><p>没有</p><p><code>今天不开心的事情</code></p><p>emmm,也不算有，不过反正高兴不起来</p>
               </div>
             </details>
+
+
+
 <details class="folding-tag" blue><summary> 痕迹 </summary>
               <div class="content">
-              <img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241230231125538.png" alt="image-20241230231125538" style="zoom:25%;"><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241230231152593.png" alt="image-20241230231152593" style="zoom:25%;"><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241230231216711.png" alt="image-20241230231216711" style="zoom:25%;">
+              <p><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241230231125538.png" alt="image-20241230231125538" style="zoom:25%;"></p><p><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241230231152593.png" alt="image-20241230231152593" style="zoom:25%;"></p><p><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241230231216711.png" alt="image-20241230231216711" style="zoom:25%;"></p>
               </div>
             </details>
-<div id="player_c06d3e7e7d9bd151"></div>
+
+<p><div id="player_c06d3e7e7d9bd151"></div></p>
 <script type="text/javascript" data-pjax src="https://player.dogecloud.com/js/loader"></script>
 <script type="text/javascript" data-pjax defer>
   setTimeout(() => {
@@ -2388,57 +2450,86 @@
     });
   }, 300);
 </script>
+
+
+
+
+
+
+
+
 </div></div></div>
 <div class="timeline undefined"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2024</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>12-29</p>
 </div></div><div class="timeline-item-content"><div class="checkbox"><input type="checkbox">
             <p>早上睡醒复习旧单词（别又玩游戏了，求你了）然后起来去图书馆</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>然后中午背30个新单词（不背单词你就学Java吧）</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>然后下午去图书馆学javaweb大概10集 （昨天才看了几集）</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>晚上时间来练字</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>加油加油加油李阳</p>
             </div>
+
+
+
 <details class="folding-tag" yellow><summary> 留影 </summary>
               <div class="content">
-              <p>今天早上9点就起来了哦，今天很厉害，夸一夸你</p><p>然后今天也有好好背单词，也有练字，也有好好学javaweb，做的好李阳</p><p><code>今天高兴的事情</code>：</p><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241229230906302.png" alt="image-20241229230906302" style="zoom:25%;"><p>免费的早饭嘿嘿</p><p>踩了好多树叶</p><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241229230933247.png" alt="image-20241229230933247" style="zoom: 25%;"><p>今天开班会啦，老师说要做个年度总结，反思自己这一年，不过今天班里很多人没有来</p><p><code>今天不好的地方</code>:</p><p>今天的缺点是抖音被看了两个多小时</p><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241229231245113.png" alt="image-20241229231245113" style="zoom:25%;"><p>emmm…</p><p><code>以下是流水账:</code></p><p>今天是被室友吵醒的，本来我还在做梦，然后睡醒想不起来了，然后起来吃早饭，其实当时心理很想玩游戏，不过我憋住了（今天一天都没有玩游戏哦），然后我就在心里想：李阳，你甘愿这样玩下去吗？我不甘心，所以我起来了吃了早饭，今天太阳很好，然后我就去图书馆学习学习，抽空复习了旧单词，下午给电脑充电的时间我背了新单词，然后大概6点回来了准备开班会，我吃了干脆面和卤蛋我肚子草鸡饿，然后开完班会和室友聚餐。然后回来就练字，练到11点，</p><p>很厉害哦今天，明天继续加油</p><p>加油加油加油加油加油加油李阳！</p>
+              <p>今天早上9点就起来了哦，今天很厉害，夸一夸你</p><p>然后今天也有好好背单词，也有练字，也有好好学javaweb，做的好李阳</p><p><code>今天高兴的事情</code>：</p><p><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241229230906302.png" alt="image-20241229230906302" style="zoom:25%;"></p><p>免费的早饭嘿嘿</p><p>踩了好多树叶</p><p><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241229230933247.png" alt="image-20241229230933247" style="zoom: 25%;"></p><p>今天开班会啦，老师说要做个年度总结，反思自己这一年，不过今天班里很多人没有来</p><p><code>今天不好的地方</code>:</p><p>今天的缺点是抖音被看了两个多小时</p><p><img src="/2024/12/27/%E5%A4%87%E5%BF%98%E5%BD%95/image-20241229231245113.png" alt="image-20241229231245113" style="zoom:25%;"></p><p>emmm…</p><p><code>以下是流水账:</code></p><p>今天是被室友吵醒的，本来我还在做梦，然后睡醒想不起来了，然后起来吃早饭，其实当时心理很想玩游戏，不过我憋住了（今天一天都没有玩游戏哦），然后我就在心里想：李阳，你甘愿这样玩下去吗？我不甘心，所以我起来了吃了早饭，今天太阳很好，然后我就去图书馆学习学习，抽空复习了旧单词，下午给电脑充电的时间我背了新单词，然后大概6点回来了准备开班会，我吃了干脆面和卤蛋我肚子草鸡饿，然后开完班会和室友聚餐。然后回来就练字，练到11点，</p><p>很厉害哦今天，明天继续加油</p><p>加油加油加油加油加油加油李阳！</p>
               </div>
             </details>
+
+
+
 </div></div></div>
 <div class="timeline undefined"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2024</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>12-28</p>
 </div></div><div class="timeline-item-content"><div class="checkbox"><input type="checkbox">
             <p>早上睡醒复习旧单词（别又玩游戏了，求你了）嘿嘿嘿 我单词背完了总该玩了吧</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>然后中午背30个新单词（真背会单词，我没骗你）</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>然后下午去图书馆学javaweb大概20集</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>晚上时间来练字</p>
             </div>
+
 <div class="checkbox"><input type="checkbox">
             <p>特殊强调，今日抖音限时1个半小时，憋不住你就看书吧</p>
             </div>
+
+
+
 <details class="folding-tag" yellow><summary> 小秘密 </summary>
               <div class="content">
               <ul><li>你可以做得到的李阳，你可以的，你真的可以你很厉害，你是世界上最爱学习的人，学习爱你，你爱学习</li><li>加油加油加油</li></ul>
               </div>
             </details>
+
+
+
 <details class="folding-tag" blue><summary> 痕迹 </summary>
               <div class="content">
               <p>这里是今天的日记</p><details class="folding-tag" blue><summary> 忏悔录 </summary>              <div class="content">              <p>对不起李阳，今天的任务就差30个单词没有背了，不过别着急，我肯定背</p><p><code>时间10点28分</code></p><p>我背好单词啦李阳，怎么样，说到做到吧</p><p>那这就不算忏悔啦，明天再加油（谁知道你怎么背的，全点认识谁都会）</p>              </div>            </details><details class="folding-tag" blue><summary> 我的痕迹 </summary>              <div class="content">              <p>兄弟们，今天一觉睡醒都10点多了，头发一天没洗了，头发好痒，呃呃呃(搓头发）…咸鱼视角哈哈</p><details class="folding-tag" blue><summary> 泡影 </summary>              <div class="content">              <p>今天做了一个很不好很不好的梦，梦见我很多朋友都在沙滩上一起玩，然后只要被海水浇到就会变成蚯蚓，好像我去尿了个尿（我没有尿床）然后回来我认识的人全部变成了蚯蚓，我当时心里想完蛋了我会不会被当成杀人犯，我该怎么给警察解释他们会变成蚯蚓。然后更厉害的是我还打电话给我们班的女同学（有点点尴尬）,然后说：爽了我们再也不用担心挂科了，我们班的同学都变成蚯蚓了。笑死我了，太好玩的梦了</p>              </div>            </details><p>以下全是流水账。（日记到底要怎么写才不会感觉很普普通通的感觉）</p><p>然后中文吃了这学校旁边的黄鼠狼鸡公煲，毫不夸张的说，当时我专升本考前在这旁边看到了鸡公煲我巨高兴，我好喜欢吃鸡公煲，不过这学校旁边的鸡公煲不好吃，原来我喜欢的一直是我们大专的鸡公煲，好次一百倍，好想好想去大专吃鸡公煲呜呜</p><p>哦哦还有，今天在图书馆坐我对面的女生也喜欢坐着那样子睡觉哈哈，我还以为就我会那样睡觉，笑死我了</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://www.freeimg.cn/i/2024/12/28/677014bf2d4f3.webp" alt="很好吃的小熊饼干，我从小吃到大好好吃。" style="width:400px;"></div><span class="image-caption">很好吃的小熊饼干，我从小吃到大好好吃。</span></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://www.freeimg.cn/i/2024/12/28/677014becb853.webp" alt=" 卧槽，这三个字真绝了好好看，有点像摸样了" style="width:400px;"></div><span class="image-caption"> 卧槽，这三个字真绝了好好看，有点像摸样了</span></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://www.freeimg.cn/i/2024/12/28/677014be49c89.webp" alt=" 还有这个边，好像例字（忽略我前面的字）" style="width:400px;"></div><span class="image-caption"> 还有这个边，好像例字（忽略我前面的字）</span></div><p>现在是12月30日，今天突然想起来这个<code>边</code>字，这个就是例子，我是怎么这么好看</p><p>好啦好啦今天就到这里啦，明天继续加油哦李阳</p>              </div>            </details>
               </div>
             </details>
+
 </div></div></div>
 ]]></content>
   </entry>
