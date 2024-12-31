@@ -1588,6 +1588,49 @@
 <li>cookie是一种键值对格式的数据,从tomcat8.5开始可以保存中文,但是不推荐</li>
 <li>由于cookie是存储于客户端的数据,比较容易暴露,一般不存储一些敏感或者影响安全的数据</li>
 </ul>
+<h5 id="生存周期">生存周期</h5>
+<ul>
+<li>
+<p>会话级Cookie</p>
+<ul>
+<li>
+<p>服务器端并没有明确指定Cookie的存在时间。</p>
+</li>
+<li>
+<p>在浏览器端，Cookie数据存在于内存中。</p>
+</li>
+<li>
+<p>只要浏览器还开着，Cookie数据就一直都在。</p>
+</li>
+<li>
+<p>浏览器关闭，内存中的cookie数据就会被释放·</p>
+</li>
+</ul>
+</li>
+<li>
+<p>持久化Cookie</p>
+<ul>
+<li>
+<p>服务器端明确设置了Cookie的存在时间。</p>
+</li>
+<li>
+<p>在浏览器端，Cookie数据会被保存到硬盘上</p>
+</li>
+<li>
+<p>Cookie在硬盘上存在的时间根据服务器端限定的时间来管控，不受浏览器关闭的影响。</p>
+</li>
+<li>
+<p>持久化Cookie到达了预设的时间会被释放</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="会话级代码演示">会话级代码演示</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.Cookie;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 创建cookie，将cookie放入response对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@WebServlet(&quot;/servletA&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServletA</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="comment">//1.</span></span><br><span class="line">        <span class="type">Cookie</span> <span class="variable">cookie1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;kaya&quot;</span>,<span class="string">&quot;vala&quot;</span>);</span><br><span class="line">        <span class="type">Cookie</span> <span class="variable">cookie2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;kayb&quot;</span>,<span class="string">&quot;valb&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2.</span></span><br><span class="line">        resp.addCookie(cookie1);</span><br><span class="line">        resp.addCookie(cookie2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>捕获</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.Cookie;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 李阳</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2024/12/31/13:19</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:获取请求中携带的cookie</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet(&quot;/servletB&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServletB</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取cookie</span></span><br><span class="line">        Cookie[] cookies = req.getCookies();</span><br><span class="line">        <span class="comment">//请求的多个cookie会进入该数组，没有cookie会为null报空指针异常</span></span><br><span class="line">        <span class="keyword">for</span> (Cookie cookie : cookies) &#123;</span><br><span class="line">            System.out.println(cookie.getName() + <span class="string">&quot; &quot;</span> + cookie.getValue());</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="持久化">持久化</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Cookie</span> <span class="variable">cookie1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;kaya&quot;</span>,<span class="string">&quot;vala&quot;</span>);</span><br><span class="line">       <span class="type">Cookie</span> <span class="variable">cookie2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;kayb&quot;</span>,<span class="string">&quot;valb&quot;</span>);</span><br><span class="line">       cookie1.setMaxAge(<span class="number">3600</span>);</span><br></pre></td></tr></table></figure>
 <h2 id="日程管理">日程管理</h2>
 <h3 id="日程管理第二期-注册登录">日程管理第二期-注册登录</h3>
 <p>红红火火恍恍惚惚，终于写项目了</p>
