@@ -1129,56 +1129,69 @@
   <entry>
     <title>javaweb尚硅谷版</title>
     <url>/posts/12826/</url>
-    <content><![CDATA[<h1 id="javaweb尚硅谷版"><a href="#javaweb尚硅谷版" class="headerlink" title="javaweb尚硅谷版"></a>javaweb尚硅谷版</h1><h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><blockquote>
+    <content><![CDATA[<h1>javaweb尚硅谷版</h1>
+<h2 id="1-前端">1.前端</h2>
+<blockquote>
 <p>前端我不喜欢，不学了</p>
 </blockquote>
-<h3 id="前端小项目-日程管理系统"><a href="#前端小项目-日程管理系统" class="headerlink" title="前端小项目-日程管理系统"></a>前端小项目-日程管理系统</h3><h4 id="第一期：登录页面"><a href="#第一期：登录页面" class="headerlink" title="第一期：登录页面"></a>第一期：登录页面</h4><p>前端页面</p>
+<h3 id="1-1-前端小项目-日程管理系统">1.1 前端小项目-日程管理系统</h3>
+<h4 id="1-1-1-第一期：登录页面">1.1.1 第一期：登录页面</h4>
+<p>前端页面</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>登录页面<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/css/login.css&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;ht&quot;</span>&gt;</span>欢迎使用日程管理系统<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">&quot;ht&quot;</span>&gt;</span>请登录<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;#&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">onsubmit</span>=<span class="string">&quot;return checkForm()&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">&quot;tab&quot;</span> <span class="attr">cellspacing</span>=<span class="string">&quot;0px&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">&quot;ltr&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>请输入账号<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ipt&quot;</span> <span class="attr">id</span>=<span class="string">&quot;usernameInput&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">onblur</span>=<span class="string">&quot;checkUsername()&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;usernameMsg&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">&quot;ltr&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>请输入密码<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ipt&quot;</span> <span class="attr">id</span>=<span class="string">&quot;userPwdInput&quot;</span> <span class="attr">name</span>=<span class="string">&quot;userPwd&quot;</span> <span class="attr">onblur</span>=<span class="string">&quot;checkUserPwd()&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;userPwdMsg&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">&quot;ltr&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span> <span class="attr">colspan</span>=<span class="string">&quot;2&quot;</span> <span class="attr">class</span>=<span class="string">&quot;buttonContainer&quot;</span> &gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">class</span>=<span class="string">&quot;btn1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;登录&quot;</span> &gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;reset&quot;</span> <span class="attr">class</span>=<span class="string">&quot;btn1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;重置&quot;</span> &gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;btn1&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/regist.html&quot;</span>&gt;</span>去注册<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>我们重点介绍几个函数</p>
 <p><code>onsubmit=&quot;return checkForm()</code>当表单为true的时候提交</p>
 <p><code>checkUsername()</code>鼠标离开焦点时，给出校验提示</p>
 <p><code>checkUserPwd()</code>鼠标离开焦点时，给出校验提示</p>
-<p><code>&lt;span id=&quot;usernameMsg&quot;&gt;&lt;/span&gt;</code>输入不正确的时候将提示放到这里</p>
+<p><code> &lt;span id=&quot;usernameMsg&quot;&gt;&lt;/span&gt;</code>输入不正确的时候将提示放到这里</p>
 <hr>
 <p>下面我们要写js啦，对前端页面信息做提示，成功的话就输出</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这里是账号密码输入的时候的校验功能</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">checkUsername</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="comment">// 正则表达式--5到10位a-z0-9的数字</span></span><br><span class="line">    <span class="keyword">var</span> usernameReg=<span class="regexp">/^[a-zA-Z0-9]&#123;5,10&#125;$/</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取用户在页面输入的信息</span></span><br><span class="line">   <span class="keyword">var</span> usernameInput= <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;usernameInput&quot;</span>)</span><br><span class="line">   <span class="keyword">var</span> username=usernameInput.<span class="property">value</span></span><br><span class="line">  </span><br><span class="line">   <span class="comment">//获得元素提示的框</span></span><br><span class="line">   <span class="keyword">var</span> usernameMsg=<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;usernameMsg&quot;</span>)</span><br><span class="line">   <span class="comment">//格式错误</span></span><br><span class="line">   <span class="keyword">if</span>(!usernameReg.<span class="title function_">test</span>(username))&#123; <span class="comment">//如果输入不合法，将提示传给span标签</span></span><br><span class="line">     usernameMsg.<span class="property">innerText</span>=<span class="string">&quot;格式必须是5-10位数字或字母&quot;</span></span><br><span class="line">     <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//格式正确返回ok，提示</span></span><br><span class="line">   usernameMsg.<span class="property">innerText</span>=<span class="string">&quot;太聪明啦&quot;</span></span><br><span class="line">   <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 校验密码</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">checkUserPwd</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="comment">// 正则表达式--5到10位a-z0-9的数字</span></span><br><span class="line">    <span class="keyword">var</span> userPwdReg=<span class="regexp">/^[a-zA-Z0-9]&#123;5,10&#125;$/</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取用户在页面输入的信息</span></span><br><span class="line">   <span class="keyword">var</span> userPwdInput= <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;userPwdInput&quot;</span>)</span><br><span class="line">   <span class="keyword">var</span> userPwd=userPwdInput.<span class="property">value</span></span><br><span class="line">  </span><br><span class="line">   <span class="comment">//获得元素提示的框</span></span><br><span class="line">   <span class="keyword">var</span> userPwdMsg=<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;userPwdMsg&quot;</span>)</span><br><span class="line">   <span class="comment">//格式错误</span></span><br><span class="line">   <span class="keyword">if</span>(!userPwdReg.<span class="title function_">test</span>(userPwd))&#123; <span class="comment">//如果输入不合法，将提示传给span标签</span></span><br><span class="line">    userPwdMsg.<span class="property">innerText</span>=<span class="string">&quot;格式必须是5-10位数字或字母&quot;</span></span><br><span class="line">     <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//格式正确返回ok，提示</span></span><br><span class="line">   userPwdMsg.<span class="property">innerText</span>=<span class="string">&quot;密码我知道啦&quot;</span></span><br><span class="line">   <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//表单提交时验证账号密码</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">checkForm</span>(<span class="params"></span>)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> flag1=<span class="title function_">checkUsername</span>()</span><br><span class="line">    <span class="keyword">var</span> flag2=<span class="title function_">checkUserPwd</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> flag1&amp;&amp;flag2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e4b7c933.png" alt></p>
-<h4 id="第二期注册验证"><a href="#第二期注册验证" class="headerlink" title="第二期注册验证"></a>第二期注册验证</h4><p>html</p>
+<h4 id="1-1-2-第二期注册验证">1.1.2 第二期注册验证</h4>
+<p>html</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>登录页面<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/css/login.css&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/js/login.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;ht&quot;</span>&gt;</span>欢迎使用日程管理系统<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">&quot;ht&quot;</span>&gt;</span>请登录<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;#&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">onsubmit</span>=<span class="string">&quot;return checkForm()&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">&quot;tab&quot;</span> <span class="attr">cellspacing</span>=<span class="string">&quot;0px&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">&quot;ltr&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>请输入账号<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ipt&quot;</span> <span class="attr">id</span>=<span class="string">&quot;usernameInput&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">onblur</span>=<span class="string">&quot;checkUsername()&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;usernameMsg&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">&quot;ltr&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>请输入密码<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ipt&quot;</span> <span class="attr">id</span>=<span class="string">&quot;userPwdInput&quot;</span> <span class="attr">name</span>=<span class="string">&quot;userPwd&quot;</span> <span class="attr">onblur</span>=<span class="string">&quot;checkUserPwd()&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;userPwdMsg&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">&quot;ltr&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span> <span class="attr">colspan</span>=<span class="string">&quot;2&quot;</span> <span class="attr">class</span>=<span class="string">&quot;buttonContainer&quot;</span> &gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">class</span>=<span class="string">&quot;btn1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;登录&quot;</span> &gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;reset&quot;</span> <span class="attr">class</span>=<span class="string">&quot;btn1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;重置&quot;</span> &gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;btn1&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;./register.html&quot;</span>&gt;</span>去注册<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">checkUsername</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> usernameReg = <span class="regexp">/^[a-zA-Z0-9]&#123;5,10&#125;$/</span>;</span><br><span class="line">    <span class="keyword">var</span> usernameInput = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;usernameInput&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> username = usernameInput.<span class="property">value</span>;</span><br><span class="line">    <span class="keyword">var</span> usernameMsg = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;usernameMsg&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!usernameReg.<span class="title function_">test</span>(username)) &#123;</span><br><span class="line">        usernameMsg.<span class="property">innerText</span> = <span class="string">&quot;格式必须是5-10位数字或字母&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    usernameMsg.<span class="property">innerText</span> = <span class="string">&quot;太聪明啦&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 校验密码</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">checkUserPwd</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> userPwdReg = <span class="regexp">/^[a-zA-Z0-9]&#123;5,10&#125;$/</span>;</span><br><span class="line">    <span class="keyword">var</span> userPwdInput = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;userPwdInput&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> userPwd = userPwdInput.<span class="property">value</span>;</span><br><span class="line">    <span class="keyword">var</span> userPwdMsg = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;userPwdMsg&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!userPwdReg.<span class="title function_">test</span>(userPwd)) &#123;</span><br><span class="line">        userPwdMsg.<span class="property">innerText</span> = <span class="string">&quot;格式必须是5-10位数字或字母&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    userPwdMsg.<span class="property">innerText</span> = <span class="string">&quot;密码我知道啦&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 表单提交时验证账号密码</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">checkForm</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> flag1 = <span class="title function_">checkUsername</span>();</span><br><span class="line">    <span class="keyword">var</span> flag2 = <span class="title function_">checkUserPwd</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> flag1 &amp;&amp; flag2; <span class="comment">// 只有两个条件都通过，表单才会提交</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>两个一样的</p>
 <p>李阳你在写前端的时候要仔细学习这个哦</p>
 <hr>
-<h2 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h2><h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><p><strong>HTTP超文本传输协议</strong>(HTTP-Hyper Text transfer protocol)，是一个属于应用层的面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。它于1990年提出，经过十几年的使用与发展，得到不断地完善和扩展。它是一种详细规定了浏览器和万维网服务器之间互相通信的规则，通过因特网传送万维网文档的数据传送协议。客户端与服务端通信时传输的内容我们称之为报文。HTTP协议就是规定报文的格式。HTTP就是一个通信规则，这个规则规定了客户端发送给服务器的报文格式，也规定了服务器发送给客户端的报文格式。实际我们要学习的就是这两种报文。客户端发送给服务器的称为”请求报文”，服务器发送给客户端的称为”响应报文””。</p>
+<h2 id="2、后端">2、后端</h2>
+<h3 id="2-1-HTTP">2.1 HTTP</h3>
+<p><strong>HTTP超文本传输协议</strong>(HTTP-Hyper Text transfer protocol)，是一个属于应用层的面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。它于1990年提出，经过十几年的使用与发展，得到不断地完善和扩展。它是一种详细规定了浏览器和万维网服务器之间互相通信的规则，通过因特网传送万维网文档的数据传送协议。客户端与服务端通信时传输的内容我们称之为报文。HTTP协议就是规定报文的格式。HTTP就是一个通信规则，这个规则规定了客户端发送给服务器的报文格式，也规定了服务器发送给客户端的报文格式。实际我们要学习的就是这两种报文。客户端发送给服务器的称为&quot;请求报文&quot;，服务器发送给客户端的称为&quot;响应报文&quot;&quot;。</p>
 <hr>
 <p>咦 这东西好耳熟，计网学过了</p>
 <p>有点无聊，我们去学Servlet去吧</p>
-<h3 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h3><p>记得我们大专的时候，这块老师讲的很详细，好像很重要的样子，李阳，这一块好好看好好学</p>
+<h3 id="2-2-Servlet">2.2 Servlet</h3>
+<p>记得我们大专的时候，这块老师讲的很详细，好像很重要的样子，李阳，这一块好好看好好学</p>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e4cd9740.png" alt="image-20241228131707368.png"></p>
 <p>李师傅要开始瞎编了：</p>
 <p>首先当在浏览器我们要点击操作的时候，浏览器会发出请求，这里包含请求的信息，然后传给tomcat</p>
 <p>tomcat会创建两个方法，获取我们在java中所写的要的操作，然后根据操作做出相应回来</p>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e4ba551e.png" alt="image-20241228132147260.png"></p>
-<h4 id="demo-xml方式"><a href="#demo-xml方式" class="headerlink" title="demo-xml方式"></a>demo-xml方式</h4><p>前端验证用户名，当用户名已注册返回NO，未注册返回YES</p>
+<h4 id="demo-xml方式">demo-xml方式</h4>
+<p>前端验证用户名，当用户名已注册返回NO，未注册返回YES</p>
 <p>哈哈哈哈哈哈哈 终于到实操了，理论太无聊了</p>
-<h5 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h5><p>java</p>
+<h5 id="代码部分">代码部分</h5>
+<p>java</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.Servlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.PrintWriter;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 李阳</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2024/12/28/13:38</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> * servlet开发流程：</span></span><br><span class="line"><span class="comment"> * 1.创建javaweb项目，同时添加依赖</span></span><br><span class="line"><span class="comment"> * 2.重写Servlet方法</span></span><br><span class="line"><span class="comment"> * 3.在servlet方法中定义业务处理代码</span></span><br><span class="line"><span class="comment"> * 4.在xml中配置Servlet对应的请求路径（后面会用注解）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserServlet</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 1.从request对象中获取请求的信息</span></span><br><span class="line"><span class="comment">         * 2.处理业务代码</span></span><br><span class="line"><span class="comment">         * 3.将相应的输入放到response里面去</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//1.根据参数名获取参数值</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> req.getParameter(<span class="string">&quot;username&quot;</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//当我们的admin和username的值相等，返回NO</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">info</span> <span class="operator">=</span><span class="string">&quot;YES&quot;</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;admin&quot;</span>.equals(username)) &#123;</span><br><span class="line">            info=<span class="string">&quot;NO&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//该方法返回的是一个向响应体打印字符串的打印流</span></span><br><span class="line">        <span class="type">PrintWriter</span> <span class="variable">writer</span> <span class="operator">=</span> resp.getWriter();</span><br><span class="line">        writer.println(info);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>html</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;get&quot;</span> <span class="attr">action</span>=<span class="string">&quot;userServlet&quot;</span>&gt;</span></span><br><span class="line">  用户名:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;校验&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>xml</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">&quot;4.0&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">&lt;!--    </span></span><br><span class="line"><span class="comment">1.配置servlet类，并起别名</span></span><br><span class="line"><span class="comment">   servlet-class告诉tomcat对应要实例化的类</span></span><br><span class="line"><span class="comment">   servlet-name 用于关联请求的映射路径</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>userServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.sgg.servlet.UserServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>userServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/userServlet<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h5 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h5><p><img src="https://bu.dusays.com/2025/01/15/67877e4b8dfbb.png" alt="image-20241228141726691.png"></p>
+<h5 id="效果">效果</h5>
+<p><img src="https://bu.dusays.com/2025/01/15/67877e4b8dfbb.png" alt="image-20241228141726691.png"></p>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e4b87e5e.png" alt="image-20241228141739406.png"></p>
-<h5 id="重点讲解："><a href="#重点讲解：" class="headerlink" title="重点讲解："></a>重点讲解：</h5><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>userServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/userServlet<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="重点讲解：">重点讲解：</h5>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>userServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/userServlet<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>的/userServlet与</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;get&quot;</span> <span class="attr">action</span>=<span class="string">&quot;userServlet&quot;</span>&gt;</span></span><br><span class="line">  用户名:<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;校验&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>的action要保持一致</p>
-<h4 id="url-pattern"><a href="#url-pattern" class="headerlink" title="url-pattern"></a>url-pattern</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>servlet1<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.sgg.servlet.Servlet1<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>servlet1<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/s1<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/xx1<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="url-pattern">url-pattern</h4>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>servlet1<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.sgg.servlet.Servlet1<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>servlet1<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/s1<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/xx1<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>这里简要说明一下流程，毕竟后面使用注解会方便很多</p>
-<p>浏览器访问/xx1然后他会去找<code>&lt;servlet-name&gt;servlet1&lt;/servlet-name&gt;</code>然后在找到对应的路径包<code>&lt;servlet-class&gt;com.sgg.servlet.Servlet1&lt;/servlet-class&gt;
-    &lt;/servlet&gt;</code></p>
+<p>浏览器访问/xx1然后他会去找<code>&lt;servlet-name&gt;servlet1&lt;/servlet-name&gt;</code>然后在找到对应的路径包<code>&lt;servlet-class&gt;com.sgg.servlet.Servlet1&lt;/servlet-class&gt;     &lt;/servlet&gt;</code></p>
 <p><code>/xx1</code>的路径唯一，其他的都不能使用</p>
-<h5 id="路径的精确批准与模糊匹配"><a href="#路径的精确批准与模糊匹配" class="headerlink" title="路径的精确批准与模糊匹配"></a>路径的精确批准与模糊匹配</h5><p>精确匹配 <code>/xx1</code></p>
+<h5 id="路径的精确批准与模糊匹配">路径的精确批准与模糊匹配</h5>
+<p>精确匹配 <code>/xx1</code></p>
 <p>模糊匹配<code>/*</code></p>
 <ul>
 <li><code>/</code>匹配全部，但是不包含jsp文件</li>
@@ -1188,7 +1201,8 @@
 <li><code>*.action</code>前缀模糊，匹配后缀也即是要以<code>.action</code>结尾</li>
 <li><img src="https://bu.dusays.com/2025/01/15/67877e4b72ebd.png" alt="image-20241228154747215.png"></li>
 </ul>
-<h4 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h4><p>嘿嘿嘿嘿嘿嘿 最喜欢的一集</p>
+<h4 id="注解">注解</h4>
+<p>嘿嘿嘿嘿嘿嘿 最喜欢的一集</p>
 <p>注解可以帮我们省掉xml的配置信息，方便大家</p>
 <details class="folding-tag" green><summary> 查看代码xml测试 </summary>
               <div class="content">
@@ -1201,7 +1215,9 @@
               </div>
             </details>
 <p>只需要在方法面前加@WebServlet，好耶好用</p>
-<h4 id="servletConfig和servletContext"><a href="#servletConfig和servletContext" class="headerlink" title="servletConfig和servletContext"></a>servletConfig和servletContext</h4><h5 id="servletConfig"><a href="#servletConfig" class="headerlink" title="servletConfig"></a>servletConfig</h5><p>这东西好像是用来获取初始化信息的，感觉用的不多，知道就好了</p>
+<h4 id="servletConfig和servletContext">servletConfig和servletContext</h4>
+<h5 id="servletConfig">servletConfig</h5>
+<p>这东西好像是用来获取初始化信息的，感觉用的不多，知道就好了</p>
 <p>xml-获取 <code>&lt;init-param&gt;</code>里面的值</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">&quot;4.0&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>servlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.sgg.servlet.servlet1<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">        配置servlet的初始参数</span></span><br><span class="line"><span class="comment">        --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>keya<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>valueA<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>keyb<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>valueB<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>servlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/servlet1<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>java</p>
@@ -1212,40 +1228,47 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebServlet(</span></span><br><span class="line"><span class="meta">        urlPatterns = &quot;/servlet1&quot;,</span></span><br><span class="line"><span class="meta">        initParams = &#123;@WebInitParam(name = &quot;keya&quot;,value = &quot;valuea&quot;),@WebInitParam(name = &quot;keyb&quot;,value = &quot;keyB&quot;)&#125;</span></span><br><span class="line"><span class="meta">)</span></span><br></pre></td></tr></table></figure>
 <p>完整代码</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebServlet(</span></span><br><span class="line"><span class="meta">        urlPatterns = &quot;/servlet1&quot;,</span></span><br><span class="line"><span class="meta">        initParams = &#123;@WebInitParam(name = &quot;keya&quot;,value = &quot;valuea&quot;),@WebInitParam(name = &quot;keyb&quot;,value = &quot;keyB&quot;)&#125;</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">servlet1</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="type">ServletConfig</span> <span class="variable">servletConfig</span> <span class="operator">=</span> <span class="built_in">this</span>.getServletConfig();</span><br><span class="line">        <span class="comment">//获取初始配置信息</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//根据参数名获取参数值</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">keya</span> <span class="operator">=</span> servletConfig.getInitParameter(<span class="string">&quot;keya&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;keya: &quot;</span> + keya);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取所有初始化参数名称</span></span><br><span class="line">        <span class="comment">//hasMoreElements判断有没有下一个参数，有就返回true</span></span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        Enumeration&lt;String&gt; initParameterNames = servletConfig.getInitParameterNames();</span><br><span class="line">        <span class="keyword">while</span> (initParameterNames.hasMoreElements())&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> initParameterNames.nextElement();<span class="comment">//取出下一元素，并移动指针</span></span><br><span class="line">            System.out.println(s + <span class="string">&quot;: &quot;</span> + servletConfig.getInitParameter(s));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h5 id="servletContext"><a href="#servletContext" class="headerlink" title="servletContext"></a>servletContext</h5><ul>
+<h5 id="servletContext">servletContext</h5>
+<ul>
 <li>ServletContext对象有称呼为上下文对象,或者叫应用域对象(后面统一讲解域对象)。容器会为每个app创建一个独立的唯一的ServletContext对象</li>
 <li>ServletContext对象为所有的Servlet所共享</li>
 <li>ServletContext可以为所有的servlet提供初始配置参数</li>
 </ul>
 <p>简而言之：为所有的servlet提供所有参数（ServletConfig是为某一个）</p>
-<h5 id="功能1：获取初始化值"><a href="#功能1：获取初始化值" class="headerlink" title="功能1：获取初始化值"></a>功能1：获取初始化值</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletConfig;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletContext;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Enumeration;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 李阳</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2024/12/29/09:54</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet(&quot;/servlet2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">servlet2</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">       <span class="comment">//获取ServletContext</span></span><br><span class="line">        <span class="type">ServletContext</span> <span class="variable">servletContext</span> <span class="operator">=</span> getServletContext();</span><br><span class="line">        <span class="type">ServletContext</span> <span class="variable">servletContext1</span> <span class="operator">=</span> req.getServletContext();</span><br><span class="line">        System.out.println( servletContext1);</span><br><span class="line">        System.out.println( servletContext);</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">encoding</span> <span class="operator">=</span> servletContext.getInitParameter(<span class="string">&quot;encoding&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;encoding: &quot;</span>+encoding);</span><br><span class="line"></span><br><span class="line">        Enumeration&lt;String&gt; initParameterNames = servletContext.getInitParameterNames();</span><br><span class="line">        <span class="keyword">while</span> (initParameterNames.hasMoreElements()) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">initParameterName</span> <span class="operator">=</span> initParameterNames.nextElement();</span><br><span class="line">            System.out.println(initParameterName+<span class="string">&quot;=&quot;</span>+servletContext.getInitParameter(initParameterName));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="功能1：获取初始化值">功能1：获取初始化值</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletConfig;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletContext;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Enumeration;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 李阳</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2024/12/29/09:54</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet(&quot;/servlet2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">servlet2</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">       <span class="comment">//获取ServletContext</span></span><br><span class="line">        <span class="type">ServletContext</span> <span class="variable">servletContext</span> <span class="operator">=</span> getServletContext();</span><br><span class="line">        <span class="type">ServletContext</span> <span class="variable">servletContext1</span> <span class="operator">=</span> req.getServletContext();</span><br><span class="line">        System.out.println( servletContext1);</span><br><span class="line">        System.out.println( servletContext);</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">encoding</span> <span class="operator">=</span> servletContext.getInitParameter(<span class="string">&quot;encoding&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;encoding: &quot;</span>+encoding);</span><br><span class="line"></span><br><span class="line">        Enumeration&lt;String&gt; initParameterNames = servletContext.getInitParameterNames();</span><br><span class="line">        <span class="keyword">while</span> (initParameterNames.hasMoreElements()) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">initParameterName</span> <span class="operator">=</span> initParameterNames.nextElement();</span><br><span class="line">            System.out.println(initParameterName+<span class="string">&quot;=&quot;</span>+servletContext.getInitParameter(initParameterName));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>xml</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>username<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>liyang<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>演示</p>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e54ec074.png" alt="image-20241229105856750.png"></p>
 <p>好无聊好无聊的课</p>
-<h5 id="功能2：获取tomcat路径和文件路径"><a href="#功能2：获取tomcat路径和文件路径" class="headerlink" title="功能2：获取tomcat路径和文件路径"></a>功能2：获取tomcat路径和文件路径</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletContext;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 李阳</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2024/12/29/11:01</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:往upload里面写入文件信息-io流</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@WebServlet(&quot;/servlet3&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">servlet3</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="type">ServletContext</span> <span class="variable">servletContext</span> <span class="operator">=</span> getServletContext();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获得一个指向项目部署位置下的某个文件/目录的磁盘路径真实路径</span></span><br><span class="line">        String path=servletContext.getRealPath(<span class="string">&quot;upload&quot;</span>);</span><br><span class="line">        System.out.println(path);</span><br><span class="line">        <span class="type">FileOutputStream</span> <span class="variable">fileOutputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(path+<span class="string">&quot;/a.txt&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">//获得项目部署的上下文路径，项目的访问路径</span></span><br><span class="line">        <span class="comment">//后序可能会用到绝对路径和相对路径来找资源</span></span><br><span class="line">        <span class="comment">//例如我们的项目启动路径可能是/demo1/servlet1</span></span><br><span class="line">        <span class="comment">//假设我们使用绝对路径，当我们的demo1改变时，就失效了</span></span><br><span class="line">        <span class="comment">//context可以帮我们动态的demo1</span></span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">contextPath</span> <span class="operator">=</span> servletContext.getContextPath();</span><br><span class="line">        System.out.println(contextPath);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="功能2：获取tomcat路径和文件路径">功能2：获取tomcat路径和文件路径</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletContext;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 李阳</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2024/12/29/11:01</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:往upload里面写入文件信息-io流</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@WebServlet(&quot;/servlet3&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">servlet3</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="type">ServletContext</span> <span class="variable">servletContext</span> <span class="operator">=</span> getServletContext();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获得一个指向项目部署位置下的某个文件/目录的磁盘路径真实路径</span></span><br><span class="line">        String path=servletContext.getRealPath(<span class="string">&quot;upload&quot;</span>);</span><br><span class="line">        System.out.println(path);</span><br><span class="line">        <span class="type">FileOutputStream</span> <span class="variable">fileOutputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(path+<span class="string">&quot;/a.txt&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">//获得项目部署的上下文路径，项目的访问路径</span></span><br><span class="line">        <span class="comment">//后序可能会用到绝对路径和相对路径来找资源</span></span><br><span class="line">        <span class="comment">//例如我们的项目启动路径可能是/demo1/servlet1</span></span><br><span class="line">        <span class="comment">//假设我们使用绝对路径，当我们的demo1改变时，就失效了</span></span><br><span class="line">        <span class="comment">//context可以帮我们动态的demo1</span></span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">contextPath</span> <span class="operator">=</span> servletContext.getContextPath();</span><br><span class="line">        System.out.println(contextPath);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e5590926.png" alt="image-20241229112333847.png"></p>
 <p>啊啊啊啊啊啊，太无聊了</p>
-<h5 id="功能3：域对象的API"><a href="#功能3：域对象的API" class="headerlink" title="功能3：域对象的API"></a>功能3：域对象的API</h5><ul>
+<h5 id="功能3：域对象的API">功能3：域对象的API</h5>
+<ul>
 <li>域对象:一些用于存储数据和传递数据的对象,传递数据不同的范围,我们称之为不同的域,不同的域对象代表不同的戢,共享数据的范围也不同</li>
 <li>ServletContext代表应用,所以ServletContext域也叫作应用域,是webapp中最大的域,可以在本应用内实现数据的共享和传递</li>
 <li>webapp中的三大域对象,分别是应用域,会话域,请求域</li>
 </ul>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e54f04e2.png" alt="image-20241229112551836.png"></p>
-<h6 id="放元素"><a href="#放元素" class="headerlink" title="放元素"></a>放元素</h6><p>servlet1</p>
+<h6 id="放元素">放元素</h6>
+<p>servlet1</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletConfig;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletContext;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebInitParam;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Enumeration;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 李阳</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2024/12/29/09:54</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@WebServlet(</span></span><br><span class="line"><span class="meta">        urlPatterns = &quot;/servlet1&quot;,</span></span><br><span class="line"><span class="meta">        initParams = &#123;@WebInitParam(name = &quot;keya&quot;,value = &quot;valuea&quot;),@WebInitParam(name = &quot;keyb&quot;,value = &quot;keyB&quot;)&#125;</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">servlet1</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">       </span><br><span class="line">        <span class="type">ServletContext</span> <span class="variable">servletContext</span> <span class="operator">=</span> getServletContext();</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * void setAttribute(String key,Object value);</span></span><br><span class="line"><span class="comment">         * 向域中存储/修改数据</span></span><br><span class="line"><span class="comment">         * object getAttribute(String key);</span></span><br><span class="line"><span class="comment">         * 获得域中的数据</span></span><br><span class="line"><span class="comment">         * void removeAttribute(String key);</span></span><br><span class="line"><span class="comment">         * 移除域中的数据</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="comment">//如果没有人用过就是新增，有就是修改</span></span><br><span class="line">        servletContext.setAttribute(<span class="string">&quot;keya&quot;</span>, <span class="string">&quot;va&quot;</span>);</span><br><span class="line">       <span class="comment">// servletContext.setAttribute(&quot;keyb&quot;, &quot;keyB&quot;);</span></span><br><span class="line">        <span class="comment">//获得域中的数据</span></span><br><span class="line">     <span class="comment">//   Object keya1 = servletContext.getAttribute(&quot;keya&quot;);</span></span><br><span class="line">        <span class="comment">//移除</span></span><br><span class="line">     <span class="comment">//   servletContext.removeAttribute(&quot;keya&quot;);</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>sevalet3读取</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package com.sgg.servlet;</span><br><span class="line"></span><br><span class="line">import javax.servlet.ServletContext;</span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.annotation.WebServlet;</span><br><span class="line">import javax.servlet.http.HttpServlet;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line">import java.io.FileOutputStream;</span><br><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created with IntelliJ IDEA.</span><br><span class="line"> *</span><br><span class="line"> * @Author: 李阳</span><br><span class="line"> * @Date: 2024/12/29/11:01</span><br><span class="line"> * @Description:往upload里面写入文件信息-io流</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">@WebServlet(&quot;/servlet3&quot;)</span><br><span class="line">public class servlet3 extends HttpServlet &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</span><br><span class="line">        ServletContext servletContext = getServletContext();</span><br><span class="line"></span><br><span class="line">        //从域中读取数据</span><br><span class="line">        String ka = (String) servletContext.getAttribute(&quot;keya&quot;);</span><br><span class="line">        System.out.println(ka);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e550116f.png" alt="image-20241229115159599.png"></p>
 <p>控制台读取到了sevalet1里面存放的元素</p>
 <p>妙秒喵🐱</p>
-<h6 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h6><p>servlet1</p>
+<h6 id="修改">修改</h6>
+<p>servlet1</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">servletContext.setAttribute(&quot;keya&quot;, &quot;va&quot;);</span><br><span class="line">servletContext.setAttribute(&quot;keya&quot;, &quot;keyB&quot;);</span><br></pre></td></tr></table></figure>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e5504c9f.png" alt="image-20241229115601579.png"></p>
 <p>烙铁，没毛病哦</p>
 <hr>
-<h4 id="HttpServaletRequest"><a href="#HttpServaletRequest" class="headerlink" title="HttpServaletRequest"></a>HttpServaletRequest</h4><ul>
+<h4 id="HttpServaletRequest">HttpServaletRequest</h4>
+<ul>
 <li>HttpServletRequest是一个接口,其父接口是ServletRequest</li>
 <li>HttpServietRequest是Tomcat将请求报文转换封装而来的对象,在Tomcat调用service方法时传入</li>
 <li>HttpServletRequest代表客户端发来的请求,所有请求中的信息都可以通过该对象获得</li>
@@ -1265,18 +1288,24 @@
 <p>post或者get都可以拿到</p>
 <p>其他api</p>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e5ea321b.png" alt="image-20241229131136745.png"></p>
-<h4 id="HttpServletResponse"><a href="#HttpServletResponse" class="headerlink" title="HttpServletResponse"></a>HttpServletResponse</h4><ul>
+<h4 id="HttpServletResponse">HttpServletResponse</h4>
+<ul>
 <li>HttpServletResponse是一个接口,其父接口是ServletResponse</li>
 <li>HttpServletResponse是Tomcat预先创建的,在Tomcat调用service方法时传入</li>
 <li>HttpServletResponse代表对客户端的响应,该对象会被转换成响应的报文发送给客户端,通过该对象我们可以设置响应信息</li>
 </ul>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e604b1d2.png" alt="image-20241229150022820.png"></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.PrintWriter;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 李阳</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2024/12/29/15:00</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet(&quot;/servlet06&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">servlet06</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">       String info=<span class="string">&quot;&lt;h1&gt;李阳&lt;/h1&gt;&quot;</span>;</span><br><span class="line">        <span class="comment">//设置响应行相关API 200/404/405/500  HTTP/1.1</span></span><br><span class="line">        resp.setStatus(<span class="number">200</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//设置响应头</span></span><br><span class="line">        resp.setHeader(<span class="string">&quot;sss&quot;</span>,<span class="string">&quot;value1&quot;</span>);</span><br><span class="line"></span><br><span class="line">        resp.setContentType(<span class="string">&quot;text/html&quot;</span>);</span><br><span class="line">        resp.setContentLength(info.getBytes().length);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//设置响应体</span></span><br><span class="line">        <span class="type">PrintWriter</span> <span class="variable">writer</span> <span class="operator">=</span> resp.getWriter();</span><br><span class="line">        writer.write(info);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="请求与转发"><a href="#请求与转发" class="headerlink" title="请求与转发"></a>请求与转发</h3><ul>
-<li>请求转发生活举例:张三找李四借钱,李四没有,李四找王五,让王五借给张三</li>
-<li><p>响应重定向生活举例:张三找李四借钱,李四没有,李四让张。去找王五,张三自己再去找王五借钱</p>
+<h3 id="2-3请求与转发">2.3请求与转发</h3>
+<ul>
+<li>
+<p>请求转发生活举例:张三找李四借钱,李四没有,李四找王五,让王五借给张三</p>
 </li>
-<li><p>请求转发通过HttpServletRequest实现,响应重定向通过HttpServletResponse实现</p>
+<li>
+<p>响应重定向生活举例:张三找李四借钱,李四没有,李四让张。去找王五,张三自己再去找王五借钱</p>
+</li>
+<li>
+<p>请求转发通过HttpServletRequest实现,响应重定向通过HttpServletResponse实现</p>
 </li>
 </ul>
 <p>1请求转发时,请求和响应对象会继续传递给下一个资源</p>
@@ -1294,7 +1323,8 @@
 <p><img src="https://bu.dusays.com/2025/01/15/67877e5ef06c7.png" alt="image-20241229155049373.png"></p>
 <p>转发到页面</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebServlet(&quot;/servletA&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">servletA</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;servletA&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">money</span> <span class="operator">=</span> req.getParameter(<span class="string">&quot;money&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;ServletA&quot;</span>+money);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//请求转发B</span></span><br><span class="line">        req.getRequestDispatcher(<span class="string">&quot;WEB-INF/b.html&quot;</span>).forward(req, resp);</span><br><span class="line">        <span class="comment">//req.getRequestDispatcher(&quot;a.html&quot;).forward(req, resp);</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="总结-面试要背"><a href="#总结-面试要背" class="headerlink" title="总结-面试要背"></a>总结-面试要背</h5><ul>
+<h5 id="总结-面试要背">总结-面试要背</h5>
+<ul>
 <li>请求转发通过HttpServletRequest对象获取请求转发器实现</li>
 <li>请求转发是服务器内部的行为,对客户端是屏蔽的</li>
 <li>客户端只发送了一次请求,客户端地址栏不变</li>
@@ -1304,9 +1334,11 @@
 <li>请求转发可以转发给WEB-INF下受保护的资源</li>
 <li>请求转发不能转发到本项目以外的外部资源</li>
 </ul>
-<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><p>客户端发送请求给A，A处理不了，然后A就返回response，把目标头302和location：目标地址 返回给浏览器，浏览器再通过目标地址去请求其他功能页面</p>
+<h3 id="2-4-重定向">2.4 重定向</h3>
+<p>客户端发送请求给A，A处理不了，然后A就返回response，把目标头302和location：目标地址 返回给浏览器，浏览器再通过目标地址去请求其他功能页面</p>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e5f915a5.png" alt="image-20241229171354913.png"></p>
-<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<h4 id="特点">特点</h4>
+<ul>
 <li>响应重定向通过HttpServletResponse对象的sendRedirect方法实现</li>
 <li>响应重定向是服务端通过302响应码和路径,告诉客户端自己去找其他资源,是在服务端提示下的,<strong>客户端的行为</strong></li>
 <li>客户端至少发送了两次请求,客户端地址栏是要变化的</li>
@@ -1317,55 +1349,73 @@
 <li>重定向可以到本项目以外的外部资源</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 李阳</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2024/12/29/17:07</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet(&quot;/servlet1&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">servlet1</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">       <span class="comment">//接收用户请求</span></span><br><span class="line">        System.out.println(<span class="string">&quot;servlet1&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//响应重定向</span></span><br><span class="line">        resp.sendRedirect(<span class="string">&quot;servlet2&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="解决响应乱码"><a href="#解决响应乱码" class="headerlink" title="解决响应乱码"></a>解决响应乱码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">resp.setContentType(<span class="string">&quot;text/html;charset=utf-8&quot;</span>);</span><br><span class="line">resp.getWriter().write(<span class="string">&quot;你好，hello&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="2-5-解决响应乱码">2.5 解决响应乱码</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">resp.setContentType(<span class="string">&quot;text/html;charset=utf-8&quot;</span>);</span><br><span class="line">resp.getWriter().write(<span class="string">&quot;你好，hello&quot;</span>);</span><br></pre></td></tr></table></figure>
 <hr>
-<h3 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h3><p>MVC (Model view Controller）是软件工程中的一种软件架构模式，它把软件系统分为模型、视图和控制器三个基本部分。用一种业务逻辑、数据、界面显示分离的方法组织代码，将业务逻辑聚集到一个部件里面，在改进和个性化定制界面及用户交互的同时，不需要重新编写业务逻辑。</p>
+<h3 id="2-6-MVC">2.6 MVC</h3>
+<p>MVC (Model view Controller）是软件工程中的一种软件架构模式，它把软件系统分为模型、视图和控制器三个基本部分。用一种业务逻辑、数据、界面显示分离的方法组织代码，将业务逻辑聚集到一个部件里面，在改进和个性化定制界面及用户交互的同时，不需要重新编写业务逻辑。</p>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e5ea1060.png" alt="image-20241230100316483.png"></p>
-<p> <img src="https://bu.dusays.com/2025/01/15/67877e67d2b9f.png" alt="image-20241230101219329.png"></p>
-<h3 id="会话管理"><a href="#会话管理" class="headerlink" title="会话管理"></a>会话管理</h3><ul>
+<p><img src="https://bu.dusays.com/2025/01/15/67877e67d2b9f.png" alt="image-20241230101219329.png"></p>
+<h3 id="2-7-会话管理">2.7 会话管理</h3>
+<ul>
 <li>·无状态就是不保存状态,即无畎态协议(stateless),HTTP协议自身不对请求和响应之间的通信状态进行保存,也就是说,在HTTP协议这个级别协议对于发送过的请求或者响应都不做持久化处理</li>
 <li>简单理解:浏览器发送请求.服务器接收并响应,但是服务器不记录请求是否来自哪个浏览器,服务器没记录浏览器的特征,就是客户端的状态</li>
 </ul>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e65cd6b9.png" alt="image-20241231120551892.png"></p>
-<h4 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h4><p>cookie是一种客户端会话技术,cookie由服务端产生,它是服务器存放在浏览器的一小份数据,浏览器以后每次访问该服务器的时候都会将这小份数据携带到服务器去。</p>
+<h4 id="2-7-1-cookie">2.7.1 cookie</h4>
+<p>cookie是一种客户端会话技术,cookie由服务端产生,它是服务器存放在浏览器的一小份数据,浏览器以后每次访问该服务器的时候都会将这小份数据携带到服务器去。</p>
 <ul>
 <li>服务端创建cookie,将cookie放入响应对象中,Tomcat容器将cookie转化为set-cookie响应头,响应给客户端。</li>
 <li>客户端在收到cookie的响应头时,在下次请求该服务的资源时,会以cookie请求头的形式携带之前收到的Cookie</li>
 <li>cookie是一种键值对格式的数据,从tomcat8.5开始可以保存中文,但是不推荐</li>
 <li>由于cookie是存储于客户端的数据,比较容易暴露,一般不存储一些敏感或者影响安全的数据</li>
 </ul>
-<h5 id="生存周期"><a href="#生存周期" class="headerlink" title="生存周期"></a>生存周期</h5><ul>
-<li><p>会话级Cookie</p>
+<h5 id="生存周期">生存周期</h5>
 <ul>
-<li><p>服务器端并没有明确指定Cookie的存在时间。</p>
-</li>
-<li><p>在浏览器端，Cookie数据存在于内存中。</p>
-</li>
-<li><p>只要浏览器还开着，Cookie数据就一直都在。</p>
-</li>
-<li><p>浏览器关闭，内存中的cookie数据就会被释放·</p>
-</li>
-</ul>
-</li>
-<li><p>持久化Cookie</p>
+<li>
+<p>会话级Cookie</p>
 <ul>
-<li><p>服务器端明确设置了Cookie的存在时间。</p>
+<li>
+<p>服务器端并没有明确指定Cookie的存在时间。</p>
 </li>
-<li><p>在浏览器端，Cookie数据会被保存到硬盘上</p>
+<li>
+<p>在浏览器端，Cookie数据存在于内存中。</p>
 </li>
-<li><p>Cookie在硬盘上存在的时间根据服务器端限定的时间来管控，不受浏览器关闭的影响。</p>
+<li>
+<p>只要浏览器还开着，Cookie数据就一直都在。</p>
 </li>
-<li><p>持久化Cookie到达了预设的时间会被释放</p>
+<li>
+<p>浏览器关闭，内存中的cookie数据就会被释放·</p>
+</li>
+</ul>
+</li>
+<li>
+<p>持久化Cookie</p>
+<ul>
+<li>
+<p>服务器端明确设置了Cookie的存在时间。</p>
+</li>
+<li>
+<p>在浏览器端，Cookie数据会被保存到硬盘上</p>
+</li>
+<li>
+<p>Cookie在硬盘上存在的时间根据服务器端限定的时间来管控，不受浏览器关闭的影响。</p>
+</li>
+<li>
+<p>持久化Cookie到达了预设的时间会被释放</p>
 </li>
 </ul>
 </li>
 </ul>
-<h5 id="会话级代码演示"><a href="#会话级代码演示" class="headerlink" title="会话级代码演示"></a>会话级代码演示</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.Cookie;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 创建cookie，将cookie放入response对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@WebServlet(&quot;/servletA&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServletA</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="comment">//1.</span></span><br><span class="line">        <span class="type">Cookie</span> <span class="variable">cookie1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;kaya&quot;</span>,<span class="string">&quot;vala&quot;</span>);</span><br><span class="line">        <span class="type">Cookie</span> <span class="variable">cookie2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;kayb&quot;</span>,<span class="string">&quot;valb&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2.</span></span><br><span class="line">        resp.addCookie(cookie1);</span><br><span class="line">        resp.addCookie(cookie2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="会话级代码演示">会话级代码演示</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.Cookie;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 创建cookie，将cookie放入response对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@WebServlet(&quot;/servletA&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServletA</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="comment">//1.</span></span><br><span class="line">        <span class="type">Cookie</span> <span class="variable">cookie1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;kaya&quot;</span>,<span class="string">&quot;vala&quot;</span>);</span><br><span class="line">        <span class="type">Cookie</span> <span class="variable">cookie2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;kayb&quot;</span>,<span class="string">&quot;valb&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2.</span></span><br><span class="line">        resp.addCookie(cookie1);</span><br><span class="line">        resp.addCookie(cookie2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>捕获</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sgg.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.Cookie;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 李阳</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2024/12/31/13:19</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:获取请求中携带的cookie</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet(&quot;/servletB&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServletB</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取cookie</span></span><br><span class="line">        Cookie[] cookies = req.getCookies();</span><br><span class="line">        <span class="comment">//请求的多个cookie会进入该数组，没有cookie会为null报空指针异常</span></span><br><span class="line">        <span class="keyword">for</span> (Cookie cookie : cookies) &#123;</span><br><span class="line">            System.out.println(cookie.getName() + <span class="string">&quot; &quot;</span> + cookie.getValue());</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Cookie</span> <span class="variable">cookie1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;kaya&quot;</span>,<span class="string">&quot;vala&quot;</span>);</span><br><span class="line">       <span class="type">Cookie</span> <span class="variable">cookie2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;kayb&quot;</span>,<span class="string">&quot;valb&quot;</span>);</span><br><span class="line">       cookie1.setMaxAge(<span class="number">3600</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="持久化">持久化</h5>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Cookie</span> <span class="variable">cookie1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;kaya&quot;</span>,<span class="string">&quot;vala&quot;</span>);</span><br><span class="line">       <span class="type">Cookie</span> <span class="variable">cookie2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;kayb&quot;</span>,<span class="string">&quot;valb&quot;</span>);</span><br><span class="line">       cookie1.setMaxAge(<span class="number">3600</span>);</span><br></pre></td></tr></table></figure>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e65b344e.png" alt="image-20241231140608015.png"></p>
-<h4 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h4><p>session要和cookie配合使用</p>
+<h4 id="2-7-2-Session">2.7.2 Session</h4>
+<p>session要和cookie配合使用</p>
 <p>HttpSession是一种保留更多信息在服务端的一种技术,服务器会为每一个客户端开辟一块内存空间,即session对象.客户端在发送请求时,都可以使用自已的session.这样服务端就可以通过session来记录某个客户端的状态了</p>
 <ul>
 <li>服务端在为客户端创建session时,会同时将session对象的id,即JSESSIONID以cookie的形式放入响应对象。</li>
@@ -1375,7 +1425,8 @@
 <li>session也是域对象(后续详细讲解)</li>
 <li><img src="https://bu.dusays.com/2025/01/15/67877e6fa4c29.png" alt="image-20241231141259769.png"></li>
 </ul>
-<h4 id="三大域对象"><a href="#三大域对象" class="headerlink" title="三大域对象"></a>三大域对象</h4><p>域对象:一些用于存储数据和传递数据的对象,传递数据不同的范围,我们称之为不同的域,不同的域对象代表不同的域,共享数据的范围也不同</p>
+<h4 id="2-7-3-三大域对象">2.7.3 三大域对象</h4>
+<p>域对象:一些用于存储数据和传递数据的对象,传递数据不同的范围,我们称之为不同的域,不同的域对象代表不同的域,共享数据的范围也不同</p>
 <ul>
 <li>web项目中,我们一定要熟练使用的域对象分别是请求域,会话域,应用域</li>
 <li>请求域对象是HttpServletRequest ,传递数据的范围是一次请求之内及请求转发。</li>
@@ -1386,7 +1437,7 @@
 <p><img src="https://bu.dusays.com/2025/01/15/67877e6e70ea6.png" alt="image-20241231143732561.png"></p>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e6e650c6.png" alt="image-20241231143759794.png"></p>
 <p><img src="https://bu.dusays.com/2025/01/15/67877e6e78891.png" alt="image-20241231143829763.png"></p>
-<h5 id="域对象的使用"><a href="#域对象的使用" class="headerlink" title="域对象的使用"></a>域对象的使用</h5><div class="table-container">
+<h5 id="域对象的使用">域对象的使用</h5>
 <table>
 <thead>
 <tr>
@@ -1409,21 +1460,24 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="过滤器-Filter"><a href="#过滤器-Filter" class="headerlink" title="过滤器-Filter"></a>过滤器-Filter</h3><h4 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h4><ul>
+<h3 id="2-8-过滤器-Filter">2.8 过滤器-Filter</h3>
+<h4 id="1-概述">1.概述</h4>
+<ul>
 <li>Filter接口定义了过滤器的开发规范,所有的过滤器都要实现该接口</li>
 <li>·Filter的工作位置是项目中所有目标资源之前,容器在创建HttpServletRequest和HttpServletResponse对象后,会先调用Filter的doFiter方法</li>
 <li>Filter的doFilter方法可以控制请求是否继续,如果放行,则请求继续,如果拒绝,则请求到此为止,由过滤器本身做出响应</li>
 <li>Filter不仅可以对请求做出过滤,也可以在目标资源做出响应前,对响应再次进行处理</li>
 <li>Filter是GOF中责任链模式的典型案例</li>
-<li>。Filter的常用应用包括但不限于:登录权限检查,解决网站乱码,过滤敏感字符,日志记录,性能分析…..</li>
+<li>。Filter的常用应用包括但不限于:登录权限检查,解决网站乱码,过滤敏感字符,日志记录,性能分析…</li>
 </ul>
-<h4 id="2-举例"><a href="#2-举例" class="headerlink" title="2.举例"></a>2.举例</h4><ul>
+<h4 id="2-举例">2.举例</h4>
+<ul>
 <li>公司前台对来访人员进行审核,如果是游客则拒绝进入公司,如果是客户则放行.客户离开时提醒客户不要遗忘物品</li>
 <li>停车场保安对来访车辆进行控制,如果没有车位拒绝进入,如果有车位,发放停车卡并放行,车辆离开时收取请车费</li>
 <li>地铁验票闸机在人员进入之前检查票,没票拒绝进入,有票验票后放行,人员离开时同样验票</li>
 </ul>
-<h4 id="3-应用"><a href="#3-应用" class="headerlink" title="3.应用"></a>3.应用</h4><ul>
+<h4 id="3-应用">3.应用</h4>
+<ul>
 <li>日志的记录</li>
 <li>·性能的分析。</li>
 <li>乱码的处理·</li>
@@ -1432,20 +1486,71 @@
 <li>跨域的处理</li>
 <li>… …</li>
 </ul>
-<p><img src="https://bu.dusays.com/2025/01/15/67877e6f62910.png" alt="image-20241231145350797.png"><br><img src="https://bu.dusays.com/2025/01/15/67877e6e78891.png" alt="image-20241231143829763.png"><br><img src="https://bu.dusays.com/2025/01/15/67877e6e775b4.png" alt="image-20241231143352815.png"><br><img src="https://bu.dusays.com/2025/01/15/67877e6e70ea6.png" alt="image-20241231143732561.png"><br><img src="https://bu.dusays.com/2025/01/15/67877e6e650c6.png" alt="image-20241231143759794.png"></p>
-<h4 id="4-格式"><a href="#4-格式" class="headerlink" title="4.格式"></a>4.格式</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">web-app</span> <span class="keyword">PUBLIC</span></span></span><br><span class="line"><span class="meta"> <span class="string">&quot;-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN&quot;</span></span></span><br><span class="line"><span class="meta"> <span class="string">&quot;http://java.sun.com/dtd/web-app_2_3.dtd&quot;</span> &gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">display-name</span>&gt;</span>Archetype Created Web Application<span class="tag">&lt;/<span class="name">display-name</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!--配置过滤器--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>logginFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.sgg.filters.LoggingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!--配置过滤器的过滤资源规则 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>logginFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">      url-pattern 根据请求的资源路径对指定的请求进行过滤</span></span><br><span class="line"><span class="comment">      /*  过滤全部资源</span></span><br><span class="line"><span class="comment">      /a/*  过滤以a开头的资源</span></span><br><span class="line"><span class="comment">      *.html  过滤以htmL为后缀的资源</span></span><br><span class="line"><span class="comment">     /servlet1  servlet1请求进行过油</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     对某一个请求过滤</span></span><br><span class="line"><span class="comment">     @WebServlet(value = &quot;/servlet1&quot;,name = &quot;servlet11&quot;)</span></span><br><span class="line"><span class="comment">     &lt;servlet-name&gt;servlet11&lt;/servlet-name&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     一个filter-mapping中可以存在多个servlet-name和url-pattern</span></span><br><span class="line"><span class="comment">   --&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="5-生命周期"><a href="#5-生命周期" class="headerlink" title="5.生命周期"></a>5.生命周期</h4><h2 id="日程管理"><a href="#日程管理" class="headerlink" title="日程管理"></a>日程管理</h2><h3 id="日程管理第二期-注册登录"><a href="#日程管理第二期-注册登录" class="headerlink" title="日程管理第二期-注册登录"></a>日程管理第二期-注册登录</h3><p>红红火火恍恍惚惚，终于写项目了</p>
+<p><img src="https://bu.dusays.com/2025/01/15/67877e6f62910.png" alt="image-20241231145350797.png"><br>
+<img src="https://bu.dusays.com/2025/01/15/67877e6e78891.png" alt="image-20241231143829763.png"><br>
+<img src="https://bu.dusays.com/2025/01/15/67877e6e775b4.png" alt="image-20241231143352815.png"><br>
+<img src="https://bu.dusays.com/2025/01/15/67877e6e70ea6.png" alt="image-20241231143732561.png"><br>
+<img src="https://bu.dusays.com/2025/01/15/67877e6e650c6.png" alt="image-20241231143759794.png"></p>
+<h4 id="4-格式">4.格式</h4>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">web-app</span> <span class="keyword">PUBLIC</span></span></span><br><span class="line"><span class="meta"> <span class="string">&quot;-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN&quot;</span></span></span><br><span class="line"><span class="meta"> <span class="string">&quot;http://java.sun.com/dtd/web-app_2_3.dtd&quot;</span> &gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">display-name</span>&gt;</span>Archetype Created Web Application<span class="tag">&lt;/<span class="name">display-name</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!--配置过滤器--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>logginFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.sgg.filters.LoggingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!--配置过滤器的过滤资源规则 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>logginFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">      url-pattern 根据请求的资源路径对指定的请求进行过滤</span></span><br><span class="line"><span class="comment">      /*  过滤全部资源</span></span><br><span class="line"><span class="comment">      /a/*  过滤以a开头的资源</span></span><br><span class="line"><span class="comment">      *.html  过滤以htmL为后缀的资源</span></span><br><span class="line"><span class="comment">     /servlet1  servlet1请求进行过油</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     对某一个请求过滤</span></span><br><span class="line"><span class="comment">     @WebServlet(value = &quot;/servlet1&quot;,name = &quot;servlet11&quot;)</span></span><br><span class="line"><span class="comment">     &lt;servlet-name&gt;servlet11&lt;/servlet-name&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     一个filter-mapping中可以存在多个servlet-name和url-pattern</span></span><br><span class="line"><span class="comment">   --&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="5-生命周期">5.生命周期</h4>
+<blockquote>
+<p>过滤器作为web项目的组件之一和Servlet的生命周期类似,略有不同,没有servlet的load-on-startup的配置,默认就是系统启动立刻构造</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>对应方法</th>
+<th>执行时机</th>
+<th>执行次数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建对象</td>
+<td>构造器</td>
+<td>web应用启动时</td>
+<td>1</td>
+</tr>
+<tr>
+<td>初始化方法</td>
+<td>void init(FilterConfig filterConfig)</td>
+<td>构造完毕</td>
+<td>1</td>
+</tr>
+<tr>
+<td>过滤请求</td>
+<td>void doFilter(ServietRequest servletRequest, ServietResponse servletResponse,FilterChainfilterChain)</td>
+<td>每次请求</td>
+<td>多次</td>
+</tr>
+<tr>
+<td>销毁</td>
+<td>default void destroy()</td>
+<td>web应用关闭时</td>
+<td>1次</td>
+</tr>
+</tbody>
+</table>
+<p>代码我很懒给略了</p>
+<h4 id="6-过滤器链的使用">6.过滤器链的使用</h4>
+<blockquote>
+<p>一个web项目中,可以同时定义多个过滤器,多个过滤器对同一个资源进行过滤时,工作位置有先后,整体形成一个工作链,称之为过滤器链</p>
+</blockquote>
+<ul>
+<li>过滤器链中的过滤器的顺序由filter-mapping顺序决定</li>
+<li>每个过滤器过滤的范围不同,针对同一个资源来说,过滤器链中的过滤器个数可能是不同的</li>
+<li>如果某个Filter是使用ServletName进行匹配规则的配置，那么这个Filter执行的优先级要更低</li>
+</ul>
+<p><img src="https://bu.dusays.com/2025/01/17/678a405838c7d.png" alt="image-20250117193438865"></p>
+<h2 id="日程管理">日程管理</h2>
+<h3 id="日程管理第二期-注册登录">日程管理第二期-注册登录</h3>
+<p>红红火火恍恍惚惚，终于写项目了</p>
 <hr>
 <p>经历了两天时间把这个登录注册页面写完了。</p>
-<h4 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h4><h5 id="实体类名称不匹配"><a href="#实体类名称不匹配" class="headerlink" title="-实体类名称不匹配"></a>-实体类名称不匹配</h5><p>我在经行测试的时候遇到了一些错误</p>
-<p><img src="https://bu.dusays.com/2025/01/15/67877e664b2e9.png" alt="image-20241230144156493.png"></p>
-<p>控制台说这个名字不匹配</p>
-<p>检查发现是因为我的实体类名称不叫uid，而查询报错</p>
-<p>解决方案1：为sql语句的uid取别名与pojo的一样</p>
-<p>方案2：修改pojo与数据库的uid一致</p>
-<p><img src="https://bu.dusays.com/2025/01/15/67877e674871e.png" alt="image-20241230144349702.png"></p>
-<p><img src="https://bu.dusays.com/2025/01/15/67877e66c3d7b.png" alt="image-20241230144423606.png"></p>
-<p>两种方法都可行</p>
+<h4 id="代码">代码</h4>
+<h5 id="第一版-登陆注册功能的实现">第一版-登陆注册功能的实现</h5>
 <div calss="anzhiyu-tag-link"><a class="tag-Link" target="_blank" href="https://github.com/lyay23/atguigu-scheduleSystem">
     <div class="tag-link-tips">引用站外地址</div>
     <div class="tag-link-bottom">
@@ -1459,6 +1564,17 @@
         <i class="anzhiyufont anzhiyu-icon-angle-right"></i>
     </div>
     </a></div>
+<h4 id="错误">错误</h4>
+<h5 id="实体类名称不匹配">-实体类名称不匹配</h5>
+<p>我在经行测试的时候遇到了一些错误</p>
+<p><img src="https://bu.dusays.com/2025/01/15/67877e664b2e9.png" alt="image-20241230144156493.png"></p>
+<p>控制台说这个名字不匹配</p>
+<p>检查发现是因为我的实体类名称不叫uid，而查询报错</p>
+<p>解决方案1：为sql语句的uid取别名与pojo的一样</p>
+<p>方案2：修改pojo与数据库的uid一致</p>
+<p><img src="https://bu.dusays.com/2025/01/15/67877e674871e.png" alt="image-20241230144349702.png"></p>
+<p><img src="https://bu.dusays.com/2025/01/15/67877e66c3d7b.png" alt="image-20241230144423606.png"></p>
+<p>两种方法都可行</p>
 ]]></content>
       <categories>
         <category>javaweb</category>
@@ -1550,7 +1666,8 @@
   <entry>
     <title>痕迹</title>
     <url>/posts/28799/</url>
-    <content><![CDATA[<h1 id="这里是李阳的日记本"><a href="#这里是李阳的日记本" class="headerlink" title="这里是李阳的日记本"></a>这里是李阳的日记本</h1><details class="folding-tag" green><summary> 写在前面 </summary>
+    <content><![CDATA[<h1>这里是李阳的日记本</h1>
+<details class="folding-tag" green><summary> 写在前面 </summary>
               <div class="content">
               <p>写在前面：</p><p>这几天突然在想以后的我会是什么样的我，碌碌无为平庸一事无成的我，还是…</p><p>我不知道，我不敢想，我也很害怕想，不过我不得不继续想</p><p>我要向前走</p>
               </div>
@@ -1561,13 +1678,25 @@
               </div>
             </details>
 <div class="timeline blue"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2025</p>
+</div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>01-17</p>
+</div></div><div class="timeline-item-content"><details class="folding-tag" blue><summary> 坟墓 </summary>
+              <div class="content">
+              <p>好久好久没有回老家了，今天回了一趟老家去上坟</p><p>回到了我小时候生长的土地，我能看到十几年前的我自己，奔跑、欢笑 ，这里也有我的痕迹</p><p>越过几十年，我爸爸出身在这片同样的土地，越过百年 我爷爷我太爷爷都在在这片土地欢笑、奔跑、劳作。</p><p><img src="https://bu.dusays.com/2025/01/17/678a474aafaca.png" alt="image-20250117200422489"></p><p>落叶归根，沧海桑田，土地还是土地，人却再也不是那代人了</p><p>我其实很讨厌这里，包括现在也是，又老又破，能不回来我就不会回来。不过每年给爷爷奶奶上坟都会回到这里，老家的人也都变了模样，我都记不得叫什么了。小时候的玩伴也全都换了模样，寒暄也不知道说什么了。</p><p>很讨厌的亲戚也变老了，过几年也便死去</p><p>不过即使我再讨厌他们他们也会生老病死，变成一座座坟墓。</p><p>即使再讨厌这里，二十多年前我还是从这里生，我死也还是要回到这里</p><p><img src="https://bu.dusays.com/2025/01/17/678a49a2306ac.png" alt="image-20250117201413227"></p><p>我还看到了新一辈的小孩也在这片土地上，他们也像我小时候一样快乐的做游戏，很快乐</p><p>文笔有限，还是借用别人的吧！</p><blockquote><p>但是太阳，它每时每刻都是夕阳也都是旭日。当它熄灭着走下山去收尽苍凉残照之际，正是它在另一面燃烧着爬上山巅布散烈烈朝晖之时。 那一天，我也将沉静着走下山去，扶着我的拐杖。有一天，在某一处山洼里，势必会跑上来一个欢蹦的孩子，抱着他的玩具。 当然，那不是我。 但是，那不是我吗？ ——史铁生 《我与地坛》</p></blockquote><blockquote><p>往事越千年，魏武挥鞭，东临碣石有遗篇。萧瑟秋风今又是，换了人间。</p></blockquote><p>时间也会掩埋我们，我们也会变成一座座坟墓</p>
+              </div>
+            </details>
+<details class="folding-tag" blue><summary> 文字 </summary>
+              <div class="content">
+              <p>我还是不太喜欢写我的思考，自言自语的时候感觉说的挺好，一写出来就感觉变样了</p><p>想想我之前：四年级作文报社投稿（未刊登），五年级全校作文一等奖（奖品乒乓球拍），六年级全校作文比赛一等奖（奖品乒乓球拍），七年级全校二等奖，八年级三等奖，九年级未获奖。文字在我之前好像一直是我的强项</p><p>不过后面就没有这种天赋了，现在更是变得干巴巴的了</p><p>没有时间读书，也便没有了自我。</p>
+              </div>
+            </details>
+</div></div></div>
+<div class="timeline blue"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2025</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>01-03</p>
 </div></div><div class="timeline-item-content"><details class="folding-tag" blue><summary> 剧终 </summary>
               <div class="content">
               <p>这两天考完试这本科时间就已经过完1/4了，不算大四就已经过完1/2了，我真的还没享受好我的大学生活，时间一直走，很想很想慢点走</p><p>今年1月份我好像才确定要专升本，那时候边上班边学习，其实也没有怎么好好学，报的班也没有好好听，我只是很恍惚，转眼到了上班的年龄，找不到好工作，就只能想逃避了</p><p>这两天里想了很多，感觉自己是一个好自私的人，爸爸妈妈都为了我在很辛苦的上班，我却在这里浑浑噩噩的享受生活</p><p>之前一直好像快点长大，早点上班赚钱，爸爸妈妈就稍微轻松一点没有这么累</p><hr><p>9月1我坐火车来到这个学校，刚进来的生活感觉好高兴，很激动，虽然这学校不怎么好，不过怎么说也算个本科，这学校很大，刚开始我还很害怕，因为我没有很好朋友在这里上课，之前的高中同学考上了这学校没有来，其他断断续续的朋友都不是很熟</p><p>我一直以为我要很孤僻下去，一个人上课一个人吃饭，感觉没有好朋友我就不能生存了，孤孤单单的</p><p>我不是很喜欢交朋友，感觉打招呼和说话都会让人感觉很尴尬，所以我除了给认识的朋友说话外，我就很少给别人说话了</p><p>结果一开学好像e的属性爆发了，我很喜欢给外向的人说话，感觉整个人都会变得很快乐，</p><p>这一年里收获还挺多的，感觉本科和专科区别就是我变得很忙，之前会很在意别人的看法，在大专学一会就感觉像留了案底一样，大家都不学我也不学了</p><p>我也有好好的爱自己了，爱吃早饭，爱背单词</p><p>我还以为我会有很多话要说，想了想好像没什么了</p><p>明年继续加油李阳</p>
               </div>
             </details>
-
 </div></div></div>
 <div class="timeline blue"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2025</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>01-02</p>
@@ -1582,130 +1711,95 @@
 <div class="checkbox"><input type="checkbox">
             <p>7点半的闹钟起来背mysql的书</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>11点半吃饭，什么时候背完什么时候吃饭</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>今天下午可以玩一会，不过你要先默写9个mysql的简答题</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>继续javaweb</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>晚上继续默写</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>练字</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>11点半睡觉</p>
             </div>
-
 <details class="folding-tag" blue><summary> 不要讨厌我 </summary>
               <div class="content">
               <p>我好像又被女生讨厌了呢🥲🥲</p><p>不知道不知道不知道，我本来很想问为啥不开心，但是想了想感觉人家也没理由告诉我</p><p>然后我就说好幸福（现在想想是有点脑瘫）万一人家想想开心的事情就能开心一点呢</p><p>结果就不理我了</p><p>记得之前和她说话还挺开心的，然后后面就感觉人家好像不喜欢和我说话</p><p>我可能真的是一个很讨厌的人</p><p>完蛋了，人家真讨厌我了</p><p>我要流眼泪了啊啊啊😭😭</p><p>好想给她道歉，不过感觉会不会很莫名其妙🥲🥲</p>
               </div>
             </details>
-
-
-
 <details class="folding-tag" blue><summary> 小太阳 </summary>
               <div class="content">
               <p>今天最开心的事情是妈妈说要回家过年啦，很开心很开心很开心</p><p>真的很开心耶耶耶！</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://bu.dusays.com/2025/01/01/67754c1975580.png" alt=" 我挖的陷阱" style="width:400px;"></div><span class="image-caption"> 我挖的陷阱</span></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://bu.dusays.com/2025/01/01/67754c172a1ae.png" alt=" 可可爱爱的小小猫" style="width:400px;"></div><span class="image-caption"> 可可爱爱的小小猫</span></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://bu.dusays.com/2025/01/01/67754c17133d3.png" alt=" 李师傅的字" style="width:400px;"></div><span class="image-caption"> 李师傅的字</span></div>
               </div>
             </details>
-
 </div></div></div>
 <div class="timeline undefined"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2024</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>12-31</p>
 </div></div><div class="timeline-item-content"><div class="checkbox 8点的闹钟起来"><input type="checkbox">
             <p>9点正式开始学习，学到11点半的javaweb</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>12点吃完饭</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>然后背旧单词</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>继续javaweb</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>抽出一个小时或者半个小时整理mysql笔记</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>7点钟回来准备吃饭</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>8点半练字</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>11点半写日记</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>11点40洗澡，准备睡觉啦</p>
             </div>
-
 <details class="folding-tag" blue><summary> 痕迹 </summary>
               <div class="content">
               <p>卧槽，谁昨天晚上趁我睡着把我的闹钟往后调了两个小时</p><p>害我今天9点半才一觉睡醒</p><p>到底是谁！😭😭😭😭</p><p>好吧，其实是我昨天忘记调闹钟了</p><p>10点准时开始学习</p><p><img src="https://bu.dusays.com/2024/12/31/6773ffe4a0734.png" alt></p><p>不要问我头发怎么尖尖的，问就是晚上洗头了，</p><p>每次晚上洗头早上睡醒头发都很像开盲盒，不过没有一次是好看的，天天炸毛</p><p>那天头发后脑勺还被我睡成压缩包了，不过照样到处走，李阳，这学校是没你在意的人了吗</p><p>不过这样的头发你还能出门，真有你的👍👍</p><hr><p>为来的女朋友请放心，今年跨年还是一个人，也没给女孩子说过话</p><p>今天又是在图书馆学了一天，还背了单词呢，我又有小进步了哦</p><p>芜湖~看我今天练的字</p><p><img src="https://bu.dusays.com/2024/12/31/6773ffe379277.png" alt></p><p><img src="https://bu.dusays.com/2024/12/31/6773ffe383f2d.png" alt></p><p>好像比之前有进步耶耶耶！</p><p>拜拜啦，我要准备洗澡睡觉啦，</p><p>明年见！</p>
               </div>
             </details>
-
-
-
-
-
 </div></div></div>
 <div class="timeline undefined"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2024</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>12-30</p>
 </div></div><div class="timeline-item-content"><div class="checkbox"><input type="checkbox">
             <p>早上睡醒复习旧单词，然后起来去图书馆</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>学习javaweb，抽空背30个新单词</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>晚上时间来练字</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>加油加油加油李阳</p>
             </div>
-
-
-
 <details class="folding-tag" blue><summary> 冬 </summary>
               <div class="content">
               <p>冬</p><p>今天表现也还行，字也练了，单词背完了，就javaweb做的不够好，明天要惩罚你早起了哦，早点解决问题</p><p><code>今天开心的事</code></p><p>没有</p><p><code>今天不开心的事情</code></p><p>emmm,也不算有，不过反正高兴不起来</p>
               </div>
             </details>
-
-
-
 <details class="folding-tag" blue><summary> 痕迹 </summary>
               <div class="content">
-              <p><img src="/posts/28799/image-20241230231125538.png" alt="image-20241230231125538" style="zoom:25%;"></p><p><img src="/posts/28799/image-20241230231152593.png" alt="image-20241230231152593" style="zoom:25%;"></p><p><img src="/posts/28799/image-20241230231216711.png" alt="image-20241230231216711" style="zoom:25%;"></p>
+              <img src="/posts/28799/image-20241230231125538.png" alt="image-20241230231125538" style="zoom:25%;"><img src="/posts/28799/image-20241230231152593.png" alt="image-20241230231152593" style="zoom:25%;"><img src="/posts/28799/image-20241230231216711.png" alt="image-20241230231216711" style="zoom:25%;">
               </div>
             </details>
-
-<p><div id="player_c06d3e7e7d9bd151"></div></p>
+<div id="player_c06d3e7e7d9bd151"></div>
 <script type="text/javascript" data-pjax src="https://player.dogecloud.com/js/loader"></script>
 <script type="text/javascript" data-pjax defer>
   setTimeout(() => {
@@ -1717,86 +1811,57 @@
     });
   }, 300);
 </script>
-
-
-
-
-
-
-
-
 </div></div></div>
 <div class="timeline undefined"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2024</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>12-29</p>
 </div></div><div class="timeline-item-content"><div class="checkbox"><input type="checkbox">
             <p>早上睡醒复习旧单词（别又玩游戏了，求你了）然后起来去图书馆</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>然后中午背30个新单词（不背单词你就学Java吧）</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>然后下午去图书馆学javaweb大概10集 （昨天才看了几集）</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>晚上时间来练字</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>加油加油加油李阳</p>
             </div>
-
-
-
 <details class="folding-tag" yellow><summary> 留影 </summary>
               <div class="content">
-              <p>今天早上9点就起来了哦，今天很厉害，夸一夸你</p><p>然后今天也有好好背单词，也有练字，也有好好学javaweb，做的好李阳</p><p><code>今天高兴的事情</code>：</p><p><img src="/posts/28799/image-20241229230906302.png" alt="image-20241229230906302" style="zoom:25%;"></p><p>免费的早饭嘿嘿</p><p>踩了好多树叶</p><p><img src="/posts/28799/image-20241229230933247.png" alt="image-20241229230933247" style="zoom: 25%;"></p><p>今天开班会啦，老师说要做个年度总结，反思自己这一年，不过今天班里很多人没有来</p><p><code>今天不好的地方</code>:</p><p>今天的缺点是抖音被看了两个多小时</p><p><img src="/posts/28799/image-20241229231245113.png" alt="image-20241229231245113" style="zoom:25%;"></p><p>emmm…</p><p><code>以下是流水账:</code></p><p>今天是被室友吵醒的，本来我还在做梦，然后睡醒想不起来了，然后起来吃早饭，其实当时心理很想玩游戏，不过我憋住了（今天一天都没有玩游戏哦），然后我就在心里想：李阳，你甘愿这样玩下去吗？我不甘心，所以我起来了吃了早饭，今天太阳很好，然后我就去图书馆学习学习，抽空复习了旧单词，下午给电脑充电的时间我背了新单词，然后大概6点回来了准备开班会，我吃了干脆面和卤蛋我肚子草鸡饿，然后开完班会和室友聚餐。然后回来就练字，练到11点，</p><p>很厉害哦今天，明天继续加油</p><p>加油加油加油加油加油加油李阳！</p>
+              <p>今天早上9点就起来了哦，今天很厉害，夸一夸你</p><p>然后今天也有好好背单词，也有练字，也有好好学javaweb，做的好李阳</p><p><code>今天高兴的事情</code>：</p><img src="/posts/28799/image-20241229230906302.png" alt="image-20241229230906302" style="zoom:25%;"><p>免费的早饭嘿嘿</p><p>踩了好多树叶</p><img src="/posts/28799/image-20241229230933247.png" alt="image-20241229230933247" style="zoom: 25%;"><p>今天开班会啦，老师说要做个年度总结，反思自己这一年，不过今天班里很多人没有来</p><p><code>今天不好的地方</code>:</p><p>今天的缺点是抖音被看了两个多小时</p><img src="/posts/28799/image-20241229231245113.png" alt="image-20241229231245113" style="zoom:25%;"><p>emmm…</p><p><code>以下是流水账:</code></p><p>今天是被室友吵醒的，本来我还在做梦，然后睡醒想不起来了，然后起来吃早饭，其实当时心理很想玩游戏，不过我憋住了（今天一天都没有玩游戏哦），然后我就在心里想：李阳，你甘愿这样玩下去吗？我不甘心，所以我起来了吃了早饭，今天太阳很好，然后我就去图书馆学习学习，抽空复习了旧单词，下午给电脑充电的时间我背了新单词，然后大概6点回来了准备开班会，我吃了干脆面和卤蛋我肚子草鸡饿，然后开完班会和室友聚餐。然后回来就练字，练到11点，</p><p>很厉害哦今天，明天继续加油</p><p>加油加油加油加油加油加油李阳！</p>
               </div>
             </details>
-
-
-
 </div></div></div>
 <div class="timeline undefined"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2024</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>12-28</p>
 </div></div><div class="timeline-item-content"><div class="checkbox"><input type="checkbox">
             <p>早上睡醒复习旧单词（别又玩游戏了，求你了）嘿嘿嘿 我单词背完了总该玩了吧</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>然后中午背30个新单词（真背会单词，我没骗你）</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>然后下午去图书馆学javaweb大概20集</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>晚上时间来练字</p>
             </div>
-
 <div class="checkbox"><input type="checkbox">
             <p>特殊强调，今日抖音限时1个半小时，憋不住你就看书吧</p>
             </div>
-
-
-
 <details class="folding-tag" yellow><summary> 小秘密 </summary>
               <div class="content">
               <ul><li>你可以做得到的李阳，你可以的，你真的可以你很厉害，你是世界上最爱学习的人，学习爱你，你爱学习</li><li>加油加油加油</li></ul>
               </div>
             </details>
-
-
-
 <details class="folding-tag" blue><summary> 痕迹 </summary>
               <div class="content">
               <p>这里是今天的日记</p><details class="folding-tag" blue><summary> 忏悔录 </summary>              <div class="content">              <p>对不起李阳，今天的任务就差30个单词没有背了，不过别着急，我肯定背</p><p><code>时间10点28分</code></p><p>我背好单词啦李阳，怎么样，说到做到吧</p><p>那这就不算忏悔啦，明天再加油（谁知道你怎么背的，全点认识谁都会）</p>              </div>            </details><details class="folding-tag" blue><summary> 我的痕迹 </summary>              <div class="content">              <p>兄弟们，今天一觉睡醒都10点多了，头发一天没洗了，头发好痒，呃呃呃(搓头发）…咸鱼视角哈哈</p><details class="folding-tag" blue><summary> 泡影 </summary>              <div class="content">              <p>今天做了一个很不好很不好的梦，梦见我很多朋友都在沙滩上一起玩，然后只要被海水浇到就会变成蚯蚓，好像我去尿了个尿（我没有尿床）然后回来我认识的人全部变成了蚯蚓，我当时心里想完蛋了我会不会被当成杀人犯，我该怎么给警察解释他们会变成蚯蚓。然后更厉害的是我还打电话给我们班的女同学（有点点尴尬）,然后说：爽了我们再也不用担心挂科了，我们班的同学都变成蚯蚓了。笑死我了，太好玩的梦了</p>              </div>            </details><p>以下全是流水账。（日记到底要怎么写才不会感觉很普普通通的感觉）</p><p>然后中文吃了这学校旁边的黄鼠狼鸡公煲，毫不夸张的说，当时我专升本考前在这旁边看到了鸡公煲我巨高兴，我好喜欢吃鸡公煲，不过这学校旁边的鸡公煲不好吃，原来我喜欢的一直是我们大专的鸡公煲，好次一百倍，好想好想去大专吃鸡公煲呜呜</p><p>哦哦还有，今天在图书馆坐我对面的女生也喜欢坐着那样子睡觉哈哈，我还以为就我会那样睡觉，笑死我了</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://www.freeimg.cn/i/2024/12/28/677014bf2d4f3.webp" alt="很好吃的小熊饼干，我从小吃到大好好吃。" style="width:400px;"></div><span class="image-caption">很好吃的小熊饼干，我从小吃到大好好吃。</span></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://www.freeimg.cn/i/2024/12/28/677014becb853.webp" alt=" 卧槽，这三个字真绝了好好看，有点像摸样了" style="width:400px;"></div><span class="image-caption"> 卧槽，这三个字真绝了好好看，有点像摸样了</span></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://www.freeimg.cn/i/2024/12/28/677014be49c89.webp" alt=" 还有这个边，好像例字（忽略我前面的字）" style="width:400px;"></div><span class="image-caption"> 还有这个边，好像例字（忽略我前面的字）</span></div><p>现在是12月30日，今天突然想起来这个<code>边</code>字，这个就是例子，我是怎么这么好看</p><p>好啦好啦今天就到这里啦，明天继续加油哦李阳</p>              </div>            </details>
               </div>
             </details>
-
 </div></div></div>
 ]]></content>
   </entry>
