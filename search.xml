@@ -1470,10 +1470,10 @@
 <p>设置中文</p>
 ]]></content>
       <categories>
-        <category>javaweb</category>
+        <category>java</category>
       </categories>
       <tags>
-        <tag>java</tag>
+        <tag>javaweb</tag>
       </tags>
   </entry>
   <entry>
@@ -3620,7 +3620,7 @@ S中顶点:从$v_o$到此顶点的最短路径长度。</p>
 <p>​         如:a1由6天变成3天，就会改变关键路径。</p>
 ]]></content>
       <categories>
-        <category>数据结构</category>
+        <category>408</category>
       </categories>
       <tags>
         <tag>数据结构</tag>
@@ -5258,7 +5258,7 @@ S中顶点:从$v_o$到此顶点的最短路径长度。</p>
   </entry>
   <entry>
     <title>计算机组成原理</title>
-    <url>/posts/51918/</url>
+    <url>/posts/51917/</url>
     <content><![CDATA[<h1>计算机组成原理</h1>
 <blockquote>
 <p>有志者，事竟成，破釜沉舟，百二秦关终属楚；苦心人，天不负，卧薪尝胆，三千越甲可吞吴</p>
