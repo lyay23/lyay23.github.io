@@ -14,7 +14,7 @@
 <h3 id="一、基本概念量（2025新增）">一、基本概念量（2025新增）</h3>
 <p>（一）数据结构的基本概念</p>
 <p>（二）算法的基本概念</p>
-<p>二、线性表</p>
+<h3 id="二、线性表">二、线性表</h3>
 <p>（一）线性表的基本概念</p>
 <p>（二）线性表的实现</p>
 <ul>
@@ -5254,6 +5254,54 @@ S中顶点:从$v_o$到此顶点的最短路径长度。</p>
       </categories>
       <tags>
         <tag>高等数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机组成原理</title>
+    <url>/posts/51917/</url>
+    <content><![CDATA[<h1>计算机组成原理</h1>
+<blockquote>
+<p>有志者，事竟成，破釜沉舟，百二秦关终属楚；苦心人，天不负，卧薪尝胆，三千越甲可吞吴</p>
+</blockquote>
+<blockquote>
+<h3 id="一、计算机系统概述">一、计算机系统概述</h3>
+<p>（一）计算机系统层次结构</p>
+<ul>
+<li>
+<p>1．计算机系统的基本组成</p>
+</li>
+<li>
+<p>2．计算机硬件的基本组成</p>
+</li>
+<li>
+<p>3．计算机软件和硬件的关系</p>
+</li>
+<li>
+<p>4．计算机系统的工作原理</p>
+</li>
+<li>
+<p>​         “存储程序”工作方式，</p>
+</li>
+<li>
+<p>​           高级语言程序与机器语言程序之间的转换，</p>
+</li>
+<li>
+<p>​           程序和指令的执行过程。</p>
+</li>
+</ul>
+<p>（二）计算机性能指标</p>
+<ul>
+<li>吞吐最、响应时间；</li>
+<li>CPU 时钟周期、主频、CPI ,CPU执行时间</li>
+<li>MIPS， MFLOPS,GFLOPS、TFLOPS、PFLOPS、EFLOPS、ZFLOPS。；</li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>408</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
       </tags>
   </entry>
 </search>
