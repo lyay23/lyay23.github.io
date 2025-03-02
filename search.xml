@@ -1998,6 +1998,14 @@
               </div>
             </details>
 <div class="timeline blue"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2025</p>
+</div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>03-02</p>
+</div></div><div class="timeline-item-content"><details class="folding-tag" blue><summary> 蓝 </summary>
+              <div class="content">
+              <p>今天突然想写日记，好长好长时间没有写了，感觉自己好累好累好累，我好像找不到某些意义了</p><p>李阳，你真的是一个很不好的人呢</p><hr><p>今天学了操作系统，大概看了5集，进度很慢，明天干嘛没想好</p>
+              </div>
+            </details>
+</div></div></div>
+<div class="timeline blue"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2025</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>03-01</p>
 </div></div><div class="timeline-item-content"><details class="folding-tag" red><summary> 近期 </summary>
               <div class="content">
@@ -2610,6 +2618,8 @@
 <li>一个进程可以执行exit系统调用，请求操作系统终止该进程。此时该进程会进入“<strong>终止态</strong>”，操作系统会让该进程下CPU,并回收内存空间等资源，最后还要回收该进程的PCB。</li>
 </ol>
 <h4 id="进程控制">进程控制</h4>
+<h5 id="概念-3">概念</h5>
+<p>进程控制的主要功能是对系统中的所有进程实施有效的管理，它具有创建新进程、撤销已有进程、实现进程状态转换等功能。</p>
 ]]></content>
       <categories>
         <category>408</category>
