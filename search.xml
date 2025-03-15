@@ -7287,4 +7287,31 @@ JDK8，不过 Spring 官方已经对 Spring6 进行了正式版发布。</p>
         <tag>javaweb</tag>
       </tags>
   </entry>
+  <entry>
+    <title>SpringSSM尚硅谷版</title>
+    <url>/posts/18665/</url>
+    <content><![CDATA[<h1 id="ssm">SSM</h1>
+<h2 id="一spring">一、Spring</h2>
+<h3 id="1容器篇">1.容器篇</h3>
+<h4 id="11-ioc和di">1.1 Ioc和DI</h4>
+<ul>
+<li>loC: Inversion of Control(控制反转)
+<ul>
+<li>·控制:资源的控制权(资源的创建、获取、销毁等)·</li>
+<li>反转:和传统的方式不一样样</li>
+</ul></li>
+<li>· DI : Dependency Injection(依赖注入)
+<ul>
+<li>依赖:组件的依赖关系，如NewsController依赖 NewsServi ices</li>
+<li>注入:通过setter方法、构造器、等方式自动的注入(赋值)</li>
+</ul></li>
+</ul>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>javaweb</tag>
+      </tags>
+  </entry>
 </search>
