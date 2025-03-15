@@ -7236,12 +7236,49 @@ JDK8，不过 Spring 官方已经对 Spring6 进行了正式版发布。</p>
   </entry>
   <entry>
     <title>苍穹外卖</title>
-    <url>/posts/22004/</url>
+    <url>/posts/21962/</url>
     <content><![CDATA[<h1>苍穹外卖</h1>
 <p><a href="https://www.bilibili.com/video/BV1TP411v7v6?spm_id_from=333.788.player.switch&amp;vd_source=e88e742588c8097398a75a4b7b5119ab&amp;p=2">Day01-01-项目效果展示_哔哩哔哩_bilibili</a></p>
 <p>⎛⎝≥⏝⏝≤⎛⎝⎛⎝≥⏝⏝≤⎛⎝⎛⎝≥⏝⏝≤⎛⎝</p>
 <h2 id="一、知识点">一、知识点</h2>
+<h3 id="1-git">1.git</h3>
+<ol>
+<li>idea点击vcs</li>
+<li>选择 Create Git Repository 然后选择，点击ok（创建本地仓库）</li>
+<li>git上面的对勾，然后选择文件，Unversioned Files所有文件</li>
+<li>填写commit message，点击commit</li>
+<li>创建github仓库，名称随便，复制代码地址</li>
+<li>然后点击git的右箭头，点击Define remote，将URL地址填写进去，就ok</li>
+<li>点击push</li>
+</ol>
 <h2 id="二、遇到的错误">二、遇到的错误</h2>
+<h3 id="第一天">第一天</h3>
+<h4 id="1-前端nginx打开报502错误">1.前端nginx打开报502错误</h4>
+<p>在项目的第一步，我把前端代码放在了没有中文的路径，然后启动了nginx，访问localhost成功，但是点击登录不跳转，控制台报了</p>
+<p>Nginx 502错误:</p>
+<blockquote>
+<p>Failed to load resource: the server responded with a status of 502 (Bad Gateway)</p>
+</blockquote>
+<p>我现在在conf文件夹下的<code>nginx.conf</code>文件中添加了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 502 bad gateway 错误解决配置 start</span><br><span class="line">proxy_buffer_size 64k;</span><br><span class="line">proxy_buffers 32 32k;</span><br><span class="line">proxy_busy_buffers_size 128k;</span><br><span class="line"># 502 bad gateway 错误解决配置 end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>发现也不行，后面了解弹幕知道好像是因为没有开后台所以登录不成功，不过服务能启动就ok</p>
+<h4 id="2-后端报错误">2.后端报错误</h4>
+<blockquote>
+<p>java: java.lang.NoSuchFieldError: Class com.sun.tools.javac.tree.JCTree$JCImport does not have member field ‘com.sun.tools.javac.tree.JCTree qualid’</p>
+</blockquote>
+<p>问题原因是<a href="https://so.csdn.net/so/search?q=Lombok&amp;spm=1001.2101.3001.7020">Lombok</a> ，与 JDK 21 兼容的最低 Lombok 版本是 1.18.30，最小的 Spring Boot 版本是 3.1.4。</p>
+<p>我的jdk是21</p>
+<p>升级呗，还能咋弄</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.30<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>升级完成后build就没有报错了，后序报错再说</p>
+<h4 id="3-项目没有iml文件">3.项目没有iml文件</h4>
+<p>我导入老师的项目没有inl文件</p>
+<p>alt+F12打开命令行</p>
+<p>执行<code>mvn idea:module</code></p>
+<p>完美解决</p>
+<h4 id="4-Steam-与nginx冲突问题">4.Steam++与nginx冲突问题</h4>
+<p>劳资的steam++与nginx又冲突，我说怎么一直启动不成功</p>
+<p>关掉steam++后nginx成功启动，任务管理器中有在运行，成功进入</p>
 ]]></content>
       <categories>
         <category>java</category>
