@@ -7237,12 +7237,12 @@ JDK8，不过 Spring 官方已经对 Spring6 进行了正式版发布。</p>
   <entry>
     <title>苍穹外卖</title>
     <url>/posts/21962/</url>
-    <content><![CDATA[<h1>苍穹外卖</h1>
+    <content><![CDATA[<h1 id="苍穹外卖">苍穹外卖</h1>
 <p><a href="https://www.bilibili.com/video/BV1TP411v7v6?spm_id_from=333.788.player.switch&amp;vd_source=e88e742588c8097398a75a4b7b5119ab&amp;p=2">Day01-01-项目效果展示_哔哩哔哩_bilibili</a></p>
 <p>⎛⎝≥⏝⏝≤⎛⎝⎛⎝≥⏝⏝≤⎛⎝⎛⎝≥⏝⏝≤⎛⎝</p>
-<h2 id="一、知识点">一、知识点</h2>
-<h3 id="1-git">1.git</h3>
-<ol>
+<h2 id="一知识点">一、知识点</h2>
+<h3 id="1git">1.git</h3>
+<ol type="1">
 <li>idea点击vcs</li>
 <li>选择 Create Git Repository 然后选择，点击ok（创建本地仓库）</li>
 <li>git上面的对勾，然后选择文件，Unversioned Files所有文件</li>
@@ -7251,98 +7251,124 @@ JDK8，不过 Spring 官方已经对 Spring6 进行了正式版发布。</p>
 <li>然后点击git的右箭头，点击Define remote，将URL地址填写进去，就ok</li>
 <li>点击push</li>
 </ol>
-<h2 id="二、代码">二、代码</h2>
-<h3 id="1-为什么会登录成功">1.为什么会登录成功</h3>
+<h3 id="2threadlocal">2.ThreadLocal</h3>
+<p>ThreadLocal并不是一个Thread，而是Thread的局部变量。
+ThreadLocal为每个线程提供单独一份存储空间，具有线程隔离的效果，只有在线程内才能获取到对应的值，线程外则不能访问。</p>
+<p>在被问simpledateformat线程不安全怎么处理的时候，也可以用这个Threadlocal</p>
+<p>可以理解为，某个事件的参与者 拉了个私群，方便内部及时交流</p>
+<p>ThreadLocal常用方法:</p>
+<ul>
+<li>public void set(T value)设置当前线程的线程局部变量的值</li>
+<li>public T get()返回当前线程所对应的线程局部变量的值</li>
+<li>.public void remove()移除当前线程的线程局部变量</li>
+</ul>
+<h2 id="二代码">二、代码</h2>
+<h3 id="1为什么会登录成功">1.为什么会登录成功</h3>
 <blockquote>
 <p>前端发送登录请求到后端，请求到后端的controller</p>
 </blockquote>
-<h4 id="1-1-请求路径">1.1 请求路径</h4>
+<h4 id="11-请求路径">1.1 请求路径</h4>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/admin/employee&quot;)</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/login&quot;)</span></span><br></pre></td></tr></table></figure>
-<p>请求路径是：POST <a href="http://localhost:8080/admin/employee/login">http://localhost:8080/admin/employee/login</a></p>
-<h4 id="1-2-方法名">1.2 方法名</h4>
+
+<p>请求路径是：POST http://localhost:8080/admin/employee/login</p>
+<h4 id="12-方法名">1.2 方法名</h4>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> Result&lt;EmployeeLoginVO&gt; <span class="title function_">login</span><span class="params">(<span class="meta">@RequestBody</span> EmployeeLoginDTO employeeLoginDTO)</span> &#123;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><code>Result</code> 返回结果类</li>
 </ul>
 <p>这是一个带泛形的类</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 后端统一返回结果</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Result</span>&lt;T&gt; <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer code; <span class="comment">//编码：1成功，0和其它数字为失败</span></span><br><span class="line">    <span class="keyword">private</span> String msg; <span class="comment">//错误信息</span></span><br><span class="line">    <span class="keyword">private</span> T data; <span class="comment">//数据</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; Result&lt;T&gt; <span class="title function_">success</span><span class="params">()</span> &#123;</span><br><span class="line">        Result&lt;T&gt; result = <span class="keyword">new</span> <span class="title class_">Result</span>&lt;T&gt;();</span><br><span class="line">        result.code = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; Result&lt;T&gt; <span class="title function_">success</span><span class="params">(T object)</span> &#123;</span><br><span class="line">        Result&lt;T&gt; result = <span class="keyword">new</span> <span class="title class_">Result</span>&lt;T&gt;();</span><br><span class="line">        result.data = object;</span><br><span class="line">        result.code = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; Result&lt;T&gt; <span class="title function_">error</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">        <span class="type">Result</span> <span class="variable">result</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Result</span>();</span><br><span class="line">        result.msg = msg;</span><br><span class="line">        result.code = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>
-<ul>
-<li>这是一个通用的后端统一返回结果类 Result<T>，用于封装后端处理请求后的响应数据。它的主要作用是标准化接口的返回格式，使得前端可以统一处理成功和失败的情况</T></li>
-<li>implements Serializable：表示该类可以被序列化（例如，用于网络传输或缓存）。</li>
-</ul>
-</li>
-<li>
-<p><code>EmployeeLoginVO</code></p>
-</li>
+<li><ul>
+<li>这是一个通用的后端统一返回结果类
+Result<T>，用于封装后端处理请求后的响应数据。它的主要作用是标准化接口的返回格式，使得前端可以统一处理成功和失败的情况</T></li>
+<li>implements
+Serializable：表示该类可以被序列化（例如，用于网络传输或缓存）。</li>
+</ul></li>
+<li><p><code>EmployeeLoginVO</code></p></li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Builder</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@ApiModel(description = &quot;员工登录返回的数据格式&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EmployeeLoginVO</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ApiModelProperty(&quot;主键值&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ApiModelProperty(&quot;用户名&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String userName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ApiModelProperty(&quot;姓名&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ApiModelProperty(&quot;jwt令牌&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String token;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>返回的格式而已</p>
 <ul>
 <li><code>@RequestBody EmployeeLoginDTO employeeLoginDTO</code>
 <ul>
-<li>@RequestBody 的作用<br>
-功能：将 HTTP 请求的 请求体（Body） 中的 JSON 或 XML 数据，自动转换为 Java 对象。</li>
+<li>@RequestBody 的作用 功能：将 HTTP 请求的 请求体（Body） 中的 JSON 或
+XML 数据，自动转换为 Java 对象。</li>
 <li>通过 @RequestBody 将 JSON 数据绑定到 EmployeeLoginDTO 对象。</li>
 <li>这里返回的username=admin password=123456</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>走到这里我明白了：</p>
-<p>​       这是一个返回值类型为Result的（里面规范为EmployeeLoginVO）名称为login的方法，将登录请求发送的json格式的数据转换为employeeLoginDTO类型的变量</p>
-<h4 id="1-3-方法体1">1.3 方法体1</h4>
+<p>​
+这是一个返回值类型为Result的（里面规范为EmployeeLoginVO）名称为login的方法，将登录请求发送的json格式的数据转换为employeeLoginDTO类型的变量</p>
+<h4 id="13-方法体1">1.3 方法体1</h4>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Employee</span> <span class="variable">employee</span> <span class="operator">=</span> employeeService.login(employeeLoginDTO);</span><br></pre></td></tr></table></figure>
+
 <p>将我们登录成功的用户名密码传给emplyee</p>
 <p>ctrl+alt+b跳转到方法</p>
 <p><code>login</code></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> Employee <span class="title function_">login</span><span class="params">(EmployeeLoginDTO employeeLoginDTO)</span> &#123;</span><br><span class="line">       <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> employeeLoginDTO.getUsername();</span><br><span class="line">       <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> employeeLoginDTO.getPassword();</span><br><span class="line"></span><br><span class="line">       <span class="comment">//1、根据用户名查询数据库中的数据</span></span><br><span class="line">       <span class="type">Employee</span> <span class="variable">employee</span> <span class="operator">=</span> employeeMapper.getByUsername(username);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//2、处理各种异常情况（用户名不存在、密码不对、账号被锁定）</span></span><br><span class="line">       <span class="keyword">if</span> (employee == <span class="literal">null</span>) &#123;</span><br><span class="line">           <span class="comment">//账号不存在</span></span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">AccountNotFoundException</span>(MessageConstant.ACCOUNT_NOT_FOUND);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="comment">//密码比对</span></span><br><span class="line">       <span class="comment">// TODO 后期需要进行md5加密，然后再进行比对</span></span><br><span class="line">       <span class="keyword">if</span> (!password.equals(employee.getPassword())) &#123;</span><br><span class="line">           <span class="comment">//密码错误</span></span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">PasswordErrorException</span>(MessageConstant.PASSWORD_ERROR);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (employee.getStatus() == StatusConstant.DISABLE) &#123;</span><br><span class="line">           <span class="comment">//账号被锁定</span></span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">AccountLockedException</span>(MessageConstant.ACCOUNT_LOCKED);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="comment">//3、返回实体对象</span></span><br><span class="line">       <span class="keyword">return</span> employee;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p><code>employeeLoginDTO</code></p>
 <p>里面会接收到前端传过来的用户名和密码</p>
 <p>然后根据用户名去数据库中查询</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Select(&quot;select * from employee where username = #&#123;username&#125;&quot;)</span></span><br><span class="line">    Employee <span class="title function_">getByUsername</span><span class="params">(String username)</span>;</span><br></pre></td></tr></table></figure>
+
 <p>将用户名传进来，然后通过注解方式去查询</p>
-<h4 id="1-4-方法体2">1.4 方法体2</h4>
+<h4 id="14-方法体2">1.4 方法体2</h4>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//登录成功后，生成jwt令牌</span></span><br><span class="line">       Map&lt;String, Object&gt; claims = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">       claims.put(JwtClaimsConstant.EMP_ID, employee.getId());</span><br><span class="line">       <span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> JwtUtil.createJWT(</span><br><span class="line">               jwtProperties.getAdminSecretKey(),</span><br><span class="line">               jwtProperties.getAdminTtl(),</span><br><span class="line">               claims);</span><br><span class="line"></span><br><span class="line">       <span class="type">EmployeeLoginVO</span> <span class="variable">employeeLoginVO</span> <span class="operator">=</span> EmployeeLoginVO.builder()</span><br><span class="line">               .id(employee.getId())</span><br><span class="line">               .userName(employee.getUsername())</span><br><span class="line">               .name(employee.getName())</span><br><span class="line">               .token(token)</span><br><span class="line">               .build();</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> Result.success(employeeLoginVO);</span><br></pre></td></tr></table></figure>
+
 <p>令牌我不知道怎么写 过了过了</p>
-<p>EmployeeLoginVO：视图对象（View Object），仅包含需要返回给前端的数据（避免暴露敏感字段）。<br>
-Builder 模式：通过 Lombok 的 @Builder 注解链式构建对象，提高代码可读性。<br>
-返回结果<br>
-return Result.success(employeeLoginVO);<br>
-使用统一的 Result 类封装响应数据，结构为 {code: 1, msg: null, data: {…}}。</p>
+<p>EmployeeLoginVO：视图对象（View
+Object），仅包含需要返回给前端的数据（避免暴露敏感字段）。 Builder
+模式：通过 Lombok 的 @Builder 注解链式构建对象，提高代码可读性。
+返回结果 return Result.success(employeeLoginVO); 使用统一的 Result
+类封装响应数据，结构为 {code: 1, msg: null, data: {…}}。</p>
 <p>最后返回成功</p>
-<h3 id="2-使用MD5加密密码">2.使用MD5加密密码</h3>
+<h3 id="2使用md5加密密码">2.使用MD5加密密码</h3>
 <p><a href="https://www.bilibili.com/video/BV1TP411v7v6?spm_id_from=333.788.player.switch&amp;vd_source=e88e742588c8097398a75a4b7b5119ab&amp;p=12">Day01-11-开发环境搭建_完善登录功能_哔哩哔哩_bilibili</a></p>
 <p><code>sky-server/src/main/java/com/sky/service/impl/EmployeeServiceImpl.java</code></p>
 <p>添加</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">password = DigestUtils.md5DigestAsHex(password.getBytes());</span><br></pre></td></tr></table></figure>
+
 <p>一个工具类搞定</p>
-<h2 id="三、遇到的错误">三、遇到的错误</h2>
+<h3 id="3新增员工">3.新增员工</h3>
+<h2 id="三遇到的错误">三、遇到的错误</h2>
 <h3 id="第一天">第一天</h3>
-<h4 id="1-前端nginx打开报502错误">1.前端nginx打开报502错误</h4>
+<h4 id="1前端nginx打开报502错误">1.前端nginx打开报502错误</h4>
 <p>在项目的第一步，我把前端代码放在了没有中文的路径，然后启动了nginx，访问localhost成功，但是点击登录不跳转，控制台报了</p>
 <p>Nginx 502错误:</p>
 <blockquote>
-<p>Failed to load resource: the server responded with a status of 502 (Bad Gateway)</p>
+<p>Failed to load resource: the server responded with a status of 502
+(Bad Gateway)</p>
 </blockquote>
 <p>我现在在conf文件夹下的<code>nginx.conf</code>文件中添加了</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 502 bad gateway 错误解决配置 start</span><br><span class="line">proxy_buffer_size 64k;</span><br><span class="line">proxy_buffers 32 32k;</span><br><span class="line">proxy_busy_buffers_size 128k;</span><br><span class="line"># 502 bad gateway 错误解决配置 end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>发现也不行，后面了解弹幕知道好像是因为没有开后台所以登录不成功，不过服务能启动就ok</p>
-<h4 id="2-后端报错误">2.后端报错误</h4>
+<h4 id="2后端报错误">2.后端报错误</h4>
 <blockquote>
-<p>java: java.lang.NoSuchFieldError: Class com.sun.tools.javac.tree.JCTree$JCImport does not have member field ‘com.sun.tools.javac.tree.JCTree qualid’</p>
+<p>java: java.lang.NoSuchFieldError: Class
+com.sun.tools.javac.tree.JCTree$JCImport does not have member field
+‘com.sun.tools.javac.tree.JCTree qualid’</p>
 </blockquote>
-<p>问题原因是<a href="https://so.csdn.net/so/search?q=Lombok&amp;spm=1001.2101.3001.7020">Lombok</a> ，与 JDK 21 兼容的最低 Lombok 版本是 1.18.30，最小的 Spring Boot 版本是 3.1.4。</p>
+<p>问题原因是<a href="https://so.csdn.net/so/search?q=Lombok&amp;spm=1001.2101.3001.7020">Lombok</a>
+，与 JDK 21 兼容的最低 Lombok 版本是 1.18.30，最小的 Spring Boot 版本是
+3.1.4。</p>
 <p>我的jdk是21</p>
 <p>升级呗，还能咋弄</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.30<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>升级完成后build就没有报错了，后序报错再说</p>
-<h4 id="3-项目没有iml文件">3.项目没有iml文件</h4>
+<h4 id="3项目没有iml文件">3.项目没有iml文件</h4>
 <p>我导入老师的项目没有inl文件</p>
 <p>alt+F12打开命令行</p>
 <p>执行<code>mvn idea:module</code></p>
 <p>完美解决</p>
-<h4 id="4-Steam-与nginx冲突问题">4.Steam++与nginx冲突问题</h4>
+<h4 id="4steam与nginx冲突问题">4.Steam++与nginx冲突问题</h4>
 <p>劳资的steam++与nginx又冲突，我说怎么一直启动不成功</p>
 <p>关掉steam++后nginx成功启动，任务管理器中有在运行，成功进入</p>
 ]]></content>
