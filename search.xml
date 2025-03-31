@@ -7264,6 +7264,7 @@ ThreadLocal为每个线程提供单独一份存储空间，具有线程隔离的
 </ul>
 <h3 id="3pagehelper">3.pagehelper</h3>
 <p>简化分页查询</p>
+<h3 id="4事务-transactional">4.事务 @Transactional</h3>
 <h3 id="4公共字段填充">4.公共字段填充</h3>
 <h2 id="二代码">二、代码</h2>
 <h3 id="1为什么会登录成功">1.为什么会登录成功</h3>
