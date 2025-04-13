@@ -7239,6 +7239,7 @@ JDK8，不过 Spring 官方已经对 Spring6 进行了正式版发布。</p>
     <url>/posts/21962/</url>
     <content><![CDATA[<h1 id="苍穹外卖">苍穹外卖</h1>
 <p><a href="https://www.bilibili.com/video/BV1TP411v7v6?spm_id_from=333.788.player.switch&amp;vd_source=e88e742588c8097398a75a4b7b5119ab&amp;p=2">Day01-01-项目效果展示_哔哩哔哩_bilibili</a></p>
+<p><a href="https://github.com/lyay23/sky-take-out.git">苍穹外卖项目地址</a></p>
 <p>⎛⎝≥⏝⏝≤⎛⎝⎛⎝≥⏝⏝≤⎛⎝⎛⎝≥⏝⏝≤⎛⎝</p>
 <h2 id="一知识点">一、知识点</h2>
 <h3 id="1git">1.git</h3>
@@ -7270,7 +7271,47 @@ ThreadLocal为每个线程提供单独一份存储空间，具有线程隔离的
 <h3 id="3pagehelper">3.pagehelper</h3>
 <p>简化分页查询</p>
 <h3 id="4事务-transactional">4.事务 @Transactional</h3>
-<h2 id="二代码">二、代码</h2>
+<h2 id="二第四天代码">二、第四天代码</h2>
+<blockquote>
+<p>完成套餐管理模块所有业务功能，包括：</p>
+<ul>
+<li>新增套餐</li>
+<li>套餐分页查询</li>
+<li>删除套餐</li>
+<li>修改套餐</li>
+<li>起售停售套餐</li>
+</ul>
+<p>要求：</p>
+<ol type="1">
+<li>根据产品原型进行需求分析，分析出业务规则</li>
+<li>设计接口</li>
+<li>梳理表之间的关系（分类表、菜品表、套餐表、口味表、套餐菜品关系表）</li>
+<li>根据接口设计进行代码实现</li>
+<li>分别通过swagger接口文档和前后端联调进行功能测试</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>好吧好吧，该来的总还是会来的，前面你可以搓出来分类管理模块，那么现在你肯定可以做到套餐管理模块呢</p>
+<p>加油加油加油加油李阳</p>
+</blockquote>
+<h3 id="1-新增套餐">1. 新增套餐</h3>
+<p>新增套餐模块肯定要关联菜品表，我想一想🤔</p>
+<p>首先肯定要有一个套餐表<code>setmeal</code>，如何根据套餐表的id将菜品与套餐关联在<code>setmeal_dish</code>表中，有点类似菜品表和口味表，这样想就立马有思路了嘿嘿，废话少说直接开干兄弟们</p>
+<p>我先看下页面原型</p>
+<p><img src="https://bu.dusays.com/2025/04/13/67fb7d83570aa.png" alt="image-20250413170146106"></p>
+<p>完蛋，好像有点麻烦</p>
+<p>涉及功能：</p>
+<ul>
+<li>套餐分类：根据分类类型查询分类</li>
+<li>套餐菜品：根据id查询菜品（所有菜品我猜）</li>
+<li>文件上传：已完成</li>
+<li>新增套餐：insert</li>
+</ul>
+<p>看下接口</p>
+<p><img src="https://bu.dusays.com/2025/04/13/67fb7f02ed49d.png" alt="image-20221018141521068"></p>
+<p><img src="https://bu.dusays.com/2025/04/13/67fb7eeaf296e.png" alt="image-20221018141606787"></p>
+<p>老师给了俩，</p>
+<h2 id="三老师代码">三、老师代码</h2>
 <div class="timeline green"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2025</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>04-11</p>
 </div></div><div class="timeline-item-content"><p>我已经进修完成javaweb的代码了，苍穹外卖一切从0开始重新写，把我之前遇到的问题做一个巩固</p>
@@ -7302,7 +7343,6 @@ ThreadLocal为每个线程提供单独一份存储空间，具有线程隔离的
 
 <h3 id="3-aop">3. AOP</h3>
 <h2 id="三遇到的错误">三、遇到的错误</h2>
-<h3 id="第一天">第一天</h3>
 <h4 id="1前端nginx打开报502错误">1.前端nginx打开报502错误</h4>
 <p>在项目的第一步，我把前端代码放在了没有中文的路径，然后启动了nginx，访问localhost成功，但是点击登录不跳转，控制台报了</p>
 <p>Nginx 502错误:</p>
@@ -7336,6 +7376,9 @@ com.sun.tools.javac.tree.JCTree$JCImport does not have member field
 <h4 id="4steam与nginx冲突问题">4.Steam++与nginx冲突问题</h4>
 <p>劳资的steam++与nginx又冲突，我说怎么一直启动不成功</p>
 <p>关掉steam++后nginx成功启动，任务管理器中有在运行，成功进入</p>
+<h4 id="5oss前端不显示图片后台正确获取问题">5.OSS前端不显示图片，后台正确获取问题</h4>
+<p><code>yml</code>的endpoint:
+oss-cn-hangzhou.aliyuncs.com不能加http://</p>
 ]]></content>
       <categories>
         <category>java</category>
