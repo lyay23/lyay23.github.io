@@ -7271,6 +7271,76 @@ ThreadLocal为每个线程提供单独一份存储空间，具有线程隔离的
 <h3 id="3pagehelper">3.pagehelper</h3>
 <p>简化分页查询</p>
 <h3 id="4事务-transactional">4.事务 @Transactional</h3>
+<h3 id="5redis">5.Redis</h3>
+<blockquote>
+<p>实话实说redis数据库对于后端开发来说非常的重要，因为它是基于内存存储的访问速度非常的快可以将mysql的数据同步到redis从而减少对mysql的访问</p>
+</blockquote>
+<p>Redis是一个基于内存的key-value结构数据库。是内存存储</p>
+<h4 id="51-5种数据类型">5.1 5种数据类型</h4>
+<ul>
+<li>字符串 String</li>
+<li>哈希 hash</li>
+<li>列表 list</li>
+<li>集合 set</li>
+<li>有序集合 sorted set/zset （排行榜）</li>
+</ul>
+<p><img src="https://bu.dusays.com/2025/04/16/67ffa1f5328cf.png" alt="image-20250416202627629"></p>
+<h4 id="52-字符串常用命令">5.2 字符串常用命令</h4>
+<p><img src="https://bu.dusays.com/2025/04/16/67ffa2d9ed39e.png" alt="image-20250416203016883"></p>
+<ul>
+<li>SET key value 设置指定key的值</li>
+<li>GET key 获取指定key的值</li>
+<li>SETEX key seconds value 设置指定key的值，并将
+key的过期时间设为seconds秒（验证码）</li>
+<li>SETNX key value 只有在key 不存在时设置key的值 （分布式锁）</li>
+</ul>
+<h4 id="53-哈希操作命令">5.3 哈希操作命令</h4>
+<p><img src="https://bu.dusays.com/2025/04/16/67ffa742be8f6.png" alt="image-20250416204905608"></p>
+<ul>
+<li>HSET key field value 将哈希表key 中的字段field的值设为value</li>
+<li>HGET key field 获取存储在哈希表中指定字段的值</li>
+<li>HDEL key field 删除存储在哈希表中的指定字段</li>
+<li>HKEYS key 获取哈希表中所有字段</li>
+<li>HVALS key 获取哈希表中所有值</li>
+</ul>
+<h4 id="54-列表操作命令">5.4 列表操作命令</h4>
+<p><img src="https://bu.dusays.com/2025/04/16/67ffa995d744f.png" alt="image-20250416205900763"></p>
+<ul>
+<li>LPUSH key value1 [value2] 将一个或多个值插入到列表头部</li>
+<li>LRANGE key start stop 获取列表指定范围内的元素</li>
+<li>RPOP key 移除并获取列表最后一个元素</li>
+<li>LLEN key 获取列表长度</li>
+</ul>
+<h4 id="55-集合操作命令">5.5 集合操作命令</h4>
+<p><img src="https://bu.dusays.com/2025/04/16/67ffac2116208.png" alt="image-20250416210951904"></p>
+<ul>
+<li>SADD key member1 [member2]向集合添加一个或多个成员</li>
+<li>SMEMBERS key 返回集合中的所有成员</li>
+<li>SCARD key 获取集合的成员数</li>
+<li>SINTER key1 [key2] 返回给定所有集合的交集</li>
+<li>SUNION key1 [key2] 返回所有给定集合的并集</li>
+<li>SREM key member1 [member2]删除集合中一个或多个成员</li>
+</ul>
+<h4 id="56-有序集合的命令">5.6 有序集合的命令</h4>
+<p><img src="https://bu.dusays.com/2025/04/16/67ffadaeb01dc.png" alt="image-20250416211629487"></p>
+<ul>
+<li>ZADD key score1 member1 [score2 member2]
+向有序集合添加一个或多个成员</li>
+<li>ZRANGE key start stop [WITHSCORES]
+通过索引区间返回有序集合中指定区间内的成员</li>
+<li>ZINCRBY key increment member
+有序集合中对指定成员的分数加上增量increment</li>
+<li>ZREM key member [member …] 移除有序集合中的一个或多个成员</li>
+</ul>
+<h4 id="57-通用命令">5.7 通用命令</h4>
+<p><img src="https://bu.dusays.com/2025/04/16/67ffaf5dcb72b.png" alt="image-20250416212340819"></p>
+<ul>
+<li>KEYS pattern 查找所有符合给定模式( pattern)的 key</li>
+<li>EXISTS key 检查给定key是否存在</li>
+<li>TYPE key 返回key所储存的值的类型</li>
+<li>DEL key 该命令用于在key存在是删除key</li>
+</ul>
+<h3 id="6-httpclient">6. HttpClient</h3>
 <h2 id="二第四天代码">二、第四天代码</h2>
 <blockquote>
 <p>完成套餐管理模块所有业务功能，包括：</p>
@@ -7310,7 +7380,26 @@ ThreadLocal为每个线程提供单独一份存储空间，具有线程隔离的
 <p>看下接口</p>
 <p><img src="https://bu.dusays.com/2025/04/13/67fb7f02ed49d.png" alt="image-20221018141521068"></p>
 <p><img src="https://bu.dusays.com/2025/04/13/67fb7eeaf296e.png" alt="image-20221018141606787"></p>
-<p>老师给了俩，</p>
+<p>老师给了俩接口文档，那我们先写第一个 根据分类文档查询第一个</p>
+<h4 id="11-据分类查询套餐">1.1 据分类查询套餐</h4>
+<p>根据文档，是写在dish里面的功能</p>
+<p>很简单的代码，这里我就不再多说，具体代码请看我github提交的commit的根据分类id查询菜品的代码</p>
+<p>再次感叹，前端功能设计的太好了</p>
+<p><em><strong>需要注意</strong></em>：</p>
+<p><code>getByCategoryId</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 根据分类id查询菜品</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> categoryId 分类id</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span> 菜品集合</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="keyword">public</span> List&lt;Dish&gt; <span class="title function_">getByCategoryId</span><span class="params">(Long categoryId)</span> &#123;</span><br><span class="line">       <span class="comment">// 查询条件，封装查询条件，设置查询条件，根据分类id查询，查询启用菜品</span></span><br><span class="line">       <span class="type">Dish</span> <span class="variable">dish</span> <span class="operator">=</span> Dish.builder()</span><br><span class="line">               .categoryId(categoryId)</span><br><span class="line">               .status(StatusConstant.ENABLE)</span><br><span class="line">               .build();</span><br><span class="line">       <span class="comment">// 查询菜品表</span></span><br><span class="line">       <span class="keyword">return</span> dishMapper.getByCategoryId(categoryId);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里需要根据id，和启用菜品来查询，对应这三个部分</p>
+<p><img src="https://bu.dusays.com/2025/04/13/67fbb57a93140.png" alt="image-20250413210042184"></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--    根据菜品类型id查询菜品--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getByCategoryId&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.sky.entity.Dish&quot;</span>&gt;</span></span><br><span class="line">        select * from dish</span><br><span class="line">        <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;categoryId != null&quot;</span>&gt;</span>and category_id = #&#123;categoryId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;status != null&quot;</span>&gt;</span>and status = #&#123;status&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;name != null and name != &#x27;&#x27;&quot;</span>&gt;</span>and name like concat(&#x27;%&#x27;, #&#123;name&#125;, &#x27;%&#x27;)<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">        order by create_time desc</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>xml还需要进行动态查询，只查某一项的功能</p>
+<h4 id="12-批量删除套餐">1.2 批量删除套餐</h4>
+<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊1啊1啊1啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊1啊啊啊啊啊啊劳资要疯了</p>
+<p>劳资删除套餐为什么只能删除套餐表，关联不到套餐菜品表</p>
+<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+<p>操他奶奶的，因为我的插入代码有误，获取id变成了获取套餐名称id，这样我的套餐菜品表关联的套餐id全部变成了口味表里的id，怪不得一直删除不成功，代码明明也和老师的差不多，但是套餐菜品表就是删除不成功</p>
+<p>目前已解决，具体代码在github</p>
 <h2 id="三老师代码">三、老师代码</h2>
 <div class="timeline green"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2025</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>04-11</p>
