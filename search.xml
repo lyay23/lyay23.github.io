@@ -7341,6 +7341,45 @@ key的过期时间设为seconds秒（验证码）</li>
 <li>DEL key 该命令用于在key存在是删除key</li>
 </ul>
 <h3 id="6-httpclient">6. HttpClient</h3>
+<h3 id="7-spring-cache-简化缓存代码开发">7. Spring Cache
+简化缓存代码开发</h3>
+<p>Spring
+Cache是一个框架，实现了基于注解的缓存功能，只需要简单地加一个注解，就能实现缓存功能。</p>
+<p>Spring Cache提供了一层抽象，底层可以切换不同的缓存实现，例如:</p>
+<ul>
+<li>EHCache</li>
+<li>Caffeine</li>
+<li>Redis</li>
+</ul>
+<blockquote>
+<p>常用注解</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@EnableCaching</td>
+<td>开启缓存注解功能，通常加在启动类上</td>
+</tr>
+<tr>
+<td>@Cacheable</td>
+<td>在方法执行前先查询缓存中是否有数据，如果有数据，则直接返回缓存数据；如果没有缓存数据，调用方法并将方法返回值放到缓存中</td>
+</tr>
+<tr>
+<td>@CachePut</td>
+<td>将方法的返回值放到缓存中</td>
+</tr>
+<tr>
+<td>@CacheEvict</td>
+<td>将一条或多条数据从缓存中删除</td>
+</tr>
+</tbody>
+</table>
 <h2 id="二第四天代码">二、第四天代码</h2>
 <blockquote>
 <p>完成套餐管理模块所有业务功能，包括：</p>
