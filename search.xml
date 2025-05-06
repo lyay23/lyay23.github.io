@@ -7595,116 +7595,163 @@ oss-cn-hangzhou.aliyuncs.com不能加http://</p>
   <entry>
     <title>tlias 智能管理系统</title>
     <url>/posts/37847/</url>
-    <content><![CDATA[<h1 id="tlias智能管理系统"><a href="#tlias智能管理系统" class="headerlink" title="tlias智能管理系统"></a>tlias智能管理系统</h1><blockquote>
+    <content><![CDATA[<h1 id="tlias智能管理系统">tlias智能管理系统</h1>
+<blockquote>
 <p>跟着老师敲了部门管理和员工管理的内容</p>
 <p>以下是自己写班级管理，学员管理，数据统计的历程</p>
 <p>故余虽愚，卒获有所闻</p>
 <p>因为在写代码的过程中发现就是简单的copy代码，所以这里没有提供更多的代码思路，详情请看github中具体的commit，那里会有详细注释解析</p>
 <hr>
-<p>I followed the teacher to type out the content about department management and staff management</p>
-<p>The following is the process of writing class management, student management, and data statistics by myself</p>
-<p>Because during the process of writing the code, it was found that it was just a simple copy of the code, no more code ideas were provided here. For more details, please refer to the specific commit on Github, where there will be detailed comments and explanations</p>
+<p>I followed the teacher to type out the content about department
+management and staff management</p>
+<p>The following is the process of writing class management, student
+management, and data statistics by myself</p>
+<p>Because during the process of writing the code, it was found that it
+was just a simple copy of the code, no more code ideas were provided
+here. For more details, please refer to the specific commit on Github,
+where there will be detailed comments and explanations</p>
 </blockquote>
-<p>代码仓库：<a href="https://github.com/lyay23/tlias-web-managemen"> tlias管理系统-黑马程序员2024JavaWeb+AI 实训 (github.com)</a></p>
-<h2 id="一、代码开发"><a href="#一、代码开发" class="headerlink" title="一、代码开发"></a>一、代码开发</h2><h3 id="1、班级管理"><a href="#1、班级管理" class="headerlink" title="1、班级管理"></a>1、班级管理</h3><h4 id="1-1-分页查询功能"><a href="#1-1-分页查询功能" class="headerlink" title="1.1 分页查询功能"></a>1.1 分页查询功能</h4><p>劳资不会怎么办 不管了先写在说</p>
+<p>代码仓库：<a href="https://github.com/lyay23/tlias-web-managemen">
+tlias管理系统-黑马程序员2024JavaWeb+AI 实训 (github.com)</a></p>
+<h2 id="一代码开发">一、代码开发</h2>
+<h3 id="1班级管理">1、班级管理</h3>
+<h4 id="11-分页查询功能">1.1 分页查询功能</h4>
+<p>劳资不会怎么办 不管了先写在说</p>
 <p>一个很不好的问题，我的Controller要叫什么名字</p>
 <p><code>ClazzController</code></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.itheima.pojo.Clazz;</span><br><span class="line"><span class="keyword">import</span> com.itheima.pojo.ClazzQueryParam;</span><br><span class="line"><span class="keyword">import</span> com.itheima.pojo.PageResult;</span><br><span class="line"><span class="keyword">import</span> com.itheima.pojo.Result;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 李阳</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2025/04/07/13:23</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 班级管理的一些列操作</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/clazzs&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClazzController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 班级管理--分页查询</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">page</span><span class="params">(ClazzQueryParam clazzQueryParam)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;分页查询班级信息,参数：&#123;&#125;&quot;</span>, clazzQueryParam);</span><br><span class="line">        PageResult&lt;Clazz&gt; pageResult= clazzService.page(clazzQueryParam);</span><br><span class="line">        <span class="keyword">return</span> Result.success(pageResult);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>分页查询功能，我先写的controller，</p>
 <p>操他奶奶的，控制台一直报错</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Method parameter <span class="string">&#x27;id&#x27;</span>: Failed to convert value of type <span class="string">&#x27;java.lang.String&#x27;</span> to required type <span class="string">&#x27;java.lang.Integer&#x27;</span>; For input string: <span class="string">&quot;list&quot;</span></span><br></pre></td></tr></table></figure>
-<p>劳资找了一下午错误，后面发现是方法上没加<strong>@GetMapping</strong>注解</p>
+
+<p>劳资找了一下午错误，后面发现是方法上没加**@GetMapping**注解</p>
 <p>代码基本上完成了，下面我们一起看看具体的实现</p>
 <p><code>ClazzController</code></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/clazzs&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClazzController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ClazzService clazzService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 班级管理--分页查询</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">page</span><span class="params">(ClazzQueryParam clazzQueryParam)</span> &#123;</span><br><span class="line">        log.info(<span class="string">&quot;分页查询班级信息,参数：&#123;&#125;&quot;</span>, clazzQueryParam);</span><br><span class="line">        PageResult&lt;Clazz&gt; pageResult = clazzService.page(clazzQueryParam);</span><br><span class="line">        <span class="keyword">return</span> Result.success(pageResult);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>参照那个部门的分页查询，基本代码一样，就修改了泛型 还有clazzQueryParam</p>
+
+<p>参照那个部门的分页查询，基本代码一样，就修改了泛型
+还有clazzQueryParam</p>
 <p><code>clazzQueryParam</code></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.pojo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 李阳</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2025/04/07/13:29</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 分页查询实体类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClazzQueryParam</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> LocalDate begin;</span><br><span class="line">    <span class="keyword">private</span> LocalDate end;</span><br><span class="line">    <span class="keyword">private</span> Integer page=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">private</span> Integer pageSize=<span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>参照的接口文档，返回来的数据</p>
 <p>service代码可以一键配置，这里不再多说</p>
 <p><code>ClazzServiceImpl</code></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ClazzMapper clazzMapper;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 分页查询</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> PageResult&lt;Clazz&gt; <span class="title function_">page</span><span class="params">(ClazzQueryParam clazzQueryParam)</span> &#123;</span><br><span class="line">        <span class="comment">//1.设置分页参数</span></span><br><span class="line">        PageHelper.startPage(clazzQueryParam.getPage(),clazzQueryParam.getPageSize());</span><br><span class="line">        <span class="comment">//2.调用分页查询的方法</span></span><br><span class="line">        List&lt;Clazz&gt; clazzList = clazzMapper.list(clazzQueryParam);</span><br><span class="line">        <span class="comment">//3.封装结果并返回</span></span><br><span class="line">        Page&lt;Clazz&gt; pageResult = (Page&lt;Clazz&gt;) clazzList;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PageResult</span> (pageResult.getTotal(),pageResult.getResult());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
 <p>还是抄的代码，基本上没有改，就改了泛型</p>
 <p><code>ClazzMapper.xml</code></p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--分页条件查询--&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;list&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.itheima.pojo.Clazz&quot;</span>&gt;</span></span><br><span class="line">       select c.*, e.name masterName,</span><br><span class="line">       (case when begin_date &gt; now() then &#x27;未开班&#x27; when now() &gt; end_date then &#x27;已结课&#x27; else &#x27;在读中&#x27; end) status</span><br><span class="line">       from clazz as c left join emp e on c.master_id = e.id</span><br><span class="line">       <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;name != null and name != &#x27;&#x27;&quot;</span>&gt;</span></span><br><span class="line">               c.name like concat(&#x27;%&#x27;,#&#123;name&#125;,&#x27;%&#x27;)</span><br><span class="line">           <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;begin !=null and end != null&quot;</span>&gt;</span></span><br><span class="line">               and c.end_date between #&#123;begin&#125; and #&#123;end&#125;</span><br><span class="line">           <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">       order by c.update_time desc</span><br><span class="line">   <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>我们重点看一下xml语句，多了一个case，后面做了一个模糊查询，把开始时间结束时间和名称做了模糊查询，挺厉害的</p>
 <p>我没有想到可以用case，我第一次思考的时候是用if语句</p>
 <p>失之毫厘 差之千里</p>
 <p>又因为大小写报错解决了半个小时的问题我草了</p>
 <p>后面都是很简单的代码操作，基本上就是抄抄抄的代码，具体看github的commit</p>
-<h3 id="2-学员管理"><a href="#2-学员管理" class="headerlink" title="2.学员管理"></a>2.学员管理</h3><h4 id="1-分页查询"><a href="#1-分页查询" class="headerlink" title="1.分页查询"></a>1.分页查询</h4><p>我在写分页查询时遇到了一些错误，控制台报错：</p>
+<h3 id="2学员管理">2.学员管理</h3>
+<h4 id="1分页查询">1.分页查询</h4>
+<p>我在写分页查询时遇到了一些错误，控制台报错：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Validation failed <span class="keyword">for</span> argument [<span class="number">0</span>] in <span class="keyword">public</span> com.itheima.pojo.Result com.itheima.controller.StudentController.page(com.itheima.pojo.StudentQueryParam): [Field error in object <span class="string">&#x27;studentQueryParam&#x27;</span> on field <span class="string">&#x27;clazzId&#x27;</span>: rejected value [<span class="literal">null</span>]; codes [typeMismatch.studentQueryParam.clazzId,typeMismatch.clazzId,typeMismatch.java.lang.Integer,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [studentQueryParam.clazzId,clazzId]; arguments []; <span class="keyword">default</span> message [clazzId]]; <span class="keyword">default</span> message [Failed to convert property value of type <span class="string">&#x27;java.lang.String&#x27;</span> to required type <span class="string">&#x27;java.lang.Integer&#x27;</span> <span class="keyword">for</span> property <span class="string">&#x27;clazzId&#x27;</span>; For input string: <span class="string">&quot;null&quot;</span>]] </span><br><span class="line">	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.resolveArgument(ModelAttributeMethodProcessor.java:<span class="number">158</span>) ~[spring-web-<span class="number">6.2</span><span class="number">.5</span>.jar:<span class="number">6.2</span><span class="number">.5</span>]</span><br><span class="line">	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:<span class="number">122</span>) ~[spring-web-<span class="number">6.2</span><span class="number">.5</span>.jar:<span class="number">6.2</span><span class="number">.5</span>]</span><br><span class="line">	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:<span class="number">227</span>) ~[spring-web-<span class="number">6.2</span><span class="number">.5</span>.jar:<span class="number">6.2</span><span class="number">.5</span>]</span><br><span class="line">	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:<span class="number">181</span>) ~[spring-web-<span class="number">6.2</span><span class="number">.5</span>.jar:<span class="number">6.2</span><span class="number">.5</span>]</span><br><span class="line">	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:<span class="number">118</span>) ~[spring-webmvc-<span class="number">6.2</span><span class="number">.5</span>.jar:<span class="number">6.2</span><span class="number">.5</span>]</span><br><span class="line">	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:<span class="number">986</span>) ~[spring-webmvc-<span class="number">6.2</span><span class="number">.5</span>.jar:<span class="number">6.2</span><span class="number">.5</span>]</span><br><span class="line">	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:<span class="number">891</span>) ~[spring-webmvc-<span class="number">6.2</span><span class="number">.5</span>.jar:<span class="number">6.2</span><span class="number">.5</span>]</span><br><span class="line">	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:<span class="number">87</span>) ~[spring-webmvc-<span class="number">6.2</span><span class="number">.5</span>.jar:<span class="number">6.2</span><span class="number">.5</span>]</span><br><span class="line">	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:<span class="number">1089</span>) ~[spring-webmvc-<span class="number">6.2</span><span class="number">.5</span>.jar:<span class="number">6.2</span><span class="number">.5</span>]</span><br><span class="line">	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:<span class="number">979</span>) ~[spring-webmvc-<span class="number">6.2</span><span class="number">.5</span>.jar:<span class="number">6.2</span><span class="number">.5</span>]</span><br><span class="line">	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:<span class="number">1014</span>) ~[spring-webmvc-<span class="number">6.2</span><span class="number">.5</span>.jar:<span class="number">6.2</span><span class="number">.5</span>]</span><br><span class="line">	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:<span class="number">903</span>) ~[spring-webmvc-<span class="number">6.2</span><span class="number">.5</span>.jar:<span class="number">6.2</span><span class="number">.5</span>]</span><br></pre></td></tr></table></figure>
+
 <p>好像是前端传的是null没办法转为Integer类型，一直未解决</p>
 <p>也就是我的所属班级模块一直是错误的</p>
 <p>奶奶的又找了一个小时的错误，后面看接口文档感觉像是班级管理模块的问题，一检查，查询所有班级模块没有加id，怪不得前端获取不到id，因为我都根本没有查，</p>
 <p>感觉自己是一头猪，再也不自己想代码了，一定要好好参考文档</p>
 <p>班级管理之类的代码也很简单，基本就是操操操，代码详情请看GitHub的commit</p>
 <hr>
-<h3 id="3-登录功能"><a href="#3-登录功能" class="headerlink" title="3. 登录功能"></a>3. 登录功能</h3><p>在 Java 中，过滤器和拦截器的区别如下：</p>
-<ol>
-<li><strong>所属规范与使用范围</strong>：过滤器属于 Servlet 规范，可拦截进入容器的所有请求，包括静态和动态资源请求；拦截器通常是 Spring 框架的功能，只能拦截 Spring 管理的 Bean 所处理的请求，一般不拦截静态资源请求。</li>
-<li><strong>实现方式</strong>：过滤器需实现 javax.servlet.Filter 接口，重写 doFilter、init 和 destroy 方法；拦截器需实现 org.springframework.web.servlet.HandlerInterceptor 接口，重写 preHandle、postHandle 和 afterCompletion 方法。</li>
-<li><strong>执行时机</strong>：过滤器在 Servlet 处理请求之前和之后执行；拦截器的 preHandle 在 Controller 处理请求之前执行，postHandle 在 Controller 处理请求之后、视图渲染之前执行，afterCompletion 在视图渲染之后执行。</li>
-<li><strong>依赖注入</strong>：过滤器中不能直接使用 Spring 的依赖注入；拦截器是 Spring 组件，可以方便地使用 Spring 的依赖注入。</li>
-<li><strong>作用对象</strong>：过滤器作用于 Servlet 容器，对所有符合条件的请求都起作用；拦截器作用于 Spring 框架的处理器映射器（HandlerMapping）返回的处理器（Handler），针对特定的请求处理逻辑。</li>
+<h3 id="3-登录功能">3. 登录功能</h3>
+<p>在 Java 中，过滤器和拦截器的区别如下：</p>
+<ol type="1">
+<li><strong>所属规范与使用范围</strong>：过滤器属于 Servlet
+规范，可拦截进入容器的所有请求，包括静态和动态资源请求；拦截器通常是
+Spring 框架的功能，只能拦截 Spring 管理的 Bean
+所处理的请求，一般不拦截静态资源请求。</li>
+<li><strong>实现方式</strong>：过滤器需实现 javax.servlet.Filter
+接口，重写 doFilter、init 和 destroy 方法；拦截器需实现
+org.springframework.web.servlet.HandlerInterceptor 接口，重写
+preHandle、postHandle 和 afterCompletion 方法。</li>
+<li><strong>执行时机</strong>：过滤器在 Servlet
+处理请求之前和之后执行；拦截器的 preHandle 在 Controller
+处理请求之前执行，postHandle 在 Controller
+处理请求之后、视图渲染之前执行，afterCompletion
+在视图渲染之后执行。</li>
+<li><strong>依赖注入</strong>：过滤器中不能直接使用 Spring
+的依赖注入；拦截器是 Spring 组件，可以方便地使用 Spring
+的依赖注入。</li>
+<li><strong>作用对象</strong>：过滤器作用于 Servlet
+容器，对所有符合条件的请求都起作用；拦截器作用于 Spring
+框架的处理器映射器（HandlerMapping）返回的处理器（Handler），针对特定的请求处理逻辑。</li>
 </ol>
-<h2 id="二、AOP"><a href="#二、AOP" class="headerlink" title="二、AOP"></a>二、AOP</h2><p>AOP: Aspect Oriented Programming(面向切面编程、面向方面编程)，可简单理解为就是面向特定方法编程。AOP的底层就是动态代理技术</p>
-<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>场景∶案例中部分业务方法运行较慢，定位执行耗时较长的方法，此时需要统计每一个业务方法的执行耗时</p>
+<h2 id="二aop">二、AOP</h2>
+<p>AOP: Aspect Oriented
+Programming(面向切面编程、面向方面编程)，可简单理解为就是面向特定方法编程。AOP的底层就是动态代理技术</p>
+<h3 id="概念">概念</h3>
+<p>场景∶案例中部分业务方法运行较慢，定位执行耗时较长的方法，此时需要统计每一个业务方法的执行耗时</p>
 <ul>
-<li>连接点: JoinPoint，可以被AOP控制的方法（暗含方法执行时的相关信息)</li>
+<li>连接点:
+JoinPoint，可以被AOP控制的方法（暗含方法执行时的相关信息)</li>
 <li>通知:Advice，指那些重复的逻辑，也就是共性功能（最终体现为一个方法)</li>
 <li>切入点:PointCut，匹配连接点的条件，通知仅会在切入点方法执行时被应用，实际被aop控制的方法</li>
 <li>切面：Aspect，描述通知与切入点的对应关系（通知+切入点）</li>
 <li>目标对象:Target，通知所应用的对象</li>
 </ul>
-<h3 id="通知"><a href="#通知" class="headerlink" title="通知"></a>通知</h3><ul>
-<li>@Around:环绕通知，此注解标注的通知方法在目标方法前、后都被执行 ，返回值类型必须为object，需要手动调用proceed方法</li>
+<h3 id="通知">通知</h3>
+<ul>
+<li>@Around:环绕通知，此注解标注的通知方法在目标方法前、后都被执行
+，返回值类型必须为object，需要手动调用proceed方法</li>
 <li>@Before:前置通知，此注解标注的通知方法在目标方法前被执行</li>
-<li>@After :后置通知，此注解标注的通知方法在目标方法后被执行，无论是否有虽常都会执行</li>
+<li>@After
+:后置通知，此注解标注的通知方法在目标方法后被执行，无论是否有虽常都会执行</li>
 <li>@AfterReturning:返回后通知，此注解标注的通知方法在目标方法后被执行，有异常不会执行</li>
 <li>@AfterThrowing :异常后通知，此注解标注的通知方法发生异常后执行</li>
 </ul>
-<h4 id="通知执行顺序"><a href="#通知执行顺序" class="headerlink" title="通知执行顺序"></a>通知执行顺序</h4><ul>
-<li><p>当有多个切面的切入点都匹配到了目标方法，目标方法运行时，多个通知方法都会被执行。</p>
-</li>
+<h4 id="通知执行顺序">通知执行顺序</h4>
+<ul>
+<li><p>当有多个切面的切入点都匹配到了目标方法，目标方法运行时，多个通知方法都会被执行。</p></li>
 <li><p>执行顺序:</p>
 <ul>
-<li><p>不同切面类中，默认按照切面类的类名字母排序:</p>
-</li>
-<li><p>目标方法前的通知方法:字母排名靠前的先执行</p>
-</li>
-<li><p>目标方法后的通知方法:字母排名靠前的后执行</p>
-</li>
+<li><p>不同切面类中，默认按照切面类的类名字母排序:</p></li>
+<li><p>目标方法前的通知方法:字母排名靠前的先执行</p></li>
+<li><p>目标方法后的通知方法:字母排名靠前的后执行</p></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="pointCut"><a href="#pointCut" class="headerlink" title="@pointCut"></a>@pointCut</h3><p><img src="https://bu.dusays.com/2025/04/10/67f7b295d32bf.png" alt="image-20250410195911547"></p>
-<h3 id="切入点表达式"><a href="#切入点表达式" class="headerlink" title="切入点表达式"></a>切入点表达式</h3><p><img src="https://bu.dusays.com/2025/04/10/67f7b489e71c5.png" alt="image-20250410200735189"></p>
+<h3 id="pointcut">@pointCut</h3>
+<p><img src="https://bu.dusays.com/2025/04/10/67f7b295d32bf.png" alt="image-20250410195911547"></p>
+<h3 id="切入点表达式">切入点表达式</h3>
+<p><img src="https://bu.dusays.com/2025/04/10/67f7b489e71c5.png" alt="image-20250410200735189"></p>
 <ul>
 <li>execution主要根据方法的返回值、包名、类名、方法名、方法参数等信息来匹配，语法为:</li>
 </ul>
-<p>​        execution(包名.类名)</p>
-<p>​        *∶单个独立的任意符号，可以通配任意返回值、包名、类名、方法名、任意类型的一个参数，也可以通配包、类、方法名的一部分</p>
-<p>​        ..∶多个连续的任意符号，可以通配任意层级的包，或任意类型、任意个数的参数</p>
+<p>​ execution(包名.类名)</p>
+<p>​
+*∶单个独立的任意符号，可以通配任意返回值、包名、类名、方法名、任意类型的一个参数，也可以通配包、类、方法名的一部分</p>
+<p>​
+..∶多个连续的任意符号，可以通配任意层级的包，或任意类型、任意个数的参数</p>
 <p><img src="https://bu.dusays.com/2025/04/10/67f7b5bdd28f3.png" alt="image-20250410201243358"></p>
-<h3 id="连接点"><a href="#连接点" class="headerlink" title="连接点"></a>连接点</h3><p>在Spring中用JoinPoint抽象了连接点，用它可以获得方法执行时的相关信息，如目标类名、方法名、方法参数等。</p>
+<h3 id="连接点">连接点</h3>
+<p>在Spring中用JoinPoint抽象了连接点，用它可以获得方法执行时的相关信息，如目标类名、方法名、方法参数等。</p>
 <ul>
-<li><p>对于@Around 通知，获取连接点信息只能使用ProceedingJoinPoint</p>
-</li>
-<li><p>对于其它四种通知，获取连接点信息只能使用JoinPoint，它是 ProceedingJoinPoint的父类型</p>
-</li>
+<li><p>对于@Around
+通知，获取连接点信息只能使用ProceedingJoinPoint</p></li>
+<li><p>对于其它四种通知，获取连接点信息只能使用JoinPoint，它是
+ProceedingJoinPoint的父类型</p></li>
 </ul>
 <p><strong>JoinPoint</strong></p>
 <p><img src="https://bu.dusays.com/2025/04/10/67f7bb2b6d3df.png" alt="image-20250410203556008"></p>
-<h2 id="三、SpringBoot零碎知识点"><a href="#三、SpringBoot零碎知识点" class="headerlink" title="三、SpringBoot零碎知识点"></a>三、SpringBoot零碎知识点</h2><h3 id="1-配置优先级"><a href="#1-配置优先级" class="headerlink" title="1. 配置优先级"></a>1. 配置优先级</h3><p>properties&gt; yml &gt; yaml，一般使用yml</p>
-<h3 id="2-Bean管理"><a href="#2-Bean管理" class="headerlink" title="2. Bean管理"></a>2. Bean管理</h3><p>@Scope()</p>
+<h2 id="三springboot零碎知识点">三、SpringBoot零碎知识点</h2>
+<h3 id="1-配置优先级">1. 配置优先级</h3>
+<p>properties&gt; yml &gt; yaml，一般使用yml</p>
+<h3 id="2-bean管理">2. Bean管理</h3>
+<p>@Scope()</p>
 <p><img src="https://bu.dusays.com/2025/04/11/67f871731fdee.png" alt="image-20250411093330523"></p>
-<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><p>感谢黑马，感谢涛哥，感谢idea，感谢通义千问，感谢github上同样写这个项目的小伙伴</p>
+<h2 id="致谢">致谢</h2>
+<p>感谢黑马，感谢涛哥，感谢idea，感谢通义千问，感谢github上同样写这个项目的小伙伴</p>
 <p>这个小项目在2025/4/10 23点正式完结</p>
 <p>虽然只是一个很小很小的小项目，不过确实收获了很多，了解了很多关于Spring的注解，以及类之间的关系</p>
-<p>没做这个小项目之前我基本上什么都不太明白，做完感觉对整个项目结构更清晰了                                                                                                                                                                                                                                           </p>
-<p>​                                                                                                                                                                                                                         李阳</p>
-<p>​                                                                                                                                                                                                                     2025/4/10</p>
+<p>没做这个小项目之前我基本上什么都不太明白，做完感觉对整个项目结构更清晰了</p>
+<p>​ 李阳</p>
+<p>​ 2025/4/10</p>
 ]]></content>
       <categories>
         <category>java</category>
