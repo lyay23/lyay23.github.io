@@ -7382,6 +7382,7 @@ Cache是一个框架，实现了基于注解的缓存功能，只需要简单地
 </table>
 <p><img src="https://bu.dusays.com/2025/04/28/680ee4967dcb4.png" alt="image-20250428101435934"></p>
 <h3 id="8-微信支付">8. 微信支付</h3>
+<h3 id="9-spring-task">9. Spring Task</h3>
 <h2 id="二代码">二、代码</h2>
 <h3 id="第四天代码">第四天代码</h3>
 <blockquote>
@@ -7450,6 +7451,24 @@ Cache是一个框架，实现了基于注解的缓存功能，只需要简单地
 <p><img src="https://bu.dusays.com/2025/05/02/6814902d0c2c9.png" alt="image-20250502172802839"></p>
 <p>后端部分：</p>
 <p>详情请看github的commit</p>
+<h3 id="5-day9-实战内容">5. Day9 实战内容</h3>
+<p>用户端历史订单模块：</p>
+<ul>
+<li>查询历史订单</li>
+<li>查询订单详情</li>
+<li>取消订单</li>
+<li>再来一单</li>
+</ul>
+<h4 id="1-接口设计自己想的">1. 接口设计（自己想的）</h4>
+<ul>
+<li>查询历史订单就是查询order表，将相关的查询出来，请求方式为get，查询到的数据封装在一个实体类中VO，然后根据vo将用户id传入过去，根据id查询必要关键字并返回</li>
+<li>查询历史订单，根据手机号去查询订单细节表</li>
+<li>取消订单就是根据手机号删除一条订单</li>
+<li>再来一单add，点击将数据再来一条</li>
+</ul>
+<h4 id="2-查询历史订单">2. 查询历史订单</h4>
+<p>自己写的代码页面显示不出来，原因是为设置状态，我的状态获取不到，后面改为了老师的代码</p>
+<h4 id="3-查询订单详情">3. 查询订单详情</h4>
 <h2 id="三老师代码">三、老师代码</h2>
 <div class="timeline green"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2025</p>
 </div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>04-11</p>
