@@ -8338,9 +8338,23 @@ mounted等。选项定义的属性都会暴露在函数内部的<code>this</code
 
 <p>这样我们的对话框组件就完成了</p>
 <ol type="1">
-<li><p>完成了我们的表单项目是不是要当点击编辑时要显示对话框</p>
+<li><p>完成了我们的表单项目是不是要当点击添加员工时要显示对话框</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 声明添加员工的箭头函数</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">addEmp</span> =  (<span class="params"></span>)=&gt;&#123;</span><br><span class="line">  dialogVisible.<span class="property">value</span>=<span class="literal">true</span>;</span><br><span class="line">  dialogTitle.<span class="property">value</span>=<span class="string">&#x27;新增员工&#x27;</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&lt;el-button type=<span class="string">&quot;primary&quot;</span> @click=<span class="string">&quot;addEmp&quot;</span>&gt;+新增员工&lt;/el-button&gt;</span><br></pre></td></tr></table></figure>
-</li>
+
+<p><img src="https://bu.dusays.com/2025/06/03/683e5eb8024a0.png" alt="image-20250603103213889"></p></li>
+<li><p>表单解析</p>
+<blockquote>
+<p>一行里面是怎么只显示两列的</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 第一行 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-row</span> <span class="attr">:gutter</span>=<span class="string">&quot;20&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;用户名&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;employee.username&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入员工用户名，2-20个字&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">  <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;姓名&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;employee.name&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入员工姓名，2-10个字&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用<code>el-row</code>布局方式，代表一行，里面有两个<code>el-col</code>代表有两列</p>
+<p><code>el-col :span="12"</code>代表一行所占的宽度。总计为<code>24</code>块。这里的两个代表是一行2个</p>
+<p><code>gutter="20"</code>代表分栏间隔</p></li>
+<li><p>页面布局优化（性别，职位，所属部门）</p>
+<blockquote>
+<p>性别，职位，所属部门这些都不应该是页面写死的，而是由后端传入的</p>
+</blockquote></li>
 </ol>
 ]]></content>
       <categories>
