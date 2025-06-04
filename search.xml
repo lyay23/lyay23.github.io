@@ -7803,7 +7803,7 @@ ProceedingJoinPoint的父类型</p></li>
     <title>前端学习（tlias为例）</title>
     <url>/posts/49515/</url>
     <content><![CDATA[<blockquote>
-<p>这段时间以来一直在帮别人写作业，然后在github上翻到了很多别人写的源码，后端部分代码我基本上都可以看的懂。不过前端部分总是感觉很迷糊，毕竟没有系统的学过。在观看别人的源码的过程中也萌发了想独立编写一个自己的前后端的代码。因此：以talis为例系统学习一下Vue，ElementPlus等前端的使用</p>
+<p>这段时间以来一直在帮别人写作业，然后在github上翻到了很多别人写的源码，后端部分代码我基本上都可以看的懂。不过前端部分总是感觉很迷糊，毕竟没有系统的学过。因此：以talis为例系统学习一下Vue，ElementPlus等前端的使用</p>
 <p>谨以此篇记录我的前端学习过程</p>
 <p><em>古之立大事者，不惟有超世之才，亦必有坚忍不拔之志。</em></p>
 <p>​ <em>——《晁错论》</em></p>
@@ -8317,7 +8317,7 @@ mounted等。选项定义的属性都会暴露在函数内部的<code>this</code
 
 <p>这样查询功能基本没有问题了</p></li>
 </ol>
-<h2 id="8-员工管理-新增员工">8. 员工管理-新增员工</h2>
+<h2 id="八-员工管理-新增员工">八、 员工管理-新增员工</h2>
 <h3 id="1-页面布局">1. 页面布局</h3>
 <p><img src="https://bu.dusays.com/2025/06/02/683d6f2f72053.png" alt="image-20250602173022378"></p>
 <h3 id="2-接口文档-1">2. 接口文档</h3>
@@ -8475,7 +8475,102 @@ label=“研发部” value=“1”&gt;</p>
 <p>这里使用watch监听函数，首先要指明监听的是哪个对象，我们要监听employee的员工数组对象，然后声明数组变化时的值。</p>
 <p>当我们的数组中有值，并且值大于1时我们需要监听数组</p>
 <p>使用forEach循环遍历数组，定义变量名称，然后将数组里面的第一个值给开始时间，第二个给结束时间</p>
-<p>这里最关键的是要使用深度监听，如果直接监听数组只有数组的引用发生变化才会生效，这里当数组里面内容发生变化都需要监听，因此要使用深度jian’t</p></li>
+<p>这里最关键的是要使用深度监听，如果直接监听数组只有数组的引用发生变化才会生效，这里当数组里面内容发生变化都需要监听，因此要使用深度监听</p></li>
+</ol>
+<h3 id="7-保存员工">7. 保存员工</h3>
+<h4 id="1-页面分析-1">1. 页面分析</h4>
+<ol type="1">
+<li>当点击提交按钮时向后端发送异步请求，将参数传入后端来保存数据</li>
+<li>保存成功要给出提示信息。然后关闭当前对话框</li>
+<li>重新查询列表数据</li>
+<li>保存失败给出对应的错误信息</li>
+</ol>
+<h4 id="2-功能开发">2. 功能开发</h4>
+<ol type="1">
+<li><p>首先在<code>api/js</code>文件中说明添加操作的请求，然后在<code>index</code>中引用</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">addApi</span> = (<span class="params">emp</span>) =&gt; request.<span class="title function_">post</span>(<span class="string">&#x27;/emps&#x27;</span>, emp);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在保存按钮上添加点击事件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;span <span class="keyword">class</span>=<span class="string">&quot;dialog-footer&quot;</span>&gt;</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">el-button</span> @<span class="attr">click</span>=<span class="string">&quot;dialogVisible = false&quot;</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span></span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;save&quot;</span>&gt;</span>保存<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span></span><br><span class="line">      &lt;/span&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后去声明这个按钮。调用api当返回值为200说明插入成功了，然后发送信息关闭对话框重新搜索</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//-------保存员工相关--------</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">save</span>= <span class="keyword">async</span>(<span class="params"></span>) =&gt;&#123;</span><br><span class="line">  <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="title function_">addApi</span>(employee.<span class="property">value</span>);</span><br><span class="line">  <span class="keyword">if</span>(result.<span class="property">code</span>)&#123;</span><br><span class="line">    <span class="title class_">ElMessage</span>.<span class="title function_">success</span>(<span class="string">&quot;保存成功&quot;</span>);</span><br><span class="line">    dialogVisible.<span class="property">value</span>=<span class="literal">false</span>;</span><br><span class="line">    <span class="title function_">search</span>();</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title class_">ElMessage</span>.<span class="title function_">error</span>(result.<span class="property">msg</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>插入成功</p>
+<p><img src="https://bu.dusays.com/2025/06/04/683f9b2ba28a7.png" alt="image-20250604090222231"></p></li>
+<li><p>哎
+这时候又有一个bug，当我们已经新增完毕用户了，但是用户的信息还在表单里面</p>
+<p><img src="https://bu.dusays.com/2025/06/04/683f9b9bd6db0.png" alt="image-20250604090421609"></p></li>
+<li><p>解决</p>
+<p>当点击新增员工时将之前的数据全部置为空</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 声明添加员工的箭头函数</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">addEmp</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  dialogVisible.<span class="property">value</span> = <span class="literal">true</span>;</span><br><span class="line">  dialogTitle.<span class="property">value</span> = <span class="string">&#x27;新增员工&#x27;</span>;</span><br><span class="line">  employee.<span class="property">value</span>=&#123;</span><br><span class="line">  <span class="attr">username</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">gender</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">phone</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">job</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">salary</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">deptId</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">entryDate</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">image</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">exprList</span>: []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加表单验证规则</p>
+<p><img src="https://bu.dusays.com/2025/06/04/683fa31083c1a.png" alt="image-20250604093605566"></p>
+<ul>
+<li><p>首先在<code>el-form</code>表单项上添加<code>:rules="reles"</code>的表单绑定项，然后在具体的<code>el-form-item</code>使用<code>prop</code>绑定名称</p>
+<p>示例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;el-form :model=<span class="string">&quot;employee&quot;</span> label-width=<span class="string">&quot;80px&quot;</span> :rules=<span class="string">&quot;rules&quot;</span> &gt;</span><br><span class="line">      &lt;!-- 基本信息 --&gt;</span><br><span class="line">      &lt;!-- 第一行 --&gt;</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">el-row</span> <span class="attr">:gutter</span>=<span class="string">&quot;20&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">el-col</span> <span class="attr">:span</span>=<span class="string">&quot;12&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;用户名&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;username&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model</span>=<span class="string">&quot;employee.username&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入员工用户名，2-20个字&quot;</span> &gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">el-col</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后去声明这个对象在里面添加校验规则</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//-------表单校验相关-------</span></span><br><span class="line"><span class="keyword">const</span> rules = <span class="title function_">ref</span>(&#123;</span><br><span class="line">  <span class="attr">username</span>: [</span><br><span class="line">    &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&#x27;请输入用户名&#x27;</span>, <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">min</span>: <span class="number">2</span>, <span class="attr">max</span>: <span class="number">20</span>, <span class="attr">message</span>: <span class="string">&#x27;用户名长度应在2到20个字符之间&#x27;</span>, <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span> &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">name</span>: [</span><br><span class="line">    &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&#x27;请输入姓名&#x27;</span>, <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">min</span>: <span class="number">2</span>, <span class="attr">max</span>: <span class="number">10</span>, <span class="attr">message</span>: <span class="string">&#x27;姓名长度应在2到10个字符之间&#x27;</span>, <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span> &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">gender</span>: [</span><br><span class="line">    &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&#x27;请选择性别&#x27;</span>, <span class="attr">trigger</span>: <span class="string">&#x27;change&#x27;</span> &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">phone</span>: [</span><br><span class="line">    &#123; <span class="attr">required</span>: <span class="literal">true</span>, <span class="attr">message</span>: <span class="string">&#x27;请输入手机号&#x27;</span>, <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">pattern</span>: <span class="regexp">/^1[3-9]\d&#123;9&#125;$/</span>, <span class="attr">message</span>: <span class="string">&#x27;请输入有效的手机号&#x27;</span>, <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span> &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这时候会发现我们表单校验虽然校验了但是没有实现，因此还需要再提交表单时进行校验</p>
+<p>声明一个表单引用对象</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 表单验证的响应式对象</span></span><br><span class="line"><span class="keyword">const</span> empFromRef =<span class="title function_">ref</span>();</span><br></pre></td></tr></table></figure>
+
+<p>然后再<code>el-form</code>进行引用</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;el-form :model=<span class="string">&quot;employee&quot;</span> label-width=<span class="string">&quot;80px&quot;</span> :rules=<span class="string">&quot;rules&quot;</span> ref=<span class="string">&quot;empFromRef&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这样我们就可以通过这个响应式对象来操作表单对象了</p></li>
+<li><p>重新修改保存员工的代码，添加表单校验信息，校验通过才可以执行添加代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//-------保存员工相关--------</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">save</span>= <span class="keyword">async</span>(<span class="params"></span>) =&gt;&#123;</span><br><span class="line">  <span class="comment">// 表单校验-只有通过了才可以执行下面的代码</span></span><br><span class="line">  <span class="keyword">if</span>(!empFromRef.<span class="property">value</span>) <span class="keyword">return</span>;</span><br><span class="line">  empFromRef.<span class="property">value</span>.<span class="title function_">validate</span>(<span class="title function_">async</span> (valid) =&gt;&#123; <span class="comment">// valid标识是否通过：true通过/false不通过</span></span><br><span class="line">   <span class="keyword">if</span>(valid)&#123; <span class="comment">// 通过</span></span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="title function_">addApi</span>(employee.<span class="property">value</span>);</span><br><span class="line">    <span class="keyword">if</span>(result.<span class="property">code</span>)&#123;</span><br><span class="line">      <span class="title class_">ElMessage</span>.<span class="title function_">success</span>(<span class="string">&quot;保存成功&quot;</span>);</span><br><span class="line">      dialogVisible.<span class="property">value</span>=<span class="literal">false</span>;</span><br><span class="line">      <span class="title function_">search</span>();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="title class_">ElMessage</span>.<span class="title function_">error</span>(result.<span class="property">msg</span>);</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123; <span class="comment">//不通过</span></span><br><span class="line">    <span class="title class_">ElMessage</span>.<span class="title function_">error</span>(<span class="string">&#x27;表单校验不通过&#x27;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最后一步：当重新添加时需要清空表单校验规则</p>
+<p>修改添加员工的相关代码，添加清空表单校验规则代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 声明添加员工的箭头函数</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">addEmp</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  dialogVisible.<span class="property">value</span> = <span class="literal">true</span>;</span><br><span class="line">  dialogTitle.<span class="property">value</span> = <span class="string">&#x27;新增员工&#x27;</span>;</span><br><span class="line">  employee.<span class="property">value</span>=&#123;</span><br><span class="line">  <span class="attr">username</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">gender</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">phone</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">job</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">salary</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">deptId</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">entryDate</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">image</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">exprList</span>: []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 重置表单校验规则</span></span><br><span class="line"><span class="keyword">if</span>(empFromRef.<span class="property">value</span>)&#123;</span><br><span class="line">  empFromRef.<span class="property">value</span>.<span class="title function_">resetFields</span>();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul></li>
+</ol>
+<h2 id="九修改员工">九、修改员工</h2>
+<h3 id="1-页面原型-4">1. 页面原型</h3>
+<p><img src="https://bu.dusays.com/2025/06/04/683fafa014d0a.png" alt="image-20250604102946823"></p>
+<h3 id="2-查询回显功能">2. 查询回显功能</h3>
+<blockquote>
+<p>为编辑按钮绑定点击事件</p>
+<p>发送异步请求，根据id查询员工的详细信息，页面进行回显</p>
+</blockquote>
+<ol type="1">
+<li><p>在<code>api/js</code>里面添加异步请求的相关数据，然后在<code>index</code>里面引用</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 根据id查询部门信息</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">queryInfoApi</span> = (<span class="params">ix</span>) =&gt; request.<span class="title function_">get</span>(<span class="string">`/emps/<span class="subst">$&#123;id&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为编辑按钮绑定点击事件</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;edit(scope.row.id)&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-icon</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Edit</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-icon</span>&gt;</span>编辑<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后使用<code>scope.row.id</code>获取这一行的id，并且作为参数传入点击事件</p></li>
+<li><p>声明这个点击函数</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ------根据id查询员工信息相关-----</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">edit</span> =<span class="keyword">async</span>(<span class="params">id</span>) =&gt;&#123;</span><br><span class="line"> <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="title function_">queryInfoApi</span>(id);</span><br><span class="line"> <span class="keyword">if</span>(result.<span class="property">code</span>)&#123;</span><br><span class="line">  dialogVisible.<span class="property">value</span>=<span class="literal">true</span>;</span><br><span class="line">  dialogTitle.<span class="property">value</span>=<span class="string">&#x27;修改员工&#x27;</span>;</span><br><span class="line">  employee.<span class="property">value</span>=result.<span class="property">data</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当我们点击按钮是将<code>id</code>作为参数，而后调用查询api，将结果封装在result结果里面。当返回值为200就打开对话框，将标题改为修改员工，然后将结果集中的数据作为参数进行回显</p></li>
+<li><p>回显失败错误</p>
+<details class="folding-tag"><summary> 问题出现背景 </summary>
+              <div class="content">
+              <p>当我在页面点击编辑按钮时不会弹出对话框，反而报了错误 index.vue:161Uncaught (in promise) TypeError: Cannot read properties of undefined(reading ‘0’) at index.vue:161:29 at watch.deep (index.vue:160:28)</p><p>但是前端可以正确发送请求，我的后端控制台也有正确的数据返回</p>
+              </div>
+            </details>
+
+<details class="folding-tag" red><summary> 问题解析 </summary>
+              <div class="content">
+              <ol type="1"><li><p>当点击“编辑”按钮时，会调用 edit 函数。</p></li><li><p>edit 函数从后端API (queryInfoApi) 获取员工数据，并将其赋值给employee.value。</p></li><li><p>后端返回的员工数据中，工作经历 (exprList) 里的每个条目包含 begin和 end 日期，但不包含前端日期选择器所绑定的 exprDate 数组。</p></li><li><p>将后端数据直接赋值给 employee.value 后，exprList 中的条目没有exprDate 属性。</p></li><li><p>此时，侦听 employee.value.exprList 的 watch 回调被触发。</p></li><li><p>在这个 watch 回调中，代码尝试通过 expr.exprDate[0] 和expr.exprDate[1] 来更新 expr.begin 和 expr.end。但由于此时 expr.exprDate是 undefined，访问 expr.exprDate[0]就会导致报错，对话框也因此无法弹出。</p></li></ol>
+              </div>
+            </details>
+
+<details class="folding-tag" green><summary> 问题修改 </summary>
+              <div class="content">
+              <ol type="1"><li><p>修改 edit 函数：在从后端获取到员工数据后，但在将其赋值给employee.value 之前，我们需要遍历 exprList(如果存在)，并根据每个工作经历条目的 begin 和 end 属性来初始化其对应的exprDate 数组。同时，要确保 exprList 本身如果从后端返回为 null 或undefined，会被正确处理为一个空数组。</p></li><li><p>修改 exprList 的侦听器：使其更健壮，能处理 expr.exprDate可能不是一个包含两个元素的数组的情况（例如，当用户清空日期选择器或新添加一条工作经历时，exprDate可能是空数组 []）。</p></li></ol>
+              </div>
+            </details>
+</li>
 </ol>
 ]]></content>
       <categories>
