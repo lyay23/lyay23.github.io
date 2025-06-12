@@ -7566,23 +7566,6 @@ oss-cn-hangzhou.aliyuncs.com不能加http://</p>
       </tags>
   </entry>
   <entry>
-    <title>java基础</title>
-    <url>/posts/61982/</url>
-    <content><![CDATA[<h1 id="java基础">Java基础</h1>
-<h2 id="一循环案例">一、循环案例</h2>
-<h4 id="案例一">案例一</h4>
-<p>某人有100,000元,每经过一次路口，需要交费,规则如下:1)当现金&gt;50000时,每次交5%
-2)当现金&lt;=50000时,每次交1000
-编程计算该人可以经过多少次路口，要求:使用while break方式完成</p>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>力扣面试150</title>
     <url>/posts/8910/</url>
     <content><![CDATA[<h3 id="1合并两个有序数组">1.合并两个有序数组</h3>
@@ -7640,18 +7623,11 @@ oss-cn-hangzhou.aliyuncs.com不能加http://</p>
 <p>以下是自己写班级管理，学员管理，数据统计的历程</p>
 <p>故余虽愚，卒获有所闻</p>
 <p>因为在写代码的过程中发现就是简单的copy代码，所以这里没有提供更多的代码思路，详情请看github中具体的commit，那里会有详细注释解析</p>
-<hr>
-<p>I followed the teacher to type out the content about department
-management and staff management</p>
-<p>The following is the process of writing class management, student
-management, and data statistics by myself</p>
-<p>Because during the process of writing the code, it was found that it
-was just a simple copy of the code, no more code ideas were provided
-here. For more details, please refer to the specific commit on Github,
-where there will be detailed comments and explanations</p>
 </blockquote>
 <p>代码仓库：<a href="https://github.com/lyay23/tlias-web-managemen">
 tlias管理系统-黑马程序员2024JavaWeb+AI 实训 (github.com)</a></p>
+<p>前端代码仓库（暂未全部完成待更新）：<a href="https://github.com/lyay23/vue-tlias-management/">lyay23/vue-tlias-management:
+tlias的前端部分</a></p>
 <h2 id="一代码开发">一、代码开发</h2>
 <h3 id="1班级管理">1、班级管理</h3>
 <h4 id="11-分页查询功能">1.1 分页查询功能</h4>
@@ -8542,7 +8518,7 @@ label=“研发部” value=“1”&gt;</p>
 </blockquote>
 <ol type="1">
 <li><p>在<code>api/js</code>里面添加异步请求的相关数据，然后在<code>index</code>里面引用</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 根据id查询部门信息</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">queryInfoApi</span> = (<span class="params">ix</span>) =&gt; request.<span class="title function_">get</span>(<span class="string">`/emps/<span class="subst">$&#123;id&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 根据id查询部门信息</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">queryInfoApi</span> = (<span class="params">id</span>) =&gt; request.<span class="title function_">get</span>(<span class="string">`/emps/<span class="subst">$&#123;id&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>为编辑按钮绑定点击事件</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> <span class="attr">size</span>=<span class="string">&quot;small&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;edit(scope.row.id)&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">el-icon</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Edit</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-icon</span>&gt;</span>编辑<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -8700,6 +8676,44 @@ label=“研发部” value=“1”&gt;</p>
 <li><p>在vscode中运行<code>build</code>脚本命令，这样会生成<code>dish</code>文件夹代表打包成功</p></li>
 <li><p>将项目部署在<code>Nginx</code>上</p></li>
 </ol>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>javaweb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>学生管理系统（SSM期末作业）</title>
+    <url>/posts/54974/</url>
+    <content><![CDATA[<blockquote>
+<p>最近SSM刚好期末大作业了，老师给我布置的题目是学生信息管理系统。因为刚好学完了黑马的tlias管理系统，所以想开发一个前后端分离的简易学生管理系统。以此来检验这段时间以来的学习成果</p>
+</blockquote>
+<h1 id="学生信息管理系统">学生信息管理系统</h1>
+<h2 id="一页面设计">一、页面设计</h2>
+<blockquote>
+<p>学⽣信息管理系统
+项⽬描述：实现对学⽣信息的管理，包括管理员对学⽣的基本信息录⼊、修改和删除，以及对学⽣信息的查询功能。学生可对自己的信息进行查询和修改操作。
+基本功能：⽤户注册登录、管理员对学⽣信息录⼊、修改、删除和查询。学生查看和修改自己的信息。
+技术要求：Spring MVC、Spring、MyBatis、MySQL。</p>
+</blockquote>
+<h3 id="1-页面基本设计">1. 页面基本设计</h3>
+<ol type="1">
+<li><p>登录页面</p>
+<p>学生登录和教师登录功能。根据不同身份去跳转到不同页面</p></li>
+<li><p>注册页面</p>
+<p>这里考虑只有学生注册功能，管理员不注册</p></li>
+<li><p>学生首页</p>
+<p>就展示自己的基本信息吧，然后可以修改。当然也可以修改密码。学生信息管理最好还要有班级功能。不过班级不能自己修改，由管理员修改。</p>
+<p>包括用户名（不可修改），姓名（可修改)，密码（可修改），性别（可修改），身份证号，手机号，密码，邮箱。</p></li>
+<li><p>退出功能</p></li>
+<li><p>管理员增删改查学生功能</p></li>
+</ol>
+<h3 id="2-数据库设计">2. 数据库设计</h3>
+<p><img src="https://bu.dusays.com/2025/06/04/68401689a1b2c.png" alt="image-20250604174852523"></p>
+<p><img src="https://bu.dusays.com/2025/06/04/684016a46767a.png" alt="image-20250604174918645"></p>
+<p>就先这两张表吧</p>
 ]]></content>
       <categories>
         <category>java</category>
