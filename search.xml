@@ -8703,6 +8703,12 @@ label=“研发部” value=“1”&gt;</p>
 <li><p>在vscode中运行<code>build</code>脚本命令，这样会生成<code>dish</code>文件夹代表打包成功</p></li>
 <li><p>将项目部署在<code>Nginx</code>上</p></li>
 </ol>
+<h2 id="十二学员管理">十二、学员管理</h2>
+<h3 id="1-页面原型-7">1. 页面原型</h3>
+<p><img src="https://bu.dusays.com/2025/06/18/68526101deee4.png" alt="image-20250618144719424"></p>
+<h3 id="2-页面分析">2. 页面分析</h3>
+<p>整体大概分为四部分，首部查询条，新增按钮，表格，分页条</p>
+<h3 id="3-顶部查询条制作">3. 顶部查询条制作</h3>
 ]]></content>
       <categories>
         <category>java</category>
@@ -8712,7 +8718,7 @@ label=“研发部” value=“1”&gt;</p>
       </tags>
   </entry>
   <entry>
-    <title>东软校内实习记录</title>
+    <title>东软校内实习实录</title>
     <url>/posts/31294/</url>
     <content><![CDATA[<blockquote>
 <p>这个夏天我们学校和武汉东软集团有一个校企合作，也就是说我要在校内参加东软集训，集训项目为东软云医院，也是我第一次接触企业级的项目，说是企业级感觉更像一个大一点的实训项目，主要是有关团队合作啥啥啥的，不过总的来说应该还是对我有所帮助。希望项目结束时，我可以真正开发一个企业级项目，努力获取一个好的名次。</p>
@@ -8730,6 +8736,16 @@ label=“研发部” value=“1”&gt;</p>
 
 <p>第一天好像啥都没有讲，就讲了git和企业背景之类的。期待第二天</p>
 </div></div></div>
+
+<div class="timeline blue"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2025</p>
+</div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>06-17</p>
+</div></div><div class="timeline-item-content"><p>第二天依然啥都没讲，老师帮人家配环境都捣鼓了半天，感觉好像也是，大多同学进度都是参差不齐的，项目进展很慢。我们写的是云医院，然后老师说把代码放在了Gitee上面了，让我们自己抄。😦😦</p>
+</div></div></div>
+
+<div class="timeline blue"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2025</p>
+</div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>06-20</p>
+</div></div><div class="timeline-item-content">
+</div></div></div>
 ]]></content>
       <categories>
         <category>java</category>
@@ -8737,5 +8753,60 @@ label=“研发部” value=“1”&gt;</p>
       <tags>
         <tag>javaweb</tag>
       </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/posts/0/</url>
+    <content><![CDATA[<h1 id="实习云医院代码问题">实习云医院代码问题</h1>
+<h2 id="一页面问题">一、页面问题</h2>
+<h3 id="1-页面部分">1. 页面部分</h3>
+<ol type="1">
+<li>美化登录页面</li>
+<li>美化首页系统信息等</li>
+<li>美化侧边栏</li>
+<li>完善首页我的设置页面（要求要有管理员的个人信息身份，头像可以回显）</li>
+<li>顶部标题适当美化</li>
+</ol>
+<h3 id="2-功能页面">2. 功能页面</h3>
+<h4 id="21-管理员页面">2.1 管理员页面</h4>
+<ol type="1">
+<li><p>编辑按钮</p>
+<p><img src="https://bu.dusays.com/2025/06/19/68536cc12de00.png" alt="image-20250619094943322"></p>
+<p>退出时清除表单校验</p></li>
+<li><p>新增成功和编辑时要调用钩子函数重新查询表</p></li>
+<li><p>点击取消时取消不可以动态回显，当点击保存时才可以修改</p></li>
+<li><p>id：当删除一个数据时，id不要使用数据库的id</p></li>
+</ol>
+<p><img src="https://bu.dusays.com/2025/06/19/68536de19e08c.png" alt="image-20250619095440251"></p>
+<h4 id="22-管理员添加用户页面">2.2 管理员添加用户页面</h4>
+<ol type="1">
+<li>页面</li>
+</ol>
+<p><img src="https://bu.dusays.com/2025/06/19/68536e371ad53.png" alt="image-20250619095605391"></p>
+<p>对话框：既然编号不可以添加，那么就不要显示id页面</p>
+<ol start="2" type="1">
+<li>添加用户用户可以登录，那么就要给他一个默认密码。那么就要在个人中心页面添加密码修改功能</li>
+<li>解决明文密码问题</li>
+<li>搜索条中文友好</li>
+</ol>
+<h3 id="23-医生页面">2.3 医生页面</h3>
+<ol type="1">
+<li><p>门诊医生页面添加页面显示（如医生的个人信息，排班，待诊用户等等）</p></li>
+<li><p>医生挂号基础功能实现</p>
+<p><img src="https://bu.dusays.com/2025/06/19/6853707d4261c.png" alt="image-20250619100547667"></p></li>
+</ol>
+<h3 id="24-挂号员页面">2.4 挂号员页面</h3>
+<ol type="1">
+<li>解决点两次才会回显查询的功能</li>
+<li>完善挂号功能</li>
+<li>完善退号功能</li>
+</ol>
+<h2 id="二待添加功能持续更新">二、待添加功能（持续更新）</h2>
+<ol type="1">
+<li><p>令牌校验功能（李阳完成）</p></li>
+<li><p>数据库明文密码问题（李阳完成）</p></li>
+<li><p>一些查询日期排序等等的小优化（王、李完成）</p></li>
+</ol>
+]]></content>
   </entry>
 </search>
