@@ -7653,7 +7653,7 @@ oss-cn-hangzhou.aliyuncs.com不能加http://</p>
 </blockquote>
 <p>代码仓库：<a href="https://github.com/lyay23/tlias-web-managemen">
 tlias管理系统-黑马程序员2024JavaWeb+AI 实训 (github.com)</a></p>
-<p>前端代码仓库（暂未全部完成待更新）：<a href="https://github.com/lyay23/vue-tlias-management/">lyay23/vue-tlias-management:
+<p>前端代码仓库：<a href="https://github.com/lyay23/vue-tlias-management/">lyay23/vue-tlias-management:
 tlias的前端部分</a></p>
 <h2 id="一代码开发">一、代码开发</h2>
 <h3 id="1班级管理">1、班级管理</h3>
@@ -8703,12 +8703,6 @@ label=“研发部” value=“1”&gt;</p>
 <li><p>在vscode中运行<code>build</code>脚本命令，这样会生成<code>dish</code>文件夹代表打包成功</p></li>
 <li><p>将项目部署在<code>Nginx</code>上</p></li>
 </ol>
-<h2 id="十二学员管理">十二、学员管理</h2>
-<h3 id="1-页面原型-7">1. 页面原型</h3>
-<p><img src="https://bu.dusays.com/2025/06/18/68526101deee4.png" alt="image-20250618144719424"></p>
-<h3 id="2-页面分析">2. 页面分析</h3>
-<p>整体大概分为四部分，首部查询条，新增按钮，表格，分页条</p>
-<h3 id="3-顶部查询条制作">3. 顶部查询条制作</h3>
 ]]></content>
       <categories>
         <category>java</category>
