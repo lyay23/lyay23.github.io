@@ -1,0 +1,1191 @@
+---
+title: SpringCloud
+mathjax: false
+tags:
+  - javaweb
+categories:
+  - java
+description: SpringCloud
+abbrlink: 42622
+date: 2025-07-13 08:34:21
+cover:
+---
+
+
+
+> 跌跌撞撞终于来到这里，我会记得这一天。
+
+ 
+
+{% link 飞书详细,黑马程序员,https://b11et3un53m.feishu.cn/wiki/PsyawI04ei2FQykqfcPcmd7Dnsc %}
+
+# 一、前置课程
+
+## 1、MybatisPlus
+
+### 1.1 项目启动
+
+1. 导入起步依赖
+
+   ```xml
+   <!―-MybatisPlus-->
+   <dependency>
+      <groupId>com.baomidou</grouprd>
+      <artifactId>mybatis-plus-boot-starter</artifactId><version>3.5.3.1</version>
+   </ dependency>
+   ```
+
+2. 自义定`Mapper`继承`MyBatisPlus`提供的`BaseMapper`接口,并且指定实体类泛型 
+
+   eg:
+
+   ```java
+   public interface UserMapper extends BaseMapper<User> {}
+   ```
+
+### 1.2 常用注解
+
+  约定大于配置
+
+- `@TableName`:用来指定表名
+- `@Table`: 用来指定表中主键字段信息
+- `@TableField`:用来指定表中的普通字段信息
+
+![image-20250713092057985](https://bu.dusays.com/2025/07/13/687309fd4d023.png)
+
+使用`@TableField`注解的常见场景
+
+- 成员变量名与数据库字段名不一致
+- 成员变量名以is开头且是布尔值
+- 成员变量名与数据库关键字冲突
+- 成员变量不是数据库字段
+
+### 1.3 常见配置
+
+```yml
+mybatis-plus:
+   type-aliases-package: com.itheima.mp.domain.po #别名扫描包
+   mapper-locations: "classpath* : /mapper/**/*,xml" # Mapper.xml文件地址，默认值
+   configuration:
+     map-underscore-to-camel-case: true #是否开启下划线和驼峰的映射
+     cache-enabled: false #是否开启二级缓存
+   global-config:
+     db-config:
+      id-type: assign_id # id为雪花算法生成
+      update-strategy: not_null #更新策略:只更新非空字段
+```
+
+ 
+
+### 1.4 核心功能
+
+#### 模糊查询
+
+```java
+//查询名字中带o,balance>1000的id，user等
+/ /1.构建查询条件
+Querywrapper<User> wrapper = new Querywrapper<User>()
+                   .select( "id"，"username"，"info","balance")
+                   .like("username", "o")
+                   .ge( "balance",1000) ;
+// 2.查询
+userMapper.selectList(wrapper) ;
+```
+
+#### 条件更新
+
+```java
+// 更新用户名为jack的的余额为2000元
+// 1.要更新的数据
+user user = new User();
+user.setBalance (2000);
+// 2.更新的条件
+Querywrapperuser> wrapper = new Querywrapper<User>()
+    .eq( column: "username"，val: "jack");
+//3.执行更新
+userMapper.update(user,wrapper);
+```
+
+####  条件更新
+
+```java
+// 更新id为1，2，4的用户余额扣100
+List<Long> ids = List.of(1L，2L，4L);
+updatewrapper<User> wrapper = new Updatewrapper<User> ()
+    .setsql( "balance = balance - 200")
+    .in( column: "id, ids);
+userMapper.update( null, wrapper) ;
+```
+
+#### 自定义SQL
+
+我们可以利用MyBatisPlus的Wrapper来构建复杂的Where条件，然后自己定义SQL语句中剩下的部分。
+
+1. 基于Wrapper构建where条件
+2. 在mapper方法参数中用Param注解声明wrapper变量名称，必须是ew
+3. 自定义SQL，并且使用wrapper条件
+
+![image-20250713104756971](https://bu.dusays.com/2025/07/13/68731e6092394.png)
+
+#### Service接口--IService
+
+ ![image-20250713105909031](https://bu.dusays.com/2025/07/13/687321021b3e5.png)
+
+![image-20250713110450874](https://bu.dusays.com/2025/07/13/687322560f0d9.png)
+
+自定义Service去继承Iservice（要指定实体泛型），自定义ServiceImpl去继承ServiceImpl（要指定Mapper泛型和实体泛型）
+
+eg：
+
+```java
+public interface IUserserice extends IService<User> {}
+```
+
+```java
+public class UserServiceImpl extends ServigeImpl<UserMapper，User> implements TUserService {}
+```
+
+
+
+### 1.5 Restful风格接口
+
+![image-20250713120734859](https://bu.dusays.com/2025/07/13/68733109e18c1.png)
+
+后端传给前端要定义VO，前端传给后端定义DTO
+
+这里有一个我之前没有注意的点，po要转为vo，可以使用`hutool`工具包进行拷贝
+
+```java
+BeanUtil.copyproperties(原始实体，目标实体)
+```
+
+
+
+### 1.6 逻辑删除
+
+![image-20250713135411266](https://bu.dusays.com/2025/07/13/68734a0b9ec3e.png)
+
+### 1.7 枚举处理器
+
+1. 在枚举类的值上添加`@EnumValue`注解
+
+![image-20250713140439923](https://bu.dusays.com/2025/07/13/68734c7b05f15.png)
+
+2. 配置全局枚举处理器
+
+   ```yml
+   mybatis-plus:
+     configuration:
+       default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+   ```
+
+   
+
+### 1.8 JSON类型处理器
+
+1. 首先定义一个单独的JSON实体
+
+![image-20250713141511161](https://bu.dusays.com/2025/07/13/68734ef1d9262.png)
+
+2. 然后将User类的info字段修改为UserInfo类型，并声明类型处理器：
+
+![image-20250713141456253](https://bu.dusays.com/2025/07/13/68734ee32877a.png)
+
+3. 在类上开启自动映射（这里设置autoResultMap = true是因为MyBatis-Plus对于这种类中再嵌套一个自定义类的，是需要手动在.xml中定义相关字段等，或者像这样开启自动映射）
+
+![image-20250713141555704](https://bu.dusays.com/2025/07/13/68734f1e6a5ac.png)
+
+### 1.9 分页插件
+
+在未引入分页插件的情况下，`MybatisPlus`是不支持分页功能的，`IService`和`BaseMapper`中的分页方法都无法正常起效。 所以，我们必须配置分页插件。
+
+新建`MybatisConfig.java`
+
+```java
+@Configuration
+public class MybatisConfig {
+
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        // 初始化核心插件
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 添加分页插件
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        return interceptor;
+    }
+}
+```
+
+编写分页查询的测试
+
+```java
+@Test
+void testPageQuery() {
+    // 1.分页查询，new Page()的两个参数分别是：页码、每页大小
+    Page<User> p = userService.page(new Page<>(2, 2));
+    // 2.总条数
+    System.out.println("total = " + p.getTotal());
+    // 3.总页数
+    System.out.println("pages = " + p.getPages());
+    // 4.数据
+    List<User> records = p.getRecords();
+    records.forEach(System.out::println);
+}
+```
+
+也可以支持排序(根据balance排序，false是降序)
+
+```java
+int pageNo = 1, pageSize = 5;
+// 分页参数
+Page<User> page = Page.of(pageNo, pageSize);
+// 排序参数, 通过OrderItem来指定
+page.addOrder(new OrderItem("balance", false));
+
+userService.page(page);
+```
+
+#### 通用分页查询案例
+
+![image-20250713143735745](https://bu.dusays.com/2025/07/13/68735433538aa.png)
+
+1. 定义一个统一的分页查询条件的实体，包含分页、排序参数、过滤条件
+
+   ```java
+   
+   @Data
+   @ApiModel(description = "分页查询实体")
+   public class PageQuery {
+       @ApiModelProperty("页码")
+       private Long pageNo;
+       @ApiModelProperty("页码")
+       private Long pageSize;
+       @ApiModelProperty("排序字段")
+       private String sortBy;
+       @ApiModelProperty("是否升序")
+       private Boolean isAsc;
+   }
+   ```
+
+2. 然后让我们需要分页的实体去继承分页实体
+
+   `callSuper = true`根据子类自身的字段值和从父类继承的字段值 来生成hashcode，当两个子类对象比较时，只有子类对象的本身的字段值和继承父类的字段值都相同，equals方法的返回值是true
+
+   `@EqualsAndHashCode` 用于自动生成 equals() 和 hashCode() 方法，并且在比较时，调用父类（super）的 equals() 和 hashCode() 方法
+
+   ```java
+   @EqualsAndHashCode(callSuper = true)
+   @Data
+   @ApiModel(description = "用户查询条件实体")
+   public class UserQuery extends PageQuery {
+       @ApiModelProperty("用户名关键字")
+       private String name;
+       @ApiModelProperty("用户状态：1-正常，2-冻结")
+       private Integer status;
+       @ApiModelProperty("余额最小值")
+       private Integer minBalance;
+       @ApiModelProperty("余额最大值")
+       private Integer maxBalance;
+   }
+   ```
+
+3. 新建统一返回结果集
+
+   ```java
+   @Data
+   @ApiModel(description = "分页结果")
+   public class PageDTO<T> {
+       @ApiModelProperty("总条数")
+       private Long total;
+       @ApiModelProperty("总页数")
+       private Long pages;
+       @ApiModelProperty("集合")
+       private List<T> list;
+   }
+   ```
+
+4. 分页查询代码示例
+
+   ```java
+   @Override
+   public PageDTO<UserVO> queryUsersPage(PageQuery query) {
+       // 1.构建条件
+       // 1.1.分页条件
+       Page<User> page = Page.of(query.getPageNo(), query.getPageSize());
+       // 1.2.排序条件
+       if (query.getSortBy() != null) {
+           page.addOrder(new OrderItem(query.getSortBy(), query.getIsAsc()));
+       }else{
+           // 默认按照更新时间排序
+           page.addOrder(new OrderItem("update_time", false));
+       }
+       // 2.查询
+       page(page);
+       // 3.数据非空校验
+       List<User> records = page.getRecords();
+       if (records == null || records.size() <= 0) {
+           // 无数据，返回空结果
+           return new PageDTO<>(page.getTotal(), page.getPages(), Collections.emptyList());
+       }
+       // 4.有数据，转换
+       List<UserVO> list = BeanUtil.copyToList(records, UserVO.class);
+       // 5.封装返回
+       return new PageDTO<UserVO>(page.getTotal(), page.getPages(), list);
+   }
+   ```
+
+
+
+#### 将分页条件封装在工具类中
+
+`PageQuery`
+
+```java
+@Data
+public class PageQuery {
+    @ApiModelProperty("页码")
+    private Long pageNo=1;
+    @ApiModelProperty("页码")
+    private Long pageSize=10;
+    @ApiModelProperty("排序字段")
+    private String sortBy;
+    @ApiModelProperty("是否升序")
+    private Boolean isAsc;
+
+    public <T>  Page<T> toMpPage(OrderItem ... orders){
+        // 1.分页条件
+        Page<T> p = Page.of(pageNo, pageSize);
+        // 2.排序条件
+        // 2.1.先看前端有没有传排序字段
+        if (sortBy != null) {
+            p.addOrder(new OrderItem(sortBy, isAsc));
+            return p;
+        }
+        // 2.2.再看有没有手动指定排序字段
+        if(orders != null){
+            p.addOrder(orders);
+        }
+        return p;
+    }
+
+    public <T> Page<T> toMpPage(String defaultSortBy, boolean isAsc){
+        return this.toMpPage(new OrderItem(defaultSortBy, isAsc));
+    }
+
+    public <T> Page<T> toMpPageDefaultSortByCreateTimeDesc() {
+        return toMpPage("create_time", false);
+    }
+
+    public <T> Page<T> toMpPageDefaultSortByUpdateTimeDesc() {
+        return toMpPage("update_time", false);
+    }
+}
+```
+
+`PageDTO`
+
+```java
+package com.itheima.mp.domain.dto;
+
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class PageDTO<V> {
+    private Long total;
+    private Long pages;
+    private List<V> list;
+
+    /**
+     * 返回空分页结果
+     * @param p MybatisPlus的分页结果
+     * @param <V> 目标VO类型
+     * @param <P> 原始PO类型
+     * @return VO的分页对象
+     */
+    public static <V, P> PageDTO<V> empty(Page<P> p){
+        return new PageDTO<>(p.getTotal(), p.getPages(), Collections.emptyList());
+    }
+
+    /**
+     * 将MybatisPlus分页结果转为 VO分页结果
+     * @param p MybatisPlus的分页结果
+     * @param voClass 目标VO类型的字节码
+     * @param <V> 目标VO类型
+     * @param <P> 原始PO类型
+     * @return VO的分页对象
+     */
+    public static <V, P> PageDTO<V> of(Page<P> p, Class<V> voClass) {
+        // 1.非空校验
+        List<P> records = p.getRecords();
+        if (records == null || records.size() <= 0) {
+            // 无数据，返回空结果
+            return empty(p);
+        }
+        // 2.数据转换
+        List<V> vos = BeanUtil.copyToList(records, voClass);
+        // 3.封装返回
+        return new PageDTO<>(p.getTotal(), p.getPages(), vos);
+    }
+
+    /**
+     * 将MybatisPlus分页结果转为 VO分页结果，允许用户自定义PO到VO的转换方式
+     * @param p MybatisPlus的分页结果
+     * @param convertor PO到VO的转换函数
+     * @param <V> 目标VO类型
+     * @param <P> 原始PO类型
+     * @return VO的分页对象
+     */
+    public static <V, P> PageDTO<V> of(Page<P> p, Function<P, V> convertor) {
+        // 1.非空校验
+        List<P> records = p.getRecords();
+        if (records == null || records.size() <= 0) {
+            // 无数据，返回空结果
+            return empty(p);
+        }
+        // 2.数据转换
+        List<V> vos = records.stream().map(convertor).collect(Collectors.toList());
+        // 3.封装返回
+        return new PageDTO<>(p.getTotal(), p.getPages(), vos);
+    }
+}
+```
+
+`业务层代码可简化为`
+
+```java
+@Override
+public PageDTO<UserVO> queryUserByPage(PageQuery query) {
+    // 1.构建条件
+    Page<User> page = query.toMpPageDefaultSortByCreateTimeDesc();
+    // 2.查询
+    page(page);
+    // 3.封装返回
+    return PageDTO.of(page, user -> {
+        // 拷贝属性到VO
+        UserVO vo = BeanUtil.copyProperties(user, UserVO.class);
+        // 用户名脱敏
+        String username = vo.getUsername();
+        vo.setUsername(username.substring(0, username.length() - 2) + "**");
+        return vo;
+    });
+}
+```
+
+
+
+## 2.Docker
+
+### 1. 安装问题
+
+#### 1. 解决配置网络时es33显示被已拔出问题
+
+在电脑服务中开启VMware DHCP Service”和“VMware NAT Service”。即可
+
+#### 2. 解决Docker镜像问题
+
+操她奶奶的，你妹的傻鸟Docker，用老师安装的方式一直不成功，最终在评论区找到答案
+
+```java
+无法安装docker 建议直接：bash <(curl -sSL https://linuxmirrors.cn/docker.sh)  这条命令，一次性全安装完毕
+```
+
+### 2. 安装MySQL
+
+```powershell
+docker run -d \
+  --name mysql \
+  -p 3306:3306 \
+  -e TZ=Asia/Shanghai \
+  -e MYSQL_ROOT_PASSWORD=abc123 \
+  mysql
+```
+
+```powershell
+tee /etc/docker/daemon.json <<-'EOF'
+{  "registry-mirrors": [   
+        "https://docker-0.unsee.tech",  
+        "https://docker-cf.registry.cyou",   
+        "https://docker.1panel.live"  
+   ]
+}
+EOF
+```
+
+### 3. Docker常见命令
+
+![img](https://bu.dusays.com/2025/07/14/68743df04bd52.png)
+
+|      命令      |              说明              |                           文档地址                           |
+| :------------: | :----------------------------: | :----------------------------------------------------------: |
+| docker images  |          查看本地镜像          | [docker images](https://docs.docker.com/engine/reference/commandline/images/) |
+|   docker rmi   |          删除本地镜像          | [docker rmi](https://docs.docker.com/engine/reference/commandline/rmi/) |
+|   docker run   | 创建并运行容器（不能重复创建） | [docker run](https://docs.docker.com/engine/reference/commandline/run/) |
+|  docker stop   |          停止指定容器          | [docker stop](https://docs.docker.com/engine/reference/commandline/stop/) |
+|  docker start  |          启动指定容器          | [docker start](https://docs.docker.com/engine/reference/commandline/start/) |
+| docker restart |          重新启动容器          | [docker restart](https://docs.docker.com/engine/reference/commandline/restart/) |
+|   docker rm    |          删除指定容器          | [docs.docker.com](https://docs.docker.com/engine/reference/commandline/rm/) |
+|   docker ps    |            查看容器            | [docker ps](https://docs.docker.com/engine/reference/commandline/ps/) |
+|  docker logs   |        查看容器运行日志        | [docker logs](https://docs.docker.com/engine/reference/commandline/logs/) |
+|  docker exec   |            进入容器            | [docker exec](https://docs.docker.com/engine/reference/commandline/exec/) |
+|  docker save   |     保存镜像到本地压缩文件     | [docker save](https://docs.docker.com/engine/reference/commandline/save/) |
+|  docker load   |     加载本地压缩文件到镜像     | [docker load](https://docs.docker.com/engine/reference/commandline/load/) |
+| docker inspect |        查看容器详细信息        | [docker inspect](https://docs.docker.com/engine/reference/commandline/inspect/) |
+
+![image-20250714072007387](https://bu.dusays.com/2025/07/14/68743f28292ae.png)
+
+如何把镜像交给运维人员：1.使用docker save形成本地压缩包，运维人员再使用docker load将本地这个压缩包进行解压；2.将镜像推送到镜像仓库，运维人员再从镜像仓库进行拉取
+
+### 4. 数据卷
+
+容器是隔离环境，容器内程序的文件、配置、运行时产生的容器都在容器内部，我们要读写容器内的文件非常不方便。大家思考几个问题：
+
+- 如果要升级MySQL版本，需要销毁旧容器，那么数据岂不是跟着被销毁了？
+- MySQL、Nginx容器运行后，如果我要修改其中的某些配置该怎么办？
+- 我想要让Nginx代理我的静态资源怎么办？
+
+因此，容器提供程序的运行环境，但是**程序运行产生的数据、程序运行依赖的配置都应该与容器解耦**。
+
+#### 4.1 什么是数据卷
+
+**数据卷（volume）**是一个虚拟目录，是**容器内目录**与**宿主机目录**之间映射的桥梁。（ps：其实类似于双向绑定，修改数据卷里面的nginx内容，实际的nginx的内容也会修改）
+
+以Nginx为例，我们知道Nginx中有两个关键的目录：
+
+- `html`：放置一些静态资源
+- `conf`：放置配置文件
+
+如果我们要让Nginx代理我们的静态资源，最好是放到`html`目录；如果我们要修改Nginx的配置，最好是找到`conf`下的`nginx.conf`文件。
+
+但遗憾的是，容器运行的Nginx所有的文件都在容器内部。所以我们必须利用数据卷将两个目录与宿主机目录关联，方便我们操作。如图：
+
+![image-20250714073124180](https://bu.dusays.com/2025/07/14/687441cd20ef8.png)
+
+在上图中：
+
+- 我们创建了两个数据卷：`conf`、`html`
+- Nginx容器内部的`conf`目录和`html`目录分别与两个数据卷关联。
+- 而数据卷conf和html分别指向了宿主机的`/var/lib/docker/volumes/conf/_data`目录和`/var/lib/docker/volumes/html/_data`目录
+
+这样以来，容器内的`conf`和`html`目录就 与宿主机的`conf`和`html`目录关联起来，我们称为**挂载**。此时，我们操作宿主机的`/var/lib/docker/volumes/html/_data`就是在操作容器内的`/usr/share/nginx/html/_data`目录。只要我们将静态资源放入宿主机对应目录，就可以被Nginx代理了。
+
+#### 4.2 数据卷的命令
+
+|       **命令**        |       **说明**       |                         **文档地址**                         |
+| :-------------------: | :------------------: | :----------------------------------------------------------: |
+| docker volume create  |      创建数据卷      | [docker volume create](https://docs.docker.com/engine/reference/commandline/volume_create/) |
+|   docker volume ls    |    查看所有数据卷    | [docs.docker.com](https://docs.docker.com/engine/reference/commandline/volume_ls/) |
+|   docker volume rm    |    删除指定数据卷    | [docs.docker.com](https://docs.docker.com/engine/reference/commandline/volume_prune/) |
+| docker volume inspect | 查看某个数据卷的详情 | [docs.docker.com](https://docs.docker.com/engine/reference/commandline/volume_inspect/) |
+|  docker volume prune  |      清除数据卷      | [docker volume prune](https://docs.docker.com/engine/reference/commandline/volume_prune/) |
+
+注意：容器与数据卷的挂载要在创建容器时配置，对于创建好的容器，是不能设置数据卷的。而且**创建容器的过程中，数据卷会自动创建**。
+
+如何挂载数据卷？
+
+- 在创建容器时，利用-v数据卷名:容器内目录完成挂载
+- 容器创建时，如果发现挂载的数据卷不存在时，会自动创建
+
+#### 4.3 创建Nginx 数据卷
+
+![image-20250714080431521](https://bu.dusays.com/2025/07/14/68744990bc1b6.png)
+哇神奇
+
+```powershell
+[root@localhost ~]# docker rm -f nginx
+nginx
+[root@localhost ~]# docker run -d --name nginx -p 80:80 -v html:/usr/share/nginx/html nginx
+d7d95a4dd8cb76b5a4baeb1a17ab2f5acbfdfe34844da319d3c7e30bfa1be047
+[root@localhost ~]# docker ps
+CONTAINER ID   IMAGE     COMMAND                   CREATED             STATUS             PORTS                                                  NAMES
+d7d95a4dd8cb   nginx     "/docker-entrypoint.…"   8 seconds ago       Up 7 seconds       0.0.0.0:80->80/tcp, :::80->80/tcp                      nginx
+5bb7b84c208d   mysql     "docker-entrypoint.s…"   About an hour ago   Up About an hour   0.0.0.0:3306->3306/tcp, :::3306->3306/tcp, 33060/tcp   mysql
+[root@localhost ~]# docker volume ls
+DRIVER    VOLUME NAME
+local     f029801a77bbe84d7ee550a9cce21abf4644a56906111cc68be691efd9495a9e
+local     html
+[root@localhost ~]# docker volume inspect html
+[
+    {
+        "CreatedAt": "2025-07-13T22:12:13+08:00",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/html/_data",
+        "Name": "html",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+[root@localhost ~]# cd /var/lib/docker/volumes/html/_data
+[root@localhost _data]#
+
+```
+
+这是 Docker 的默认存储位置，所有命名卷都会存放在 `/var/lib/docker/volumes/<卷名>/_data` 下
+
+volume对应的宿主机目录，html是虚拟目录 ，`/usr/share/nginx/html` 容器内的对应目录
+
+![image-20250714103106907](https://bu.dusays.com/2025/07/14/68746bec07642.png)
+
+#### 4.4 MySQL 容器的数据挂载
+
+```powershell
+[root@localhost ~]# docker inspect mysql
+[
+    {
+        "Id": "e4c3c8923f08031b15e4590cbc0a10209867ac4793a46ac409e4ae3d6923cea9",
+        "Created": "2025-07-13T18:25:21.488931875Z",
+        "Path": "docker-entrypoint.sh",
+        "Args": [
+            "mysqld"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 52260,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2025-07-13T18:25:21.819305537Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+ 
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "c5ab9bdf061d55de6fc1d602ff8e644d915611171539536ea48f1ba0b5092d5e",
+                "Source": "/var/lib/docker/volumes/c5ab9bdf061d55de6fc1d602ff8e644d915611171539536ea48f1ba0b5092d5e/_data",
+                "Destination": "/var/lib/mysql",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "e4c3c8923f08",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "3306/tcp": {},
+                "33060/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "TZ=Asia/Shanghai",
+                "MYSQL_ROOT_PASSWORD=abc123",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.17",
+                "MYSQL_MAJOR=innovation",
+                "MYSQL_VERSION=9.3.0-1.el9",
+                "MYSQL_SHELL_VERSION=9.3.0-1.el9"
+            ],
+            "Cmd": [
+                "mysqld"
+            ],
+            "Image": "mysql",
+            "Volumes": {
+                "/var/lib/mysql": {}
+            },
+            "WorkingDir": "/",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "bbc2939d84f12f3ba3b2063229491abfaf2b0ee8a52b7b3d605792017b49f3a5",
+            "SandboxKey": "/var/run/docker/netns/bbc2939d84f1",
+            "Ports": {
+                "3306/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "3306"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "3306"
+                    }
+                ],
+                "33060/tcp": null
+            },
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "67d5ed6abb8444918c766a0e9be1ba00a6ed7d9f32d55155e1b7924466ee1a0d",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "NetworkID": "2bcb6623ac17cfcba762bc1efedf14674fe023680a15b89e4f5f687f76ad2d90",
+                    "EndpointID": "67d5ed6abb8444918c766a0e9be1ba00a6ed7d9f32d55155e1b7924466ee1a0d",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DriverOpts": null,
+                    "DNSNames": null
+                }
+            }
+        }
+    }
+]
+[root@localhost ~]#
+
+```
+
+发现有默认的数据挂载，但是默认匿名挂载名字复杂目录太深了，下面给他修改到挂载到根目录
+
+```powershell
+docker run -d \
+--name mysql \
+-p 3306:3306 \
+-e Tz=Asia/Shanghai \
+-e MYSQL_ROOT_PASSWORD=abc123 \
+-v /root/mysql/data:/var/lib/mysql \
+-v /root/mysq1/conf:/etc/mysq1/conf.d \
+-v /root/mysql/init:/docker-entrypoint-initdb.d \
+mysql
+```
+
+注意：SQL文件必须要有创建数据库的命令，不然无法创建成功数据库
+
+然后将SQL文件放在init文件夹里面
+
+运行
+
+```powershell
+docker run -d \
+--name mysql \
+-p 3306:3306 \
+-e Tz=Asia/Shanghai \
+-e MYSQL_ROOT_PASSWORD=abc123 \
+-v /root/mysql/data:/var/lib/mysql \
+-v /root/mysq1/conf:/etc/mysq1/conf.d \
+-v /root/mysql/init:/docker-entrypoint-initdb.d \
+mysql
+```
+
+即可
+
+### 5. 自定义镜像
+
+镜像就是包含了应用程序、程序运行的系统函数库、运行配置等文件的文件包。构建镜像的过程其实就是把上述文件打包的过程。
+
+由于制作镜像的过程中，需要逐层处理和打包，比较复杂，所以Docker就提供了自动打包镜像的功能。我们只需要将打包的过程，每一层要做的事情用固定的语法写下来，交给Docker去执行即可。而这种记录镜像结构的文件就称为**Dockerfile**
+
+|    **指令**    |                   **说明**                   |           **示例**            |
+| :------------: | :------------------------------------------: | :---------------------------: |
+|    **FROM**    |                 指定基础镜像                 |        `FROM centos:6`        |
+|    **ENV**     |        设置环境变量，可在后面指令使用        |        `ENV key value`        |
+|    **COPY**    |         拷贝本地文件到镜像的指定目录         | `COPY ./xx.jar /tmp/app.jar`  |
+|    **RUN**     |  执行Linux的shell命令，一般是安装过程的命令  |     `RUN yum install gcc`     |
+|   **EXPOSE**   | 指定容器运行时监听的端口，是给镜像使用者看的 |         `EXPOSE 8080`         |
+| **ENTRYPOINT** |     镜像中应用的启动命令，容器运行时调用     | `ENTRYPOINT java -jar xx.jar` |
+
+### 6. 网络
+
+容器的网络IP其实是一个虚拟的IP，其值并不固定与某一个容器绑定，如果我们在开发时写死某个IP，而在部署时很可能MySQL容器的IP会发生变化，连接会失败。
+
+所以，我们必须借助于docker的网络功能来解决这个问题
+常见命令
+
+|         **命令**          |         **说明**         |                         **文档地址**                         |
+| :-----------------------: | :----------------------: | :----------------------------------------------------------: |
+|   docker network create   |       创建一个网络       | [docker network create](https://docs.docker.com/engine/reference/commandline/network_create/) |
+|     docker network ls     |       查看所有网络       | [docs.docker.com](https://docs.docker.com/engine/reference/commandline/network_ls/) |
+|     docker network rm     |       删除指定网络       | [docs.docker.com](https://docs.docker.com/engine/reference/commandline/network_rm/) |
+|   docker network prune    |     清除未使用的网络     | [docs.docker.com](https://docs.docker.com/engine/reference/commandline/network_prune/) |
+|  docker network connect   | 使指定容器连接加入某网络 | [docs.docker.com](https://docs.docker.com/engine/reference/commandline/network_connect/) |
+| docker network disconnect | 使指定容器连接离开某网络 | [docker network disconnect](https://docs.docker.com/engine/reference/commandline/network_disconnect/) |
+|  docker network inspect   |     查看网络详细信息     | [docker network inspect](https://docs.docker.com/engine/reference/commandline/network_inspect/) |
+
+```powershell
+[root@localhost mysql]# docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+f1a34d4477b4   baskly    bridge    local
+2bcb6623ac17   bridge    bridge    local
+e693457ba93b   host      host      local
+028d2b795efa   none      null      local
+[root@localhost mysql]# docker network connect baskly mysql
+[root@localhost mysql]# docker inspect mysql
+
+```
+
+
+
+### 7.使用Docker打包项目（tlias为例）
+
+> 老东西 终于把焚决交出来了
+
+#### 7.1后端打包
+
+1. 准备MySQL容器，并且创建tlias数据库以及表结构（上面在本地目录挂载MySQL时已经2完成）
+
+2. 准备Java应用（tlias）镜像，部署Docker容器，运行测试
+
+   + 修改tlias项目的配置文件，修改数据库服务地址及logback日志文件存放地址，打jar包。
+
+   + 编写Dockerfile文件。
+
+   + 构建Docker镜像。
+
+   + 部署Docker容器。
+
+
+
+##### 具体步骤
+
+1. 打开idea将yml中数据库连接部分改为Docker中的MySQL
+
+   ```yml
+    datasource:
+       driver-class-name: com.mysql.cj.jdbc.Driver
+       url: jdbc:mysql://mysql:3306/tlias?useUnicode=true&characterEncoding=utf-8&useSSL=true
+       username: root
+       password: abc123
+   ```
+
+2. 在idea中的Maven中的Lifecycle中点击`package`,等待build成功。然后我们的target文件夹中会出现我们的Jar包了。jar包名字很长可以适当重命名
+
+3. 新建Dockerfile
+
+   ```powershell
+   # 使用 CentOS 7 作为基础镜像
+   FROM centos:7
+   
+   # 添加 JDK 到镜像中
+   COPY jdk21.tar.gz /usr/local/
+   RUN tar -xzf /usr/local/jdk21.tar.gz -C /usr/local/ &&  rm /usr/local/jdk21.tar.gz
+   
+   # 设置环境变量
+   ENV JAVA_HOME=/usr/local/jdk-21.0.1
+   ENV PATH=$JAVA_HOME/bin:$PATH
+   
+   # 配置阿里云OSS
+   ENV OSS_ACCESS_KEY_ID=[你的]
+   ENV OSS_ACCESS_KEY_SECRET=[你的]
+   #统一编码
+   ENV LANG=en_US.UTF-8
+   ENV LANGUAGE=en_US:en
+   ENV LC_ALL=en_US.UTF-8
+   
+   # 创建应用目录
+   RUN mkdir -p /tlias
+   WORKDIR /tlias
+   
+   # 复制应用 JAR 文件到容器
+   COPY  tlias.jar  tlias.jar
+   
+   # 暴露端口
+   EXPOSE 8080
+   
+   # 运行命令
+   ENTRYPOINT ["java","-jar","/tlias/tlias.jar"]
+   ```
+
+4. 在`/usr/local/`下新建`tlias-docker-app`文件夹，里面上传进去我们的`tlias.jar`,`Dockerfile`,`jdk21`
+
+5. 然后去构建Docker镜像
+
+   ```powershell
+   [root@localhost tlias-docker-app]# docker build -t tlias:1.0 .
+   [+] Building 266.8s (11/11) FINISHED                             docker:default
+    => [internal] load build definition from Dockerfile                       0.0s
+    => => transferring dockerfile: 818B                                       0.0s
+    => [internal] load metadata for docker.io/library/centos:7              146.9s
+    => [internal] load .dockerignore                                          0.0s
+    => => transferring context: 2B                                            0.0s
+    => [1/6] FROM docker.io/library/centos:7@sha256:be65f488b7764ad3638f23  111.2s
+    => => resolve docker.io/library/centos:7@sha256:be65f488b7764ad3638f236b  0.0s
+    => => sha256:eeb6ee3f44bd0b5103bb561b4c16bcb82328cfe5809 2.75kB / 2.75kB  0.0s
+    => => sha256:2d473b07cdd5f0912cd6f1a703352c82b512407 76.10MB / 76.10MB  103.9s
+    => => sha256:be65f488b7764ad3638f236b7b515b3678369a5124c 1.20kB / 1.20kB  0.0s
+    => => sha256:dead07b4d8ed7e29e98de0f4504d87e8880d4347859d839 529B / 529B  0.0s
+    => => extracting sha256:2d473b07cdd5f0912cd6f1a703352c82b512407db6b05b43  7.1s
+    => [internal] load build context                                          0.0s
+    => => transferring context: 173B                                          0.0s
+    => [2/6] COPY jdk21.tar.gz /usr/local/                                    2.0s
+    => [3/6] RUN tar -xzf /usr/local/jdk21.tar.gz -C /usr/local/ &&  rm /usr  5.4s
+    => [4/6] RUN mkdir -p /tlias                                              0.4s
+    => [5/6] WORKDIR /tlias                                                   0.0s
+    => [6/6] COPY  tlias.jar  tlias.jar                                       0.1s
+    => exporting to image                                                     0.7s
+    => => exporting layers                                                    0.6s
+    => => writing image sha256:8b8dd47f37a8752599c8d24b4b01dcce96ccb2469d4f4  0.0s
+    => => naming to docker.io/library/tlias:1.0                               0.0s
+   [root@localhost tlias-docker-app]# docker images
+   REPOSITORY   TAG       IMAGE ID       CREATED              SIZE
+   tlias        1.0       8b8dd47f37a8   About a minute ago   783MB
+   redis        latest    f2cd22713a18   7 days ago           128MB
+   nginx        latest    9592f5595f2b   2 weeks ago          192MB
+   mysql        latest    4c2531d6bf10   2 months ago         859MB
+   
+   ```
+
+   取名字为tlias，版本1.0，在当前文件夹里
+
+6. 部署docker容器
+
+   ```powershell
+   [root@localhost tlias-docker-app]# docker run -d --name tlias-server -p 8080:8080 --network baskly tlias:1.0
+   ffc30c9fde8cf187b0c035e1fd27b12417ebcf988af34b3779c2cf50040f7a4d
+   
+   [root@localhost tlias-docker-app]# docker ps
+   CONTAINER ID   IMAGE     COMMAND                   CREATED          STATUS          PORTS   NAMES
+   ffc30c9fde8c   tlias:1.0   "java -jar /tlias/tl…"   18 seconds ago   Up 17 seconds   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   tlias-server
+   ```
+
+7. 使用`docker logs -f tlias-service` 查看后端启动日志
+
+   ```java
+   [root@localhost tlias-docker-app]# docker logs -f tlias-server
+   
+     .   ____          _            __ _ _
+    /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+   ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+    \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+     '  |____| .__|_| |_|_| |_\__, | / / / /
+    =========|_|==============|___/=/_/_/_/
+   
+    :: Spring Boot ::                (v3.4.4)
+   
+   2025-07-13T21:02:32.843Z  INFO 1 --- [tlias-web-managemen] [           main] c.itheima.TliasWebManagemenApplication   : Starting TliasWebManagemenApplication v0.0.1-SNAPSHOT using Java 21.0.1 with PID 1 (/tlias/tlias.jar started by root in /tlias)
+   2025-07-13T21:02:32.849Z  INFO 1 --- [tlias-web-managemen] [           main] c.itheima.TliasWebManagemenApplication   : No active profile set, falling back to 1 default profile: "default"
+   2025-07-13T21:02:35.395Z  INFO 1 --- [tlias-web-managemen] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+   2025-07-13T21:02:35.427Z  INFO 1 --- [tlias-web-managemen] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+   2025-07-13T21:02:35.428Z  INFO 1 --- [tlias-web-managemen] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
+   2025-07-13T21:02:35.493Z  INFO 1 --- [tlias-web-managemen] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+   2025-07-13T21:02:35.495Z  INFO 1 --- [tlias-web-managemen] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2524 ms
+   Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+   
+   
+   ,------.                           ,--.  ,--.         ,--.
+   |  .--. '  ,--,--.  ,---.   ,---.  |  '--'  |  ,---.  |  |  ,---.   ,---.  ,--.--.
+   |  '--' | ' ,-.  | | .-. | | .-. : |  .--.  | | .-. : |  | | .-. | | .-. : |  .--'
+   |  | --'  \ '-'  | ' '-' ' \   --. |  |  |  | \   --. |  | | '-' ' \   --. |  |
+   `--'       `--`--' .`-  /   `----' `--'  `--'  `----' `--' |  |-'   `----' `--'
+                      `---'                                   `--'                        is intercepting.
+   
+   2025-07-13T21:02:37.128Z  INFO 1 --- [tlias-web-managemen] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+   2025-07-13T21:02:37.149Z  INFO 1 --- [tlias-web-managemen] [           main] c.itheima.TliasWebManagemenApplication   : Started TliasWebManagemenApplication in 5.209 seconds (process running for 5.838)
+   
+   
+   
+   ```
+
+8. 这样我们的项目就启动成功了使用ApiFox发送请求也能正常输出结果
+   ![image-20250714143249324](https://bu.dusays.com/2025/07/14/6874a49234ca3.png)
+
+#### 7.2. 前端项目部署
+
+创建一个新的nginx容器，将资料中提供的前端项目的静态资源部署到nginx中。
+
+![image-20250714143712192](https://bu.dusays.com/2025/07/14/6874a598518f0.png)
+
+1. 在root文件夹下创建一个新文件夹用于映射Nginx，名字叫`tlias-nginx`。
+
+2. 然后配置挂载
+
+   ```powershell
+   docker run -d \
+    --name nginx-tlias \
+    -v /root/tlias-nginx/html:/usr/share/nginx/html \
+    -v /root/tlias-nginx/conf/nginx.conf:/etc/nginx/nginx.conf \
+    --network baskly \
+    -p 80:80 \
+   nginx:1.20.2
+   ```
+
+3. 然后访问（未开启需要开启一下服务）
+
+   ```powershell
+   # 安装ntpdate（若未安装）
+   sudo yum install -y ntpdate
+   
+   # 同步阿里云时间服务器（北京时间）
+   sudo ntpdate ntp.aliyun.com
+   ```
+
+   解决因为Linux时间和系统系统不符导致的时区不同步问题
+
+
+
+### 8. DockerCompose
+
+> 老东西 把异火也交出来了
+
+Docker Compose通过一个单独的docker-compose.yml模板文件（YANL 格式）来定义一组相关联的应用容器，帮助我们实现多个相互关联的Docker容器的快速部署。
+
+![image-20250714153048956](https://bu.dusays.com/2025/07/14/6874b22bd22c4.png)
+
+现在我们使用DockerCompose来重新构建项目
+
+- 准备资源（tlias.sql，服务端的jdk17、jar包、Dockerfile，前端项目打包文件、nginx.conf)
+- 准备docker-compose.yml配置文件
+- 基于DockerCompose快速构建项目
+
+
+
+```yml
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: abc123
+    volumes:
+      - "/usr/local/app/mysql/conf:/etc/mysql/conf.d"
+      - "/usr/local/app/mysql/data:/var/lib/mysql"
+      - "/usr/local/app/mysql/init:/docker-entrypoint-initdb.d"
+    networks:
+      - tlias-net
+  tlias:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: tlias-server
+    ports:
+      - "8080:8080"
+    networks:
+      - tlias-net
+    depends_on:
+      - mysql
+  nginx:
+    image: nginx:1.20.2
+    container_name: nginx-tlias
+    ports:
+      - "80:80"
+    volumes:
+      - "/usr/local/app/nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
+      - "/usr/local/app/nginx/html:/usr/share/nginx/html"
+    depends_on:
+      - tlias
+    networks:
+      - tlias-net
+networks:
+  tlias-net:
+    name: itheima
+```
+
+根据compose定义的路径在文件夹下新建空文件夹，然后将以下文件存放在文件夹中
+
+![image-20250714161252989](https://bu.dusays.com/2025/07/14/6874bc04e9c7b.png)
+
+```powershell
+docker compose [OPTIONS] [COMMAND]
+```
+
+其中，OPTIONS和COMMAND都是可选参数，比较常见的有：
+
+| **类型** | **参数或指令** |                           **说明**                           |
+| -------- | -------------- | :----------------------------------------------------------: |
+| Options  | -f             |                 指定compose文件的路径和名称                  |
+|          | -p             | 指定project名称。project就是当前compose文件中设置的多个service的集合，是逻辑概念 |
+| Commands | up             |                  创建并启动所有service容器                   |
+|          | down           |                   停止并移除所有容器、网络                   |
+|          | ps             |                      列出所有启动的容器                      |
+|          | logs           |                      查看指定容器的日志                      |
+|          | stop           |                           停止容器                           |
+|          | start          |                           启动容器                           |
+|          | restart        |                           重启容器                           |
+|          | top            |                        查看运行的进程                        |
+|          | exec           |                 在指定的运行中容器中执行命令                 |
+
+1. 创建容器
+
+   ```powershell
+   [root@localhost app]# docker compose up -d
+   [+] Running 11/11
+    ✔ mysql Pulled                                                           94.0s
+      ✔ 90dac1e734aa Already exists                                           0.0s
+      ✔ bf40b60a847d Pull complete                                           32.0s
+      ✔ 9d9cb66e1171 Pull complete                                           32.1s
+      ✔ 31b29e08d2d1 Pull complete                                           32.8s
+      ✔ 1f5a1dfb5b55 Pull complete                                           32.8s
+      ✔ 7becd864c61c Pull complete                                           32.8s
+      ✔ 00a0a1479659 Pull complete                                           35.0s
+      ✔ cff841917be4 Pull complete                                           35.0s
+      ✔ 8e98c1c43da6 Pull complete                                           76.4s
+      ✔ 61ba5ff08093 Pull complete                                           76.4s
+   [+] Building 38.5s (11/11) FINISHED                              docker:default
+    => [tlias internal] load build definition from Dockerfile                 0.0s
+    => => transferring dockerfile: 818B                                       0.0s
+    => [tlias internal] load metadata for docker.io/library/centos:7         36.3s
+    => [tlias internal] load .dockerignore                                    0.0s
+    => => transferring context: 2B                                            0.0s
+    => [tlias 1/6] FROM docker.io/library/centos:7@sha256:be65f488b7764ad363  0.0s
+    => [tlias internal] load build context                                    2.1s
+    => => transferring context: 232.73MB                                      2.1s
+    => CACHED [tlias 2/6] COPY jdk21.tar.gz /usr/local/                       0.0s
+    => CACHED [tlias 3/6] RUN tar -xzf /usr/local/jdk21.tar.gz -C /usr/local  0.0s
+    => CACHED [tlias 4/6] RUN mkdir -p /tlias                                 0.0s
+    => CACHED [tlias 5/6] WORKDIR /tlias                                      0.0s
+    => CACHED [tlias 6/6] COPY  tlias.jar  tlias.jar                          0.0s
+    => [tlias] exporting to image                                             0.0s
+    => => exporting layers                                                    0.0s
+    => => writing image sha256:e2a98bd74211094262b8ba068f777e782edeba8b11cdf  0.0s
+    => => naming to docker.io/library/app-tlias                               0.0s
+   [+] Running 4/4
+    ✔ Network itheima         Created                                         0.1s
+    ✔ Container mysql         Started                                         1.2s
+    ✔ Container tlias-server  Started                                         1.2s
+    ✔ Container nginx-tlias   Started   
+   ```
+
+2. 开始停止容器
+
+      ```powershell
+      [root@localhost app]# docker compose stop
+      [+] Stopping 3/3
+       ✔ Container nginx-tlias   Stopped                                         0.2s
+       ✔ Container tlias-server  Stopped                                         0.2s
+       ✔ Container mysql         Stopped                                         2.9s
+      [root@localhost app]# docker compose start
+      [+] Running 3/3
+       ✔ Container mysql         Started                                         0.3s
+       ✔ Container tlias-server  Started                                         0.3s
+       ✔ Container nginx-tlias   Started                                         0.4s
+      [root@localhost app]#
+      
+      ```
+
+      🥲心心念念的Docker终于结束了
+      
+      
