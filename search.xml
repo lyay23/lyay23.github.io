@@ -9314,6 +9314,76 @@ network inspect</a></td>
 
 <p>🥲心心念念的Docker终于结束了</p></li>
 </ol>
+<h1 id="二微服务">二、微服务</h1>
+<h3 id="1-导入后端项目">1. 导入后端项目</h3>
+<p>导入后端项目启动项目时报了错误</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">java.lang.reflect.InaccessibleObjectException</span><br></pre></td></tr></table></figure>
+
+<p>看弹幕说时因为MyBatisPlus版本与Java高版本冲突导致的反射问题</p>
+<p><img src="https://bu.dusays.com/2025/07/14/6874f9c876c67.png" alt="image-20250714203620847"></p>
+<p>配置vm</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="literal">--add-opens</span> java.base/java.lang.invoke=ALL<span class="literal">-UNNAMED</span></span><br></pre></td></tr></table></figure>
+
+<p>即可解决</p>
+<h4 id="解决时区不同步问题">解决时区不同步问题</h4>
+<p><img src="https://bu.dusays.com/2025/07/15/68759b7de967c.png" alt="image-20250715080613698"></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">[<span class="type">root</span>@<span class="type">localhost</span> ~]<span class="comment"># date</span></span><br><span class="line"><span class="number">2025</span>年 <span class="number">07</span>月 <span class="number">14</span>日 星期一 <span class="number">21</span>:<span class="number">22</span>:<span class="number">05</span> CST</span><br><span class="line">[<span class="type">root</span>@<span class="type">localhost</span> ~]<span class="comment"># hwclock</span></span><br><span class="line"><span class="number">2025</span>年<span class="number">07</span>月<span class="number">14</span>日 星期一 <span class="number">21</span>时<span class="number">22</span>分<span class="number">51</span>秒  <span class="literal">-0</span>.<span class="number">695010</span> 秒</span><br><span class="line">[<span class="type">root</span>@<span class="type">localhost</span> ~]<span class="comment"># systemctl status ntpd</span></span><br><span class="line">● ntpd.service - Network Time Service</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/ntpd.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since 一 <span class="number">2025</span><span class="literal">-07-14</span> <span class="number">21</span>:<span class="number">22</span>:<span class="number">01</span> CST; <span class="number">10</span><span class="built_in">h</span> ago</span><br><span class="line">  <span class="keyword">Process</span>: <span class="number">43362</span> ExecStart=/usr/sbin/ntpd <span class="literal">-u</span> ntp:ntp <span class="variable">$OPTIONS</span> (code=exited, status=<span class="number">0</span>/SUCCESS)</span><br><span class="line"> Main PID: <span class="number">43363</span> (ntpd)</span><br><span class="line">    Tasks: <span class="number">1</span></span><br><span class="line">   Memory: <span class="number">624.0</span>K</span><br><span class="line">   CGroup: /system.slice/ntpd.service</span><br><span class="line">           └─<span class="number">43363</span> /usr/sbin/ntpd <span class="literal">-u</span> ntp:ntp <span class="literal">-g</span></span><br><span class="line"></span><br><span class="line"><span class="number">7</span>月 <span class="number">14</span> <span class="number">21</span>:<span class="number">22</span>:<span class="number">01</span> localhost ntpd[<span class="number">43363</span>]: Listen normally on <span class="number">9</span> ens33 fe80::<span class="number">8396</span>:<span class="number">4</span>bf:<span class="number">9262</span>:f21 UDP <span class="number">123</span></span><br><span class="line"><span class="number">7</span>月 <span class="number">14</span> <span class="number">21</span>:<span class="number">22</span>:<span class="number">01</span> localhost ntpd[<span class="number">43363</span>]: Listen normally on <span class="number">10</span> veth1ba4f03 fe80::<span class="number">3</span>cd2:e1ff:fe8b:fa0a UDP <span class="number">123</span></span><br><span class="line"><span class="number">7</span>月 <span class="number">14</span> <span class="number">21</span>:<span class="number">22</span>:<span class="number">01</span> localhost ntpd[<span class="number">43363</span>]: Listening on routing socket on fd <span class="comment">#27 for interface updates</span></span><br><span class="line"><span class="number">7</span>月 <span class="number">14</span> <span class="number">21</span>:<span class="number">22</span>:<span class="number">01</span> localhost ntpd[<span class="number">43363</span>]: <span class="number">0.0</span>.<span class="number">0.0</span> c016 <span class="number">06</span> restart</span><br><span class="line"><span class="number">7</span>月 <span class="number">14</span> <span class="number">21</span>:<span class="number">22</span>:<span class="number">01</span> localhost ntpd[<span class="number">43363</span>]: <span class="number">0.0</span>.<span class="number">0.0</span> c012 <span class="number">02</span> freq_set kernel <span class="number">0.000</span> PPM</span><br><span class="line"><span class="number">7</span>月 <span class="number">14</span> <span class="number">21</span>:<span class="number">22</span>:<span class="number">01</span> localhost ntpd[<span class="number">43363</span>]: <span class="number">0.0</span>.<span class="number">0.0</span> c011 <span class="number">01</span> freq_not_set</span><br><span class="line"><span class="number">7</span>月 <span class="number">14</span> <span class="number">21</span>:<span class="number">22</span>:<span class="number">01</span> localhost systemd[<span class="number">1</span>]: Started Network Time Service.</span><br><span class="line"><span class="number">7</span>月 <span class="number">14</span> <span class="number">21</span>:<span class="number">22</span>:<span class="number">09</span> localhost ntpd[<span class="number">43363</span>]: <span class="number">0.0</span>.<span class="number">0.0</span> c61c <span class="number">0</span>c clock_step +<span class="number">38329.171798</span> s</span><br><span class="line"><span class="number">7</span>月 <span class="number">15</span> <span class="number">08</span>:<span class="number">00</span>:<span class="number">58</span> localhost ntpd[<span class="number">43363</span>]: <span class="number">0.0</span>.<span class="number">0.0</span> c614 <span class="number">04</span> freq_mode</span><br><span class="line"><span class="number">7</span>月 <span class="number">15</span> <span class="number">08</span>:<span class="number">00</span>:<span class="number">59</span> localhost ntpd[<span class="number">43363</span>]: <span class="number">0.0</span>.<span class="number">0.0</span> c618 <span class="number">08</span> no_sys_peer</span><br><span class="line">[<span class="type">root</span>@<span class="type">localhost</span> ~]<span class="comment"># date</span></span><br><span class="line"><span class="number">2025</span>年 <span class="number">07</span>月 <span class="number">15</span>日 星期二 <span class="number">08</span>:<span class="number">02</span>:<span class="number">44</span> CST</span><br><span class="line">[<span class="type">root</span>@<span class="type">localhost</span> ~]<span class="comment">#</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-单体架构与微服务">2. 单体架构与微服务</h3>
+<p>单体架构:将业务的所有功能集中在一个项目中开发，打成一个包部署。</p>
+<p>优点：架构简单，部署成本低</p>
+<p>缺点：团队协作成本高，系统发布效率低，系统可用性差</p>
+<p>微服务架构，是服务化思想指导下的一套最佳实践架构方案。服务化，就是把单体架构中的功能模块拆分为多个独立项目。</p>
+<h3 id="3-微服务拆分原则">3. 微服务拆分原则</h3>
+<p><img src="https://bu.dusays.com/2025/07/15/68759e54a2d78.png" alt="image-20250715081827665"></p>
+<p>什么时候需要拆分微服务？</p>
+<ul>
+<li>如果是创业型公司，最好先用单体架构快速迭代开发，验证市场运作模型，快速试错。当业务跑通以后，随着业务规模扩大、人员规模增加，再考虑拆分微服务。</li>
+<li>如果是大型企业，有充足的资源，可以在项目开始之初就搭建微服务架构</li>
+</ul>
+<p>如何拆分？</p>
+<ul>
+<li>首先要做到高内聚、低耦合</li>
+<li>从拆分方式来说，有横向拆分和纵向拆分两种。纵向就是按照业务功能模块，横向则是拆分通用性业务，提高复用性</li>
+</ul>
+<p>服务拆分之后，不可避免的会出现跨微服务的业务，此时微服务之间就需要进行远程调用。微服务之间的远程调用被称为RPC，即远程过程调用。RPC的实现方式有很多，比如：</p>
+<ul>
+<li>基于Http协议</li>
+<li>基于Dubbo协议</li>
+</ul>
+<p>我们使用的是Http方式，这种方式不关心服务提供者的具体技术实现，只要对外暴露Http接口即可，更符合微服务的需要。</p>
+<h3 id="4-远程调用rpc">4. 远程调用（RPC）</h3>
+<p>在拆分的时候，我们发现一个问题：就是购物车业务中需要查询商品信息，但商品信息查询的逻辑全部迁移到了<code>item-service</code>服务，导致我们无法查询。</p>
+<p>最终结果就是查询到的购物车数据不完整，因此要想解决这个问题，我们就必须改造其中的代码，把原本本地方法调用，改造成跨微服务的远程调用（RPC，即<strong>R</strong>emote
+<strong>P</strong>roduce <strong>C</strong>all）。</p>
+<p>因此，现在查询购物车列表的流程变成了这样：</p>
+<p><img src="https://bu.dusays.com/2025/07/15/6875bf1040313.png" alt="image-20250715103806173"></p>
+<p>那么问题来了：我们该如何跨服务调用，准确的说，如何在<code>cart-service</code>中获取<code>item-service</code>服务中的提供的商品数据呢？</p>
+<p>答案是肯定的，我们前端向服务端查询数据，其实就是从浏览器远程查询服务端数据。比如我们刚才通过Swagger测试商品查询接口，就是向<code>http://localhost:8081/items</code>这个接口发起的请求：</p>
+<p>而这种查询就是通过http请求的方式来完成的，不仅仅可以实现远程查询，还可以实现新增、删除等各种远程请求。
+那么：我们该如何用Java代码发送Http的请求呢？</p>
+<h4 id="41-resttemplate">4.1 RestTemplate</h4>
+<p>Java发送http请求可以使用Spring提供的RestTemplate，使用的基本步骤如下：</p>
+<ul>
+<li>注册RestTemplate到Spring容器</li>
+<li>调用RestTemplate的API发送请求，常见方法有：
+<ul>
+<li>getForObject：发送Get请求并返回指定类型对象</li>
+<li>PostForObject：发送Post请求并返回指定类型对象</li>
+<li>put：发送PUT请求</li>
+<li>delete：发送Delete请求</li>
+<li>exchange：发送任意类型请求，返回ResponseEntity</li>
+</ul></li>
+</ul>
+<p>感觉这种如果有大量用户同时请求不会变的很卡吗？？？？？？</p>
+ <div class="note blue anzhiyufont anzhiyu-icon-bullhorn modern"><p>构造器注入</p>
+</div>
+
+<details class="folding-tag" green><summary> 构造器注入 </summary>
+              <div class="content">
+              <p>Spring推荐我们使用Lombok构造器注入而不是使用<code>@Autowired</code></p><p>因此我们可以在类上添加<code>@RequiredArgsConstructor</code>注解，使用<code>final</code>注入类</p><p>eg：</p><p><img src="https://bu.dusays.com/2025/07/15/6875c44601fb1.png" alt="image-20250715110020446"></p>
+              </div>
+            </details>
 ]]></content>
       <categories>
         <category>java</category>
