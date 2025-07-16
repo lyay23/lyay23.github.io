@@ -9384,6 +9384,49 @@ network inspect</a></td>
               <p>Spring推荐我们使用Lombok构造器注入而不是使用<code>@Autowired</code></p><p>因此我们可以在类上添加<code>@RequiredArgsConstructor</code>注解，使用<code>final</code>注入类</p><p>eg：</p><p><img src="https://bu.dusays.com/2025/07/15/6875c44601fb1.png" alt="image-20250715110020446"></p>
               </div>
             </details>
+
+<h4 id="42-注册中心">4.2 注册中心</h4>
+<p>在微服务远程调用的过程中，包括两个角色：</p>
+<ul>
+<li>服务提供者：提供接口供其它微服务访问，比如<code>item-service</code></li>
+<li>服务消费者：调用其它微服务提供的接口，比如<code>cart-service</code></li>
+<li>服务者可以是消费者，消费者也可以是服务者</li>
+</ul>
+<p>在大型微服务项目中，服务提供者的数量会非常多，为了管理这些服务就引入了<strong>注册中心</strong>的概念。注册中心、服务提供者、服务消费者三者间关系如下：</p>
+<p><img src="https://bu.dusays.com/2025/07/15/687642f91dee1.png" alt="image-20250715200054715"></p>
+<p>流程如下：</p>
+<ul>
+<li>服务启动时就会注册自己的服务信息（服务名、IP、端口）到注册中心</li>
+<li>调用者可以从注册中心订阅想要的服务，获取服务对应的实例列表（1个服务可能多实例部署）</li>
+<li>调用者自己对实例列表负载均衡，挑选一个实例</li>
+<li>调用者向该实例发起远程调用</li>
+</ul>
+<p>当服务提供者的实例宕机或者启动新实例时，调用者如何得知呢？</p>
+<ul>
+<li>服务提供者会定期向注册中心发送请求，报告自己的健康状态（心跳请求）</li>
+<li>当注册中心长时间收不到提供者的心跳时，会认为该实例宕机，将其从服务的实例列表中剔除</li>
+<li>注册中心一旦认为某个实例宕机并将其剔除实例列表，那么其他服务的调用者就无法再调用这个实例。</li>
+<li>当服务有新实例启动时，会发送注册服务请求，其信息会被记录在注册中心的服务实例列表</li>
+<li>当注册中心服务列表变更时，会主动通知微服务，更新本地服务列表</li>
+</ul>
+<h4 id="43-nacos注册中心">4.3 Nacos注册中心</h4>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">docker run <span class="literal">-d</span> \</span><br><span class="line"><span class="literal">--name</span> nacos \</span><br><span class="line"><span class="literal">--env-file</span> ./nacos/custom.env \</span><br><span class="line"><span class="literal">-p</span> <span class="number">8848</span>:<span class="number">8848</span> \</span><br><span class="line"><span class="literal">-p</span> <span class="number">9848</span>:<span class="number">9848</span> \</span><br><span class="line"><span class="literal">-p</span> <span class="number">9849</span>:<span class="number">9849</span> \</span><br><span class="line"><span class="literal">--restart</span>=always \</span><br><span class="line"><span class="literal">--network</span> hm<span class="literal">-net</span> \</span><br><span class="line">nacos/nacos<span class="literal">-server</span>:v2.<span class="number">1.0</span><span class="literal">-slim</span></span><br></pre></td></tr></table></figure>
+
+<p>访问路径</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="number">192.168</span>.<span class="number">163.129</span>:<span class="number">8848</span>/nacos</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://bu.dusays.com/2025/07/15/68764c4d39516.png" alt="image-20250715204042672"></p>
+<h4 id="44-openfeign">4.4 OpenFeign</h4>
+<p><img src="https://bu.dusays.com/2025/07/16/687759c72d8e2.png" alt="image-20250716155017015"></p>
+<p><img src="https://bu.dusays.com/2025/07/16/68775a37c9c09.png" alt="image-20250716155218953"></p>
+<p>哇神奇</p>
+<p><img src="https://bu.dusays.com/2025/07/16/68775f9635517.png" alt="image-20250716161513007"></p>
+<p><img src="https://bu.dusays.com/2025/07/16/687765ea25acb.png" alt="image-20250716164213666"></p>
+<ol type="1">
+<li>将来Feign可以根据服务名称去注册中心中去拉取实例列表</li>
+<li>Feign会使用负载均衡自动获取一个实例（我们在pom中引入了负载均衡的依赖了）</li>
+<li>然后定义GET请求，路径为<code>/items</code>,</li>
+</ol>
 ]]></content>
       <categories>
         <category>java</category>
