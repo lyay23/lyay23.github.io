@@ -9690,7 +9690,7 @@ headerValue</td>
 <li>网关校验JWT之后，如何将用户信息传递给微服务？</li>
 <li>微服务之间也会相互调用，这种调用不经过网关，又该如何传递用户信息？</li>
 </ul>
-<h4 id="网关过滤器">网关过滤器</h4>
+<h4 id="131-网关过滤器">1.3.1 网关过滤器</h4>
 <p>登录校验必须在请求转发到微服务之前做，否则就失去了意义。而网关的请求转发是<code>Gateway</code>内部代码实现的，要想在请求转发之前做登录校验，就必须了解<code>Gateway</code>内部工作的基本原理。</p>
 <p><img src="https://bu.dusays.com/2025/07/20/687c576d672c9.png" alt="image-20250720104147586"></p>
 <ol type="1">
@@ -9706,12 +9706,106 @@ headerValue</td>
 <li>如果我们能够定义一个过滤器，在其中实现登录校验逻辑，并且将过滤器执行顺序定义到<code>NettyRoutingFilter</code>之前，这就符合我们的需求了！</li>
 <li>可以将用户信息保存在请求头中，然后传递给微服务，然后微服务在从请求头中取出用户信息</li>
 </ol>
-<h4 id="自定义过滤器">自定义过滤器</h4>
+<h4 id="132-自定义过滤器">1.3.2 自定义过滤器</h4>
 <p>网关过滤器链中的过滤器有两种：</p>
 <ul>
 <li><strong><code>GatewayFilter</code></strong>：路由过滤器，作用范围比较灵活，可以是任意指定的路由<code>Route</code>.
 （配置的过滤器，有33种，默认不生效，配置到哪一个路由下之后就对配置的路由生效。配置到default-filter：之后就会对所有路由生效（这样就不必在所有的路由中配置类，但是所属类别依旧是GatewayFilter）。）</li>
 <li><strong><code>GlobalFilter</code></strong>：全局过滤器，作用范围是所有路由，不可配置。</li>
+</ul>
+<h4 id="133-实现登录校验">1.3.3 实现登录校验</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(AuthProperties.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AuthGlobalFilter</span> <span class="keyword">implements</span> <span class="title class_">GlobalFilter</span>, Ordered &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> JwtTool jwtTool;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AuthProperties authProperties;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">AntPathMatcher</span> <span class="variable">antPathMatcher</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AntPathMatcher</span>();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Mono&lt;Void&gt; <span class="title function_">filter</span><span class="params">(ServerWebExchange exchange, GatewayFilterChain chain)</span> &#123;</span><br><span class="line">        <span class="comment">// 1.获取Request</span></span><br><span class="line">        <span class="type">ServerHttpRequest</span> <span class="variable">request</span> <span class="operator">=</span> exchange.getRequest();</span><br><span class="line">        <span class="comment">// 2.判断是否不需要拦截</span></span><br><span class="line">        <span class="keyword">if</span>(isExclude(request.getPath().toString()))&#123;</span><br><span class="line">            <span class="comment">// 无需拦截，直接放行</span></span><br><span class="line">            <span class="keyword">return</span> chain.filter(exchange);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 3.获取请求头中的token</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        List&lt;String&gt; headers = request.getHeaders().get(<span class="string">&quot;authorization&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (!CollUtils.isEmpty(headers)) &#123;</span><br><span class="line">            token = headers.get(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 4.校验并解析token</span></span><br><span class="line">        <span class="type">Long</span> <span class="variable">userId</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            userId = jwtTool.parseToken(token);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnauthorizedException e) &#123;</span><br><span class="line">            <span class="comment">// 如果无效，拦截</span></span><br><span class="line">            <span class="type">ServerHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> exchange.getResponse();</span><br><span class="line">            response.setRawStatusCode(<span class="number">401</span>);</span><br><span class="line">            <span class="keyword">return</span> response.setComplete();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// TODO 5.如果有效，传递用户信息</span></span><br><span class="line">        System.out.println(<span class="string">&quot;userId = &quot;</span> + userId);</span><br><span class="line">        <span class="comment">// 6.放行</span></span><br><span class="line">        <span class="keyword">return</span> chain.filter(exchange);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">isExclude</span><span class="params">(String antPath)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (String pathPattern : authProperties.getExcludePaths()) &#123;</span><br><span class="line">            <span class="keyword">if</span>(antPathMatcher.match(pathPattern, antPath))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getOrder</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>对于AntPathMatcher，虽然它是Spring框架的一部分，但它并不是由Spring管理的Bean。AntPathMatcher是一个工具类，用于匹配Ant风格的路径模式，它没有定义为Spring的Bean，因此Spring容器不知道如何自动注入它。</p>
+<p>为什么需要手动创建AntPathMatcher实例？</p>
+<p>工具类：AntPathMatcher是一个工具类，通常不需要Spring管理其生命周期。工具类是无状态的，可以在任何地方实例化和使用。</p>
+<p>非单例：由于AntPathMatcher是无状态的，它不需要作为单例Bean管理。每次使用时创建一个新的实例是安全的，不会导致资源浪费或状态不一致的问题。</p>
+<p>简单性：手动创建AntPathMatcher实例非常简单，只需要使用new关键字即可。这种方式代码清晰，易于理解</p></li>
+</ul>
+<h4 id="134-网关传递用户">1.3.4 网关传递用户</h4>
+<p>现在，网关已经可以完成登录校验并获取登录用户身份信息。但是当网关将请求转发到微服务时，微服务又该如何获取用户身份呢？</p>
+<p>由于网关发送请求到微服务依然采用的是<code>Http</code>请求，因此我们可以将用户信息以请求头的方式传递到下游微服务。然后微服务可以从请求头中获取登录用户信息。考虑到微服务内部可能很多地方都需要用到登录用户信息，因此我们可以利用SpringMVC的拦截器来实现登录用户信息获取，并存入ThreadLocal，方便后续使用。</p>
+<p>据图流程图如下：</p>
+<p><img src="https://bu.dusays.com/2025/07/21/687e269e78f41.png" alt="image-20250721193804387"></p>
+<p>因此，接下来我们要做的事情有：</p>
+<ul>
+<li>改造网关过滤器，在获取用户信息后保存到请求头，转发到下游微服务</li>
+<li>编写微服务拦截器，拦截请求获取用户信息，保存到<code>ThreadLocal</code>后放行</li>
+</ul>
+<h5 id="保存用户到请求头">保存用户到请求头</h5>
+<p>首先，我们修改登录校验拦截器的处理逻辑，保存用户信息到请求头中：</p>
+<p><img src="https://bu.dusays.com/2025/07/22/687f7b34da201.png" alt="image-20250722195113363"></p>
+<p>修改<code>AuthGlobalFilter</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 5.如果有效，传递用户信息</span></span><br><span class="line">        <span class="comment">// mutate()方法可以对下游请求做更改，.request表示对请求做处理，利用builder可以对请求中各种信息做修改</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">userInfo</span> <span class="operator">=</span> userId.toString();</span><br><span class="line">        <span class="type">ServerWebExchange</span> <span class="variable">swe</span> <span class="operator">=</span> exchange.mutate()</span><br><span class="line">                .request(builder -&gt; builder.header(<span class="string">&quot;user-Info&quot;</span>, userInfo))</span><br><span class="line">                .build();</span><br><span class="line">        <span class="comment">// 6.放行</span></span><br><span class="line">        <span class="keyword">return</span> chain.filter(swe);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>拦截器先通过 Token
+解析出<code>userId</code>，再将其放入请求头；</li>
+<li>后续的 Controller
+可以直接从请求头<code>user-Info</code>中获取<code>userId</code>，无需再次解析
+Token，提高效率。</li>
+</ul>
+<h5 id="拦截器获取用户">拦截器获取用户</h5>
+<p>需求:由于每个微服务都可能有获取登录用户的需求，因此我们直接在hm-common模块定义拦截器，这样微服务只需要引入依赖即可生效，无需重复编写。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hmall.common.interceptors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.hutool.core.util.StrUtil;</span><br><span class="line"><span class="keyword">import</span> com.hmall.common.utils.UserContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfoInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">// 1.获取请求头中的用户信息</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">userInfo</span> <span class="operator">=</span> request.getHeader(<span class="string">&quot;user-info&quot;</span>);</span><br><span class="line">        <span class="comment">// 2.判断是否为空</span></span><br><span class="line">        <span class="keyword">if</span> (StrUtil.isNotBlank(userInfo)) &#123;</span><br><span class="line">            <span class="comment">// 不为空，保存到ThreadLocal</span></span><br><span class="line">            UserContext.setUser(Long.valueOf(userInfo));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 3.放行</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">// 移除用户</span></span><br><span class="line">        UserContext.removeUser();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里只是写了一个拦截器类，但是并没有注册到<code>springmvc</code>拦截器里。要想注册进去需要进行配置：编写<code>config</code>配置类<code>WebMvcConfigurer </code>，将其add进去</p>
+<p>当请求从 Spring Cloud Gateway（WebFlux、Netty驱动）进入下游 Spring
+MVC 微服务时，exchange 不会被直接传递，而是 自动被底层 HTTP
+协议转换为标准的 HttpServletRequest 和 HttpServletResponse。</p>
+<p>spring-web通过线程池复用线程，并且不是每次使用user-service都会覆盖user信息，所以有必要在一次请求完成后清理user信息</p>
+<p>拦截器生命周期：</p>
+<p>preHandle() → 2. Controller &amp; Service等 → 3. postHandle()（如有）
+→ 4. afterCompletion()</p>
+<p>特殊情况处理如果请求在 preHandle 返回 false（拦截请求）：不会执行
+Controller，但 仍会触发 afterCompletion（Spring 5.3+ 行为）。</p>
+<h5 id="配置拦截器">配置拦截器</h5>
+<p>springMVC拦截器需要配置@configuration，进行配置才能生效</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(DispatcherServlet.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MvcConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> &#123;</span><br><span class="line">        registry.addInterceptor(<span class="keyword">new</span> <span class="title class_">UserInfoInterceptor</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过 registry.addInterceptor(new UserInfoInterceptor()) 将一个名为
+UserInfoInterceptor
+的拦截器添加到拦截器注册表中。这样自定义的拦截器才会生效</li>
+<li>添加@ConditionalOnClass(DispatcherServlet.class)的原因：因为hm-gateway中也引用了common模块，而我们知道gateway使用的openfeign虽然也处理http请求，但是底层不是靠SpringMvc实现的，而现在设计了只要引用common这个包就会自动装配MvcConfig配置类，然而hm-gateway底层没有springmvc自然无法自动装配MvcConfig配置类，会报错。所以我们需要设计成只有依赖了SpringMvc的微服务模块才自动装配，而SpringMvc的核心类就是DispatcherServlet.class，所以只有有DispatcherServlet.class这个类的微服务模块才会自动装配MvcConfig配置类</li>
+<li>@ConditionalOnClass 是 Spring Boot
+中的一个条件注解，它用于在特定类存在于类路径上时才启用配置。因此特定的类就是DispatcherServlet.class只要再pom.xml中加入spring-boot-starter-web就会存在DispatcherServlet类</li>
+<li>DispatcherServlet.class 是 Spring MVC 的核心组件之一，通常用于处理
+HTTP 请求。如果存在 DispatcherServlet，说明当前项目中使用了 Spring
+MVC，Spring 会加载 MvcConfig 配置类</li>
+<li>除了hm-gateway外底层都是springMVC，那要想不让网关得到这个WebMvcconfigurer配置，那就要；利用SpringMVC的特点去排除它，SprngMVC都有一个DispatcherServlet的api。</li>
+<li>当我们配置了扫描时，其他的微服务就会使用这个拦截器配置的内容，但是网关也使用了这个配置类，网关没有MVC的内容因此会报错。</li>
+</ul>
+<h5 id="添加扫描">添加扫描</h5>
+<p><code>spring.factories</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span><br><span class="line">  com.hmall.common.config.MyBatisConfig,\</span><br><span class="line">  com.hmall.common.config.MvcConfig,\</span><br><span class="line">  com.hmall.common.config.JsonConfig</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不过，需要注意的是，这个配置类默认是不会生效的，因为它所在的包是<code>com.hmall.common.config</code>，与其它微服务的扫描包不一致，无法被扫描到，因此无法生效。基于SpringBoot的自动装配原理，我们要将其添加到<code>resources</code>目录下的<code>META-INF/spring.factories</code>文件中：</li>
+<li>依赖虽然被引入，但@ComponentScan默认扫描启动类所在的包及其子包，这里没在对应的扫描范围内所有没有注册。可以@ComponentScan添加包范围；在对应模块通过spring.factories文件将对应配置类的全限定名写进去，利用Springboot自动配置原理，其他微服务引入对应模块依赖，在启动后会进行Bean注册；同样也还可以用@Import导入对应的Bean组件或配置类</li>
+<li>spring.factories可以基于springboot的自动装配机制自动发现并装配配置类。简单来说，就是所有微服务都无法扫描到这个拦截器，我们可以给每一个微服务的启动类Application加上compinentscan指定扫描这个拦截器，但是，微服务数量庞大，显然不是个好办法，利用SpringBoot的自动装配原理就简单的多</li>
+</ul>
+<h5 id="结果">结果</h5>
+<p>这样我们请求单个购物车就查询不到用户信息了</p>
+<p><img src="https://bu.dusays.com/2025/07/24/6881fa6ec44c8.png" alt="image-20250724171835215"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">: ==&gt;  Preparing: SELECT id,user_id,item_id,num,name,spec,price,image,create_time,update_time FROM cart <span class="title function_">WHERE</span> <span class="params">(user_id = ?)</span></span><br><span class="line"><span class="number">17</span>:<span class="number">15</span>:<span class="number">27</span>:<span class="number">140</span> DEBUG <span class="number">1764</span> --- [nio-<span class="number">8082</span>-exec-<span class="number">6</span>] c.h.cart.mapper.CartMapper.selectList    : ==&gt; Parameters: <span class="number">2</span>(Long)</span><br><span class="line"><span class="number">17</span>:<span class="number">15</span>:<span class="number">27</span>:<span class="number">148</span> DEBUG <span class="number">1764</span> --- [nio-<span class="number">8082</span>-exec-<span class="number">6</span>] c.h.cart.mapper.CartMapper.selectList    : &lt;==      Total: <span class="number">1</span></span><br><span class="line"><span class="number">17</span>:<span class="number">16</span>:<span class="number">27</span>:<span class="number">290</span> DEBUG <span class="number">1764</span> --- [nio-<span class="number">8082</span>-exec-<span class="number">7</span>] c.h.cart.mapper.CartMapper.selectList    : ==&gt;  Preparing: SELECT id,user_id,item_id,num,name,spec,price,image,create_time,update_time FROM cart <span class="title function_">WHERE</span> <span class="params">(user_id = ?)</span></span><br><span class="line"><span class="number">17</span>:<span class="number">16</span>:<span class="number">27</span>:<span class="number">293</span> DEBUG <span class="number">1764</span> --- [nio-<span class="number">8082</span>-exec-<span class="number">7</span>] c.h.cart.mapper.CartMapper.selectList    : ==&gt; Parameters: <span class="literal">null</span></span><br><span class="line"><span class="number">17</span>:<span class="number">16</span>:<span class="number">27</span>:<span class="number">298</span> DEBUG <span class="number">1764</span> --- [nio-<span class="number">8082</span>-exec-<span class="number">7</span>] c.h.cart.mapper.CartMapper.selectList    : &lt;==      Total: <span class="number">0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="135-openfeign传递用户">1.3.5 OpenFeign传递用户</h4>
+<blockquote>
+<p>请求从网关到交易时会被mvc拦截，将userinfo存入threadlocal，当这个请求执行完之后，afterCompletion会清除threadlocal，故当交易发请求到商品时是没有ui的</p>
+</blockquote>
+<p>前端发起的请求都会经过网关再到微服务，由于我们之前编写的过滤器和拦截器功能，微服务可以轻松获取登录用户信息。</p>
+<p>但有些业务是比较复杂的，请求到达微服务后还需要调用其它多个微服务。比如下单业务，流程如下：</p>
+<p><img src="https://bu.dusays.com/2025/07/24/68820370c5d70.png" alt="image-20250724175700620"></p>
+<p>下单的过程中，需要调用商品服务扣减库存，调用购物车服务清理用户购物车。而清理购物车时必须知道当前登录的用户身份。但是，<strong>订单服务调用购物车时并没有传递用户信息</strong>，购物车服务无法知道当前用户是谁！</p>
+<p>由于微服务获取用户信息是通过拦截器在请求头中读取，因此要想实现微服务之间的用户信息传递，就<strong>必须在微服务发起调用时把用户信息存入请求头</strong>。</p>
+<ul>
+<li><p>ThreadLocal：仅限单JVM线程内，用于存储线程级别的上下文（如用户身份、事务ID）。其生命周期与线程绑定，无法跨进程或跨服务传递。</p>
+<p>微服务间通信：本质是跨进程的分布式调用，服务可能部署在不同物理节点。ThreadLocal无法穿透网络边界，无法在服务A的线程中直接访问服务B的线程数据。</p></li>
+<li><p>服务调用，即跨进程的服务调用，而ThreadLocal只仅限于当前服务内部的范围，所以无法使用，但网关那里刚开始不是已经通过过滤器进行了userInfo存入请求头中吗？为什么后续微服务a调用服务b时，需要再次将userInfo存入请求头才能传递用户信息呢？那是因为——&gt;HTTP协议无状态：每个请求默认不携带上一个请求的上下文（直接理解成，每次发送的都是一个新的http请求，所以需要我们自己给该请求做标识）。
+最后记住：拦截器+Feign组合：是实现微服务间身份透传的标准模式。</p></li>
+<li><p>拦截器是属于微服务的，过滤器是属于网关的；拦截器从请求头获取userId，并保存在context中，过滤器解析jwt并保存在请求头中；</p></li>
 </ul>
 ]]></content>
       <categories>
@@ -9719,6 +9813,23 @@ headerValue</td>
       </categories>
       <tags>
         <tag>javaweb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>战痘日记</title>
+    <url>/posts/33676/</url>
+    <content><![CDATA[<h5 id="7月21日晚">7月21日晚</h5>
+<p>今天吃了一颗eva，无感</p>
+<h5 id="7月22日">7月22日</h5>
+<p>两颗 无感</p>
+<h5 id="7月23日">7月23日</h5>
+<p>失眠了半夜，</p>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>日常</tag>
       </tags>
   </entry>
 </search>
