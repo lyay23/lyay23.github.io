@@ -9670,7 +9670,7 @@ headerValue</td>
 </tr>
 </tbody>
 </table>
-<h3 id="13-网关登录">1.3 网关登录</h3>
+<h2 id="2-网关登录">2. 网关登录</h2>
 <p>单体架构时我们只需要完成一次用户登录、身份校验，就可以在所有业务中获取到用户信息。而微服务拆分后，每个微服务都独立部署，不再共享数据。也就意味着每个微服务都需要做登录校验，这显然不可取。</p>
 <p>我们的登录是基于JWT来实现的，校验JWT的算法复杂，而且需要用到秘钥。如果每个微服务都去做登录校验，这就存在着两大问题：</p>
 <ul>
@@ -9690,7 +9690,7 @@ headerValue</td>
 <li>网关校验JWT之后，如何将用户信息传递给微服务？</li>
 <li>微服务之间也会相互调用，这种调用不经过网关，又该如何传递用户信息？</li>
 </ul>
-<h4 id="131-网关过滤器">1.3.1 网关过滤器</h4>
+<h3 id="21-网关过滤器">2.1 网关过滤器</h3>
 <p>登录校验必须在请求转发到微服务之前做，否则就失去了意义。而网关的请求转发是<code>Gateway</code>内部代码实现的，要想在请求转发之前做登录校验，就必须了解<code>Gateway</code>内部工作的基本原理。</p>
 <p><img src="https://bu.dusays.com/2025/07/20/687c576d672c9.png" alt="image-20250720104147586"></p>
 <ol type="1">
@@ -9706,14 +9706,14 @@ headerValue</td>
 <li>如果我们能够定义一个过滤器，在其中实现登录校验逻辑，并且将过滤器执行顺序定义到<code>NettyRoutingFilter</code>之前，这就符合我们的需求了！</li>
 <li>可以将用户信息保存在请求头中，然后传递给微服务，然后微服务在从请求头中取出用户信息</li>
 </ol>
-<h4 id="132-自定义过滤器">1.3.2 自定义过滤器</h4>
+<h3 id="22-自定义过滤器">2.2 自定义过滤器</h3>
 <p>网关过滤器链中的过滤器有两种：</p>
 <ul>
 <li><strong><code>GatewayFilter</code></strong>：路由过滤器，作用范围比较灵活，可以是任意指定的路由<code>Route</code>.
 （配置的过滤器，有33种，默认不生效，配置到哪一个路由下之后就对配置的路由生效。配置到default-filter：之后就会对所有路由生效（这样就不必在所有的路由中配置类，但是所属类别依旧是GatewayFilter）。）</li>
 <li><strong><code>GlobalFilter</code></strong>：全局过滤器，作用范围是所有路由，不可配置。</li>
 </ul>
-<h4 id="133-实现登录校验">1.3.3 实现登录校验</h4>
+<h3 id="23-实现登录校验">2.3 实现登录校验</h3>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(AuthProperties.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AuthGlobalFilter</span> <span class="keyword">implements</span> <span class="title class_">GlobalFilter</span>, Ordered &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> JwtTool jwtTool;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AuthProperties authProperties;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">AntPathMatcher</span> <span class="variable">antPathMatcher</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AntPathMatcher</span>();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Mono&lt;Void&gt; <span class="title function_">filter</span><span class="params">(ServerWebExchange exchange, GatewayFilterChain chain)</span> &#123;</span><br><span class="line">        <span class="comment">// 1.获取Request</span></span><br><span class="line">        <span class="type">ServerHttpRequest</span> <span class="variable">request</span> <span class="operator">=</span> exchange.getRequest();</span><br><span class="line">        <span class="comment">// 2.判断是否不需要拦截</span></span><br><span class="line">        <span class="keyword">if</span>(isExclude(request.getPath().toString()))&#123;</span><br><span class="line">            <span class="comment">// 无需拦截，直接放行</span></span><br><span class="line">            <span class="keyword">return</span> chain.filter(exchange);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 3.获取请求头中的token</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        List&lt;String&gt; headers = request.getHeaders().get(<span class="string">&quot;authorization&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (!CollUtils.isEmpty(headers)) &#123;</span><br><span class="line">            token = headers.get(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 4.校验并解析token</span></span><br><span class="line">        <span class="type">Long</span> <span class="variable">userId</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            userId = jwtTool.parseToken(token);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnauthorizedException e) &#123;</span><br><span class="line">            <span class="comment">// 如果无效，拦截</span></span><br><span class="line">            <span class="type">ServerHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> exchange.getResponse();</span><br><span class="line">            response.setRawStatusCode(<span class="number">401</span>);</span><br><span class="line">            <span class="keyword">return</span> response.setComplete();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// TODO 5.如果有效，传递用户信息</span></span><br><span class="line">        System.out.println(<span class="string">&quot;userId = &quot;</span> + userId);</span><br><span class="line">        <span class="comment">// 6.放行</span></span><br><span class="line">        <span class="keyword">return</span> chain.filter(exchange);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">isExclude</span><span class="params">(String antPath)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (String pathPattern : authProperties.getExcludePaths()) &#123;</span><br><span class="line">            <span class="keyword">if</span>(antPathMatcher.match(pathPattern, antPath))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getOrder</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -9723,7 +9723,7 @@ headerValue</td>
 <p>非单例：由于AntPathMatcher是无状态的，它不需要作为单例Bean管理。每次使用时创建一个新的实例是安全的，不会导致资源浪费或状态不一致的问题。</p>
 <p>简单性：手动创建AntPathMatcher实例非常简单，只需要使用new关键字即可。这种方式代码清晰，易于理解</p></li>
 </ul>
-<h4 id="134-网关传递用户">1.3.4 网关传递用户</h4>
+<h3 id="24-网关传递用户">2.4 网关传递用户</h3>
 <p>现在，网关已经可以完成登录校验并获取登录用户身份信息。但是当网关将请求转发到微服务时，微服务又该如何获取用户身份呢？</p>
 <p>由于网关发送请求到微服务依然采用的是<code>Http</code>请求，因此我们可以将用户信息以请求头的方式传递到下游微服务。然后微服务可以从请求头中获取登录用户信息。考虑到微服务内部可能很多地方都需要用到登录用户信息，因此我们可以利用SpringMVC的拦截器来实现登录用户信息获取，并存入ThreadLocal，方便后续使用。</p>
 <p>据图流程图如下：</p>
@@ -9733,7 +9733,7 @@ headerValue</td>
 <li>改造网关过滤器，在获取用户信息后保存到请求头，转发到下游微服务</li>
 <li>编写微服务拦截器，拦截请求获取用户信息，保存到<code>ThreadLocal</code>后放行</li>
 </ul>
-<h5 id="保存用户到请求头">保存用户到请求头</h5>
+<h4 id="保存用户到请求头">保存用户到请求头</h4>
 <p>首先，我们修改登录校验拦截器的处理逻辑，保存用户信息到请求头中：</p>
 <p><img src="https://bu.dusays.com/2025/07/22/687f7b34da201.png" alt="image-20250722195113363"></p>
 <p>修改<code>AuthGlobalFilter</code></p>
@@ -9746,7 +9746,7 @@ headerValue</td>
 可以直接从请求头<code>user-Info</code>中获取<code>userId</code>，无需再次解析
 Token，提高效率。</li>
 </ul>
-<h5 id="拦截器获取用户">拦截器获取用户</h5>
+<h4 id="拦截器获取用户">拦截器获取用户</h4>
 <p>需求:由于每个微服务都可能有获取登录用户的需求，因此我们直接在hm-common模块定义拦截器，这样微服务只需要引入依赖即可生效，无需重复编写。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hmall.common.interceptors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.hutool.core.util.StrUtil;</span><br><span class="line"><span class="keyword">import</span> com.hmall.common.utils.UserContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfoInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">// 1.获取请求头中的用户信息</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">userInfo</span> <span class="operator">=</span> request.getHeader(<span class="string">&quot;user-info&quot;</span>);</span><br><span class="line">        <span class="comment">// 2.判断是否为空</span></span><br><span class="line">        <span class="keyword">if</span> (StrUtil.isNotBlank(userInfo)) &#123;</span><br><span class="line">            <span class="comment">// 不为空，保存到ThreadLocal</span></span><br><span class="line">            UserContext.setUser(Long.valueOf(userInfo));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 3.放行</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">// 移除用户</span></span><br><span class="line">        UserContext.removeUser();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -9760,7 +9760,7 @@ MVC 微服务时，exchange 不会被直接传递，而是 自动被底层 HTTP
 → 4. afterCompletion()</p>
 <p>特殊情况处理如果请求在 preHandle 返回 false（拦截请求）：不会执行
 Controller，但 仍会触发 afterCompletion（Spring 5.3+ 行为）。</p>
-<h5 id="配置拦截器">配置拦截器</h5>
+<h4 id="配置拦截器">配置拦截器</h4>
 <p>springMVC拦截器需要配置@configuration，进行配置才能生效</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(DispatcherServlet.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MvcConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> &#123;</span><br><span class="line">        registry.addInterceptor(<span class="keyword">new</span> <span class="title class_">UserInfoInterceptor</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -9777,7 +9777,7 @@ MVC，Spring 会加载 MvcConfig 配置类</li>
 <li>除了hm-gateway外底层都是springMVC，那要想不让网关得到这个WebMvcconfigurer配置，那就要；利用SpringMVC的特点去排除它，SprngMVC都有一个DispatcherServlet的api。</li>
 <li>当我们配置了扫描时，其他的微服务就会使用这个拦截器配置的内容，但是网关也使用了这个配置类，网关没有MVC的内容因此会报错。</li>
 </ul>
-<h5 id="添加扫描">添加扫描</h5>
+<h4 id="添加扫描">添加扫描</h4>
 <p><code>spring.factories</code></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span><br><span class="line">  com.hmall.common.config.MyBatisConfig,\</span><br><span class="line">  com.hmall.common.config.MvcConfig,\</span><br><span class="line">  com.hmall.common.config.JsonConfig</span><br></pre></td></tr></table></figure>
 
@@ -9786,12 +9786,12 @@ MVC，Spring 会加载 MvcConfig 配置类</li>
 <li>依赖虽然被引入，但@ComponentScan默认扫描启动类所在的包及其子包，这里没在对应的扫描范围内所有没有注册。可以@ComponentScan添加包范围；在对应模块通过spring.factories文件将对应配置类的全限定名写进去，利用Springboot自动配置原理，其他微服务引入对应模块依赖，在启动后会进行Bean注册；同样也还可以用@Import导入对应的Bean组件或配置类</li>
 <li>spring.factories可以基于springboot的自动装配机制自动发现并装配配置类。简单来说，就是所有微服务都无法扫描到这个拦截器，我们可以给每一个微服务的启动类Application加上compinentscan指定扫描这个拦截器，但是，微服务数量庞大，显然不是个好办法，利用SpringBoot的自动装配原理就简单的多</li>
 </ul>
-<h5 id="结果">结果</h5>
+<h4 id="结果">结果</h4>
 <p>这样我们请求单个购物车就查询不到用户信息了</p>
 <p><img src="https://bu.dusays.com/2025/07/24/6881fa6ec44c8.png" alt="image-20250724171835215"></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">: ==&gt;  Preparing: SELECT id,user_id,item_id,num,name,spec,price,image,create_time,update_time FROM cart <span class="title function_">WHERE</span> <span class="params">(user_id = ?)</span></span><br><span class="line"><span class="number">17</span>:<span class="number">15</span>:<span class="number">27</span>:<span class="number">140</span> DEBUG <span class="number">1764</span> --- [nio-<span class="number">8082</span>-exec-<span class="number">6</span>] c.h.cart.mapper.CartMapper.selectList    : ==&gt; Parameters: <span class="number">2</span>(Long)</span><br><span class="line"><span class="number">17</span>:<span class="number">15</span>:<span class="number">27</span>:<span class="number">148</span> DEBUG <span class="number">1764</span> --- [nio-<span class="number">8082</span>-exec-<span class="number">6</span>] c.h.cart.mapper.CartMapper.selectList    : &lt;==      Total: <span class="number">1</span></span><br><span class="line"><span class="number">17</span>:<span class="number">16</span>:<span class="number">27</span>:<span class="number">290</span> DEBUG <span class="number">1764</span> --- [nio-<span class="number">8082</span>-exec-<span class="number">7</span>] c.h.cart.mapper.CartMapper.selectList    : ==&gt;  Preparing: SELECT id,user_id,item_id,num,name,spec,price,image,create_time,update_time FROM cart <span class="title function_">WHERE</span> <span class="params">(user_id = ?)</span></span><br><span class="line"><span class="number">17</span>:<span class="number">16</span>:<span class="number">27</span>:<span class="number">293</span> DEBUG <span class="number">1764</span> --- [nio-<span class="number">8082</span>-exec-<span class="number">7</span>] c.h.cart.mapper.CartMapper.selectList    : ==&gt; Parameters: <span class="literal">null</span></span><br><span class="line"><span class="number">17</span>:<span class="number">16</span>:<span class="number">27</span>:<span class="number">298</span> DEBUG <span class="number">1764</span> --- [nio-<span class="number">8082</span>-exec-<span class="number">7</span>] c.h.cart.mapper.CartMapper.selectList    : &lt;==      Total: <span class="number">0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h4 id="135-openfeign传递用户">1.3.5 OpenFeign传递用户</h4>
+<h3 id="135-openfeign传递用户">1.3.5 OpenFeign传递用户</h3>
 <blockquote>
 <p>请求从网关到交易时会被mvc拦截，将userinfo存入threadlocal，当这个请求执行完之后，afterCompletion会清除threadlocal，故当交易发请求到商品时是没有ui的</p>
 </blockquote>
@@ -9807,6 +9807,131 @@ MVC，Spring 会加载 MvcConfig 配置类</li>
 最后记住：拦截器+Feign组合：是实现微服务间身份透传的标准模式。</p></li>
 <li><p>拦截器是属于微服务的，过滤器是属于网关的；拦截器从请求头获取userId，并保存在context中，过滤器解析jwt并保存在请求头中；</p></li>
 </ul>
+<p>微服务之间调用是基于OpenFeign来实现的，并不是我们自己发送的请求。我们如何才能让每一个由OpenFeign发起的请求自动携带登录用户信息呢？</p>
+<p>这里要借助Feign中提供的一个拦截器接口：<code>feign.RequestInterceptor</code></p>
+<p><img src="https://bu.dusays.com/2025/07/25/6882cd197e1e5.png" alt="image-20250725081720605"></p>
+<p>不放在common中，因为不是所有模块都需要，例如网关微服务就不需要FeignClient
+其实就是拦截下来OpenFeign的转发请求，然后再请求头中添加上user-info字段后放行。</p>
+<p><code>DefaultFeignConfig</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DefaultFeignConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Logger.Level <span class="title function_">feignLogLevel</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Logger.Level.FULL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将用户信息添加请求头</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> RequestInterceptor <span class="title function_">userInfoRequestInterceptor</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RequestInterceptor</span>()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">apply</span><span class="params">(RequestTemplate requestTemplate)</span> &#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">/**</span></span><br><span class="line"><span class="comment">                 * 微服务调用微服务的请求是从网关传过来的，</span></span><br><span class="line"><span class="comment">                 * 所以这时请求头中是有用户信息的，</span></span><br><span class="line"><span class="comment">                 * 只需要从请求头中获取到用户信息，添加到请求头中即可</span></span><br><span class="line"><span class="comment">                 * 如何请求再次传递给下一个微服务，这样就将用户信息传递给了其他微服务了</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                <span class="type">Long</span> <span class="variable">userId</span> <span class="operator">=</span> UserContext.getUser();</span><br><span class="line">                <span class="keyword">if</span> (userId != <span class="literal">null</span>)&#123;</span><br><span class="line">                    requestTemplate.header(<span class="string">&quot;user-info&quot;</span>, userId.toString());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-配置管理">3. 配置管理</h2>
+<p>到目前为止我们已经解决了微服务相关的几个问题：</p>
+<ul>
+<li>微服务远程调用</li>
+<li>微服务注册、发现</li>
+<li>微服务请求路由、负载均衡</li>
+<li>微服务登录用户信息传递</li>
+</ul>
+<p>不过，现在依然还有几个问题需要解决：</p>
+<ul>
+<li>网关路由在配置文件中写死了，如果变更必须重启微服务</li>
+<li>某些业务配置在配置文件中写死了，每次修改都要重启服务</li>
+<li>每个微服务都有很多重复的配置，维护成本高</li>
+</ul>
+<p>这些问题都可以通过统一的<strong>配置管理器服务</strong>解决。而Nacos不仅仅具备注册中心功能，也具备配置管理的功能：</p>
+<p><img src="https://bu.dusays.com/2025/07/25/6882ef6723d77.png" alt="image-20250725104348028"></p>
+<p>微服务共享的配置可以统一交给Nacos保存和管理，在Nacos控制台修改配置后，Nacos会将配置变更推送给相关的微服务，并且无需重启即可生效，实现配置热更新。</p>
+<p>网关的路由同样是配置，因此同样可以基于这个功能实现动态路由功能，无需重启网关即可修改路由配置。</p>
+<h3 id="31-配置共享">3.1 配置共享</h3>
+<p>我们可以把微服务共享的配置抽取到Nacos中统一管理，这样就不需要每个微服务都重复配置了。分为两步：</p>
+<ul>
+<li>在Nacos中添加共享配置</li>
+<li>微服务拉取配置</li>
+</ul>
+<h4 id="311-添加共享配置">3.1.1 添加共享配置</h4>
+<p>以cart-service为例，我们看看有哪些配置是重复的，可以抽取的：</p>
+<p>首先是jdbc相关配置：</p>
+<p><img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=ODgyMzVlOTk5ZTFhYzhlOWJlNjViOWQ3NzhiZWFjM2NfbVdBbEgxclE5WWx4Rmd4VUhQdkFOR0pHc3daSkY0ZDBfVG9rZW46U0d6TGJjOU9ob21YckJ4THd5ZmNqT1I4blRiXzE3NTM0Mjk3NTA6MTc1MzQzMzM1MF9WNA" alt="img"></p>
+<p>然后是日志配置：</p>
+<p><img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MmRjODhjYWUxODQyYzk2ODVlYTczYTY3ZjBlMWY3NjlfVlZSZGtrWlJKdTVDUHNEUGFsMkxnUElhMWFTWU5SbmVfVG9rZW46SER6WGJNb09ob3V6Wk54YjBzZGN0YzJNbnFnXzE3NTM0Mjk3NTA6MTc1MzQzMzM1MF9WNA" alt="img"></p>
+<p>然后是swagger以及OpenFeign的配置：</p>
+<p><img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=YjVkNmRhMDYyZjhjMWNmYmNkYWIzMWE3NzRlZGM2NGJfYjFpUXl3RHlhYnhqVzh2UEhQdDROZHExMGc4QVZPTUdfVG9rZW46UkhrT2J0bG1jb2dHdTF4WFRsVWNlR2lsbm9iXzE3NTM0Mjk3NTA6MTc1MzQzMzM1MF9WNA" alt="img"></p>
+<p>我们在nacos控制台分别添加这些配置。</p>
+<p>首先是jdbc相关配置，在<code>配置管理</code>-&gt;<code>配置列表</code>中点击<code>+</code>新建一个配置：</p>
+<p><img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MjViZTkxNWUwOGI4OWZhM2I5ZmU3NzI3NDkzMjc1OTNfSGJIVldMY1hjelJIVTNXSG83T3dXa0lQQllubHExR2pfVG9rZW46VG9hb2JnWm1Vb08yYU94OXQ3dmNIQ2ZibktmXzE3NTM0Mjk3NTA6MTc1MzQzMzM1MF9WNA" alt="img"></p>
+<p>在弹出的表单中填写信息：</p>
+<p><img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MjgyMmY2OTc1MTBjMTlkMWNlOWVjN2U0ZmIzZTQ0OGFfQUd4N1E2V0lZbUdDSmlBRlo3WlRkcDRhdzhsTUd3T3FfVG9rZW46RU52YmJNMkNmb1dhVFh4MkJkUGNEanlzbkVjXzE3NTM0Mjk3NTA6MTc1MzQzMzM1MF9WNA" alt="img"></p>
+<p>其中详细的配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://$&#123;hm.db.host:192.168.150.101&#125;:$&#123;hm.db.port:3306&#125;/$&#123;hm.db.database&#125;?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;serverTimezone=Asia/Shanghai</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">$&#123;hm.db.un:root&#125;</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">$&#123;hm.db.pw:123&#125;</span></span><br><span class="line"><span class="attr">mybatis-plus:</span></span><br><span class="line">  <span class="attr">configuration:</span></span><br><span class="line">    <span class="attr">default-enum-type-handler:</span> <span class="string">com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler</span></span><br><span class="line">  <span class="attr">global-config:</span></span><br><span class="line">    <span class="attr">db-config:</span></span><br><span class="line">      <span class="attr">update-strategy:</span> <span class="string">not_null</span></span><br><span class="line">      <span class="attr">id-type:</span> <span class="string">auto</span></span><br></pre></td></tr></table></figure>
+
+<p>注意这里的jdbc的相关参数并没有写死，例如：</p>
+<ul>
+<li><code>数据库ip</code>：通过<code>$&#123;hm.db.host:192.168.150.101&#125;</code>配置了默认值为<code>192.168.150.101</code>，同时允许通过<code>$&#123;hm.db.host&#125;</code>来覆盖默认值</li>
+<li><code>数据库端口</code>：通过<code>$&#123;hm.db.port:3306&#125;</code>配置了默认值为<code>3306</code>，同时允许通过<code>$&#123;hm.db.port&#125;</code>来覆盖默认值</li>
+<li><code>数据库database</code>：可以通过<code>$&#123;hm.db.database&#125;</code>来设定，无默认值</li>
+</ul>
+<p>然后是统一的日志配置，命名为<code>shared-log.``yaml</code>，配置内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">  <span class="attr">level:</span></span><br><span class="line">    <span class="attr">com.hmall:</span> <span class="string">debug</span></span><br><span class="line">  <span class="attr">pattern:</span></span><br><span class="line">    <span class="attr">dateformat:</span> <span class="string">HH:mm:ss:SSS</span></span><br><span class="line">  <span class="attr">file:</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">&quot;logs/$&#123;spring.application.name&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后是统一的swagger配置，命名为<code>shared-swagger.yaml</code>，配置内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">knife4j:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">openapi:</span></span><br><span class="line">    <span class="attr">title:</span> <span class="string">$&#123;hm.swagger.title:黑马商城接口文档&#125;</span></span><br><span class="line">    <span class="attr">description:</span> <span class="string">$&#123;hm.swagger.description:黑马商城接口文档&#125;</span></span><br><span class="line">    <span class="attr">email:</span> <span class="string">$&#123;hm.swagger.email:zhanghuyi@itcast.cn&#125;</span></span><br><span class="line">    <span class="attr">concat:</span> <span class="string">$&#123;hm.swagger.concat:虎哥&#125;</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">https://www.itcast.cn</span></span><br><span class="line">    <span class="attr">version:</span> <span class="string">v1.0.0</span></span><br><span class="line">    <span class="attr">group:</span></span><br><span class="line">      <span class="attr">default:</span></span><br><span class="line">        <span class="attr">group-name:</span> <span class="string">default</span></span><br><span class="line">        <span class="attr">api-rule:</span> <span class="string">package</span></span><br><span class="line">        <span class="attr">api-rule-resources:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">$&#123;hm.swagger.package&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，这里的swagger相关配置我们没有写死，例如：</p>
+<ul>
+<li><code>title</code>：接口文档标题，我们用了<code>$&#123;hm.swagger.title&#125;</code>来代替，将来可以有用户手动指定</li>
+<li><code>email</code>：联系人邮箱，我们用了<code>$&#123;hm.swagger.email:``zhanghuyi@itcast.cn``&#125;</code>，默认值是<code>zhanghuyi@itcast.cn</code>，同时允许用户利用<code>$&#123;hm.swagger.email&#125;</code>来覆盖。</li>
+</ul>
+<h3 id="32-拉取nacos">3.2 拉取nacos</h3>
+<p>接下来，我们要在微服务拉取共享配置。将拉取到的共享配置与本地的<code>application.yaml</code>配置合并，完成项目上下文的初始化。</p>
+<p>不过，需要注意的是，读取Nacos配置是SpringCloud上下文（<code>ApplicationContext</code>）初始化时处理的，发生在项目的引导阶段。然后才会初始化SpringBoot上下文，去读取<code>application.yaml</code>。</p>
+<p>也就是说引导阶段，<code>application.yaml</code>文件尚未读取，根本不知道nacos
+地址，该如何去加载nacos中的配置文件呢？</p>
+<p>SpringCloud在初始化上下文的时候会先读取一个名为<code>bootstrap.yaml</code>(或者<code>bootstrap.properties</code>)的文件，如果我们将nacos地址配置到<code>bootstrap.yaml</code>中，那么在项目引导阶段就可以读取nacos中的配置了。</p>
+<p><img src="https://bu.dusays.com/2025/07/25/688336256383b.png" alt="image-20250725154538843"></p>
+<p>因此，微服务整合Nacos配置管理的步骤如下：</p>
+<p>1）引入依赖：</p>
+<p>在cart-service模块引入依赖：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--nacos配置管理--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--读取bootstrap文件--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-bootstrap<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2）新建bootstrap.yaml</p>
+<p>在cart-service中的resources目录新建一个bootstrap.yaml文件：</p>
+<p><img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=ODlmZTExNzk2NjQ5NzQ3MTI4Njk5MWYzMTQ3MmE3M2RfWHlEcUZWRDhhSml5MDZidlBDS0VXMVZXZ2JuTGczNnlfVG9rZW46VldKQWJEUjJlb1F6SEJ4VGVwZGNPb3MzbktlXzE3NTM0Mjk4NTU6MTc1MzQzMzQ1NV9WNA" alt="img"></p>
+<p>内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cart-service</span> <span class="comment"># 服务名称</span></span><br><span class="line">  <span class="attr">profiles:</span></span><br><span class="line">    <span class="attr">active:</span> <span class="string">dev</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">server-addr:</span> <span class="number">192.168</span><span class="number">.150</span><span class="number">.101</span> <span class="comment"># nacos地址</span></span><br><span class="line">      <span class="attr">config:</span></span><br><span class="line">        <span class="attr">file-extension:</span> <span class="string">yaml</span> <span class="comment"># 文件后缀名</span></span><br><span class="line">        <span class="attr">shared-configs:</span> <span class="comment"># 共享配置</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">dataId:</span> <span class="string">shared-jdbc.yaml</span> <span class="comment"># 共享mybatis配置</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">dataId:</span> <span class="string">shared-log.yaml</span> <span class="comment"># 共享日志配置</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">dataId:</span> <span class="string">shared-swagger.yaml</span> <span class="comment"># 共享日志配置</span></span><br></pre></td></tr></table></figure>
+
+<p>3）修改application.yaml</p>
+<p>由于一些配置挪到了bootstrap.yaml，因此application.yaml需要修改为：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8082</span></span><br><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">okhttp:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment"># 开启OKHttp连接池支持</span></span><br><span class="line"><span class="attr">hm:</span></span><br><span class="line">  <span class="attr">swagger:</span></span><br><span class="line">    <span class="attr">title:</span> <span class="string">购物车服务接口文档</span></span><br><span class="line">    <span class="attr">package:</span> <span class="string">com.hmall.cart.controller</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">database:</span> <span class="string">hm-cart</span></span><br></pre></td></tr></table></figure>
+
+<p>重启服务，发现所有配置都生效了。</p>
+<h3 id="33-配置热更新">3.3 配置热更新</h3>
+<p>有很多的业务相关参数，将来可能会根据实际情况临时调整。例如购物车业务，购物车数量有一个上限，默认是10，对应代码如下：</p>
+<p>现在这里购物车是写死的固定值，我们应该将其配置在配置文件中，方便后期修改。</p>
+<p>但现在的问题是，即便写在配置文件中，修改了配置还是需要重新打包、重启服务才能生效。能不能不用重启，直接生效呢？</p>
+<p>这就要用到Nacos的配置热更新能力了，分为两步：</p>
+<ul>
+<li>在Nacos中添加配置</li>
+<li>在微服务读取配置</li>
+</ul>
+<p><img src="https://bu.dusays.com/2025/07/25/68837b6508f41.png" alt="image-20250725204101759"></p>
+<p>文件名称由三部分组成：</p>
+<ul>
+<li><strong><code>服务名</code></strong>：我们是购物车服务，所以是<code>cart-service</code></li>
+<li><strong><code>spring.active.profile</code></strong>：就是spring
+boot中的<code>spring.active.profile</code>，可以省略，则所有profile共享该配置</li>
+<li><strong><code>后缀名</code></strong>：例如yaml</li>
+</ul>
+<p>这里我们直接使用<code>cart-service.yaml</code>这个名称，则不管是dev还是local环境都可以共享该配置。</p>
+<p>配置内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">hm:</span></span><br><span class="line">  <span class="attr">cart:</span></span><br><span class="line">    <span class="attr">maxAmount:</span> <span class="number">1</span> <span class="comment"># 购物车商品数量上限</span></span><br></pre></td></tr></table></figure>
+
+<p>接着，我们在微服务中读取配置，实现配置热更新。</p>
+<p>在<code>cart-service</code>中新建一个属性读取类：</p>
+<p><img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MjMxOTBiZDBmMGQ2ODBkMzU0ZmY3NmYyYmVjYzNkNjhfaUdLckZzcUpWcjhXSkt2STR6QVVZT25DRnEwbm9HWVFfVG9rZW46UW5QT2JwNVFNbzNscHZ4QldVWWMzdFpPbnhkXzE3NTM0NDczNDI6MTc1MzQ1MDk0Ml9WNA" alt="img"></p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hmall.cart.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;hm.cart&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CartProperties</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer maxAmount;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接着，在业务中使用该属性加载类：</p>
+<p><img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=NzAwNjQxN2QzOGZkYjkxYzYzZGFmNDFlYTYzODA2NTRfV1gyS0dsenNOVVNOUk8xRlRxNWVUMnhxeEZZbDNBZVpfVG9rZW46TG13ZmJyRWpub2ZZUDN4SVZZY2NXaWlvbjVmXzE3NTM0NDczNDI6MTc1MzQ1MDk0Ml9WNA" alt="img"></p>
+<p>测试，向购物车中添加多个商品：</p>
+<p><img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MzAyZTNiMzQzNmYwMjQxOTMxMjhkNzZlM2Q5NWI0MDVfNkFtQjdlSGhUcmJiWjZqSGxWSWk2SzhFQm8wR1RucEJfVG9rZW46TFNuMWJwNWNDb1lXa0d4UDVJaWNQcUZPbmNkXzE3NTM0NDczNDI6MTc1MzQ1MDk0Ml9WNA" alt="img"></p>
+<p>我们在nacos控制台，将购物车上限配置为5：</p>
+<p><img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=MjVmZTFiNmVlNDAxMTdkNWE4ZDgzMTAxMTEwOTY0NDNfWWtGZm10VGNZOUEzcmtoM28xT1NtbFNJVTZYVHhYblFfVG9rZW46WGJTQWJxWGJRb0lOQnd4MUF2VGNGcnhybkxlXzE3NTM0NDczNDI6MTc1MzQ1MDk0Ml9WNA" alt="img"></p>
+<p>无需重启，再次测试购物车功能：</p>
+<p><img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=OGU1NDMzM2Y4MGY2NWY1OWI5ZWE2YTEwOGVmYjMzMjlfWjhrakxJN3JDUXhXZHptOU9EZkVLSG1NUUxSUFN5RmVfVG9rZW46UlZYOWJkUXRBb2lnZ1N4dzVpeWNwb0VXbjdkXzE3NTM0NDczNDI6MTc1MzQ1MDk0Ml9WNA" alt="img"></p>
+<p>加入成功！</p>
+<p>无需重启服务，配置热更新就生效了！</p>
 ]]></content>
       <categories>
         <category>java</category>
@@ -9824,6 +9949,8 @@ MVC，Spring 会加载 MvcConfig 配置类</li>
 <p>两颗 无感</p>
 <h5 id="7月23日">7月23日</h5>
 <p>失眠了半夜，</p>
+<h5 id="7月24日">7月24日</h5>
+<p>感觉口干</p>
 ]]></content>
       <categories>
         <category>日常</category>
