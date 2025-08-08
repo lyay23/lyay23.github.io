@@ -7703,6 +7703,20 @@ oss-cn-hangzhou.aliyuncs.com不能加http://</p>
     </div>
     </a></div>
 
+<div calss="anzhiyu-tag-link"><a class="tag-Link" target="_blank" href="https://blog.baskly.fun/posts/49515/">
+    <div class="tag-link-tips">引用站外地址</div>
+    <div class="tag-link-bottom">
+        <div class="tag-link-left" style="background-image: url(https://bu.dusays.com/2025/08/07/6893e6d9c807f.png)">
+          <i class="anzhiyufont anzhiyu-icon-link" style="display: none"></i>
+        </div>
+        <div class="tag-link-right">
+            <div class="tag-link-title">tlias前端笔记</div>
+            <div class="tag-link-sitename">李阳的秘密小屋</div>
+        </div>
+        <i class="anzhiyufont anzhiyu-icon-angle-right"></i>
+    </div>
+    </a></div>
+
 <div calss="anzhiyu-tag-link"><a class="tag-Link" target="_blank" href="https://github.com/lyay23/vue-tlias-management/">
     <div class="tag-link-tips">引用站外地址</div>
     <div class="tag-link-bottom">
@@ -7883,20 +7897,6 @@ ProceedingJoinPoint的父类型</p></li>
         <div class="tag-link-right">
             <div class="tag-link-title">tlias后端仓库</div>
             <div class="tag-link-sitename">GitHub</div>
-        </div>
-        <i class="anzhiyufont anzhiyu-icon-angle-right"></i>
-    </div>
-    </a></div>
-
-<div calss="anzhiyu-tag-link"><a class="tag-Link" target="_blank" href="https://blog.baskly.fun/posts/49515/">
-    <div class="tag-link-tips">引用站外地址</div>
-    <div class="tag-link-bottom">
-        <div class="tag-link-left" style="background-image: url(https://bu.dusays.com/2025/08/07/6893e6d9c807f.png)">
-          <i class="anzhiyufont anzhiyu-icon-link" style="display: none"></i>
-        </div>
-        <div class="tag-link-right">
-            <div class="tag-link-title">tlias前端笔记</div>
-            <div class="tag-link-sitename">李阳的秘密小屋</div>
         </div>
         <i class="anzhiyufont anzhiyu-icon-angle-right"></i>
     </div>
@@ -11969,6 +11969,41 @@ xml数据。</li>
 <p>5、将接口文档给到前端人员，前后端分离开发。</p>
 <p>6、开发完毕进行测试。</p>
 <p>7、测试完毕发布项目，由运维人员进行部署安装。</p>
+<h4 id="10-mybatis分页插件的原理">10. MyBatis分页插件的原理</h4>
+<ul>
+<li>首先分页参数放到ThreadLocal中，拦截执行的sql，根据数据库类型添加对应的分页语句重写sql，例如:
+(select* from table where a)转换为(select count(*) from table where
+a)和(select * from table where a limit,)</li>
+<li>计算出了total总条数、pageNum当前第几页、pageSize每页大小和当前页的数据，是否为首页，是否为尾页，总页数等。</li>
+</ul>
+<h4 id="11-树型表的标记字段是什么如何查询mysql的树型表">11.
+树型表的标记字段是什么？如何查询MySQl的树型表</h4>
+<p>标记字段就是<code>parentid</code>，即父节点</p>
+<ul>
+<li>当层级固定可以用数据库的自连接的方式</li>
+<li>如果想要灵活查询可以使用MySQL的递归的方式（使用with表达式，里面的recusive关键字可以使用关键字的方式）</li>
+</ul>
+<h4 id="12-mybatis的resulttype和resultmap的区别">12.
+MyBatis的ResultType和ResultMap的区别</h4>
+<p>ResultType:指定映射类型，只要查询的字段名和类型的属性名匹配可以自动映射。</p>
+<p>ResultMap:自定义映射规则，当查询的字段名和映射类型的属性不匹配时可以通过ResultMap自定义映射规则,也可以实现一对多、一对一映射。</p>
+<h4 id="13-mybatis中的和有什么区别">13.
+MyBatis中的#{}和${}有什么区别</h4>
+<p>#{}是标记一个占位符，可以防止sql注入。
+${}用于在动态sql中拼接字符串，可能导致s.ql注入。</p>
+<h4 id="14-系统如何处理自定义异常">14. 系统如何处理自定义异常</h4>
+<p>我们自定义一个统一的异常处理器去捕获并处理异常。</p>
+<p>使用控制器增加注解@ControllerAdvice和异常处理注解@ExceptionHandler来实现。</p>
+<p>1)处理自定义异常</p>
+<ul>
+<li>程序在编写代码时根据校验结果主动抛出自定义异常类对象，抛出异常时指定详细的异常信息，异常处理器捕获异常信息记录异常日志并响应给用户。</li>
+</ul>
+<p>2)处理未知异常</p>
+<ul>
+<li>接口执行过程中的一些运行时异常也会由异常处理器统一捕获，记录异常日志，统一响应给用户500错误。在异常处理器中还可以针对某个异常类型进行单独处理。</li>
+</ul>
+<h4 id="15-请求参数合法性该如何校验">15. 请求参数合法性该如何校验</h4>
+<p>使用基于ISR303的校验框架实现，SpringBoot提供了ISR-303的支持，它就是spring-boot-starter-validation，它包括了很多校验规则，只需要在模型类中通过注解指定校验规则，在controller方法上开启校验</p>
 <h1 id="二-内容管理模块">二 .内容管理模块</h1>
 <h2 id="1-课程查询">1. 课程查询</h2>
 <p>接口请求示例:</p>
@@ -12011,6 +12046,24 @@ UNION 会自动删除重复的行。</p>
 
 <p><img src="https://bu.dusays.com/2025/08/06/6892faa45a0f6.png" alt="image-20250806144803080"></p>
 <p>那么我们在Java的SQL中改怎么写呢</p>
+<h2 id="课程添加">课程添加</h2>
+<h3 id="全局异常处理器">全局异常处理器</h3>
+<p>全局异常处理器</p>
+<p>​ 从 Spring 3.0 - Spring 3.2 版本之间，对 Spring 架构和 SpringMVC
+的Controller 的异常捕获提供了相应的异常处理。</p>
+<ul>
+<li>@ExceptionHandler</li>
+<li>Spring3.0提供的标识在方法上或类上的注解，用来表明方法的处理异常类型。</li>
+<li>@ControllerAdvice</li>
+<li>Spring3.2提供的新注解，从名字上可以看出大体意思是控制器增强，
+在项目中来增强SpringMVC中的Controller。通常和**<code>@ExceptionHandler</code>**
+结合使用，来处理SpringMVC的异常信息。</li>
+<li>@ResponseStatus</li>
+<li>Spring3.0提供的标识在方法上或类上的注解，用状态代码和应返回的原因标记方法或异常类。
+调用处理程序方法时，状态代码将应用于HTTP响应。</li>
+</ul>
+<h3 id="jsr303">JSR303</h3>
+<p><img src="https://bu.dusays.com/2025/08/07/68943dd4b42a9.png" alt="image-20250807134656451"></p>
 ]]></content>
       <categories>
         <category>java</category>
