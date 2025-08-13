@@ -11848,6 +11848,8 @@ ID（Lucene 的 doc_id）可直接计算偏移量，实现快速随机访问。�
 <p>感觉口干</p>
 <h5 id="7月30日">7月30日</h5>
 <p>这几天爆豆，嘴唇干，不过脸上好像出油少了。</p>
+<h5 id="8月13日">8月13日</h5>
+<p>继续长痘，不过脸上油少了很多，头发也不油了</p>
 ]]></content>
       <categories>
         <category>日常</category>
@@ -12004,6 +12006,26 @@ ${}用于在动态sql中拼接字符串，可能导致s.ql注入。</p>
 </ul>
 <h4 id="15-请求参数合法性该如何校验">15. 请求参数合法性该如何校验</h4>
 <p>使用基于ISR303的校验框架实现，SpringBoot提供了ISR-303的支持，它就是spring-boot-starter-validation，它包括了很多校验规则，只需要在模型类中通过注解指定校验规则，在controller方法上开启校验</p>
+<h4 id="16-spring事务什么时候会失效">16. Spring事务什么时候会失效</h4>
+<p>1）在方法中捕获异常没有抛出去</p>
+<p>2）非事务方法调用事务方法</p>
+<p>3）事务方法内部调用事务方法</p>
+<p>4）@Transactional标记的方法不是public</p>
+<p>5）抛出的异常与rollbackFor指定的异常不匹配，默认rollbackFor指定的异常为RuntimeException</p>
+<p>6）数据库表不支持事务，比如MySQL的MyISAM</p>
+<p>7)Spring的传播行为导致事务失效，比如:PROPAGATION_NEVER、PROPAGATION_NOT_SUPPORTED</p>
+<h4 id="17-断点续传是怎么做的">17. 断点续传是怎么做的</h4>
+<p>我们是基于分块上传的模式实现断点续传的需求，当文件上传一部分断网后前边已经上传过的不再上传。</p>
+<p>1）前端对文件分块。</p>
+<p>2）前端使用多线程一块一块上传，上传前给服务端发一个消息校验该分块是否上传，如果已上传则不再上传。</p>
+<p>3）等所有分块上传完毕，服务端合并所有分块，校验文件的完整性。</p>
+<p>因为分块全部上传到了服务器，服务器将所有分块按顺序进行合并，就是写每个分块文件内容按顺序依次写入一个文件中。使用字节流去读写文件。</p>
+<p>4）前端给服务传了一个md5值，服务端合并文件后计算合并后文件的md5是否和前端传的一样，如果一样则说文件完整，如果不一样说明可能由于网络丢包导致文件不完整，这时上传失败需要重新上传。</p>
+<h4 id="18-分块文件清理问题">18. 分块文件清理问题</h4>
+<p>上传一个文件进行分块上传，上传一半不传了，之前上传到minio的分块文件要清理吗?怎么做的?</p>
+<p>1、在数据库中有一张文件表记录minio中存储的文件信息。</p>
+<p>2、文件开始上传时会写入文件表，状态为上传中，上传完成会更新状态为上传完成。</p>
+<p>3、当一个文件传了一半不再上传了说明该文件没有上传完成，会有定时任务去查询文件表中的记录，如果文件未上传完成则删除minio中没有上传成功的文件目录。</p>
 <h1 id="二-内容管理模块">二 .内容管理模块</h1>
 <h2 id="1-课程查询">1. 课程查询</h2>
 <p>接口请求示例:</p>
@@ -12064,6 +12086,7 @@ UNION 会自动删除重复的行。</p>
 </ul>
 <h3 id="jsr303">JSR303</h3>
 <p><img src="https://bu.dusays.com/2025/08/07/68943dd4b42a9.png" alt="image-20250807134656451"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run \</span><br><span class="line">  -e MINIO_ROOT_USER=minioadmin \</span><br><span class="line">  -e MINIO_ROOT_PASSWORD=minioadmin \</span><br><span class="line">  -v minio-data:/data \</span><br><span class="line">  --name minio \</span><br><span class="line">  --hostname minio \</span><br><span class="line">  -p 9000:9000 \</span><br><span class="line">  -p 9001:9001 \</span><br><span class="line">  --network hm-net \</span><br><span class="line">  -d \</span><br><span class="line">  minio/minio:RELEASE.2023-05-04T21-44-30Z server /data --console-address &quot;:9001&quot;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>java</category>
