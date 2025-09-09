@@ -7321,7 +7321,7 @@ JDK8，不过 Spring 官方已经对 Spring6 进行了正式版发布。</p>
           <i class="anzhiyufont anzhiyu-icon-link" style="display: none"></i>
         </div>
         <div class="tag-link-right">
-            <div class="tag-link-title">tlias后端仓库</div>
+            <div class="tag-link-title">苍穹外卖</div>
             <div class="tag-link-sitename">GitHub</div>
         </div>
         <i class="anzhiyufont anzhiyu-icon-angle-right"></i>
@@ -11833,32 +11833,6 @@ ID（Lucene 的 doc_id）可直接计算偏移量，实现快速随机访问。�
       </tags>
   </entry>
   <entry>
-    <title>战痘日记</title>
-    <url>/posts/33676/</url>
-    <content><![CDATA[<blockquote>
-<p>劳资再家天天早睡早起但是脸上还一直长痘，你妹的，劳资现在决定吃eva来对痤疮正式宣战</p>
-</blockquote>
-<h5 id="7月21日晚">7月21日晚</h5>
-<p>今天吃了一颗eva，无感</p>
-<h5 id="7月22日">7月22日</h5>
-<p>两颗 无感</p>
-<h5 id="7月23日">7月23日</h5>
-<p>失眠了半夜，</p>
-<h5 id="7月24日">7月24日</h5>
-<p>感觉口干</p>
-<h5 id="7月30日">7月30日</h5>
-<p>这几天爆豆，嘴唇干，不过脸上好像出油少了。</p>
-<h5 id="8月13日">8月13日</h5>
-<p>继续长痘，不过脸上油少了很多，头发也不油了</p>
-]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>日常</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>黑马学成在线</title>
     <url>/posts/3860/</url>
     <content><![CDATA[<blockquote>
@@ -12026,6 +12000,28 @@ ${}用于在动态sql中拼接字符串，可能导致s.ql注入。</p>
 <p>1、在数据库中有一张文件表记录minio中存储的文件信息。</p>
 <p>2、文件开始上传时会写入文件表，状态为上传中，上传完成会更新状态为上传完成。</p>
 <p>3、当一个文件传了一半不再上传了说明该文件没有上传完成，会有定时任务去查询文件表中的记录，如果文件未上传完成则删除minio中没有上传成功的文件目录。</p>
+<h5 id="19-xxl-job的工作原理是什么">19 XXL-job的工作原理是什么？</h5>
+<p>XXL-JOB分布式任务调度服务由调用中心和执行器组成，调用中心负责按任务调度策略向执行器下发任务，执行器负责接收任务执行任务。</p>
+<p>1）首先部署并启动xxl-job调度中心。(一个java工程)</p>
+<p>2）首先在微服务添加xxl-job依赖，在微服务中配置执行器</p>
+<p>3）启动微服务，执行器向调度中心上报自己。</p>
+<p>4）在微服务中写一个任务方法并用xxl-job的注解去标记执行任务的方法名称。</p>
+<p>5)在调度中心配置任务调度策略，调度策略就是每隔多长时间执行还是在每天或每月的固定时间去执行，比如每天0点执行，或每隔1小时执行一次等。</p>
+<p>6)在调度中心启动任务。</p>
+<p>7）调度中心根据任务调度策略，到达时间就开始下发任务给执行器。</p>
+<p>8)执行器收到任务就开始执行任务。</p>
+<h5 id="如何保证任务不重复执行">如何保证任务不重复执行</h5>
+<p>1)调度中心按分片广播的方式去下发任务</p>
+<p>2)执行器收到作业分片广播的参数:分片总数和分片序号，计算任务id
+除以分片总数得到一个余数，如果余数等于分片序号这时就去执行这全任务，这里保证了不同的执行器执行不同的任务。</p>
+<p>3）配置调度过期策略为“忽略”，避免同一个执行器多次重复执行同一个任务</p>
+<p>4）配置任务阻塞处理策略为“丢弃后续调度”，注意:丢弃也没事下一次调度就又可以执行了</p>
+<p>5）另外还要保证任务处理的幂等性，执行过的任务可以打一个状态标记已完成，下次再调度执行该任务判断该任务已完成就不再执行</p>
+<h5 id="如何保证任务的幂等性">如何保证任务的幂等性</h5>
+<p>1）数据库约束，比如:唯一索引，主键。同一个主键不可能两次都插入成功。</p>
+<p>2）乐观锁，常用于数据库，更新数据时根据乐观锁状态去更新。</p>
+<p>3）唯一序列号，请求前生成唯一的序列号，携带序列号去请求，执行时在redis记录该序列号表示以该序列号的请求执行过了，如果相同的序列号再次来执行说明是重复执行。</p>
+<p>这里我们在数据库视频处理表中添加处理状态字段，视频处理完成更新状态为完成，执行视频处理前判断状态是否完成，如果完成则不再处理。</p>
 <h1 id="二-内容管理模块">二 .内容管理模块</h1>
 <h2 id="1-课程查询">1. 课程查询</h2>
 <p>接口请求示例:</p>
@@ -12093,6 +12089,302 @@ UNION 会自动删除重复的行。</p>
       </categories>
       <tags>
         <tag>javaweb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis黑马版</title>
+    <url>/posts/11096/</url>
+    <content><![CDATA[<h1 id="一redis安装">一、Redis安装</h1>
+<h2 id="1-指定配置启动">1. 指定配置启动</h2>
+<p>如果要让Redis以<code>后台</code>方式启动，则必须修改Redis配置文件，就在我们之前解压的redis安装包下（<code>/usr/local/src/redis-6.2.6</code>），名字叫redis.conf：</p>
+<p><img src="https://bu.dusays.com/2025/09/08/68be43004b3bf.png" alt="image-20211211082225509"></p>
+<p>我们先将这个配置文件备份一份：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp redis.conf redis.conf.bck</span><br></pre></td></tr></table></figure>
+
+<p>然后修改redis.conf文件中的一些配置：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 允许访问的地址，默认是127.0.0.1，会导致只能在本地访问。修改为0.0.0.0则可以在任意IP访问，生产环境不要设置为0.0.0.0</span></span><br><span class="line"><span class="attr">bind</span> <span class="string">0.0.0.0</span></span><br><span class="line"><span class="comment"># 守护进程，修改为yes后即可后台运行</span></span><br><span class="line"><span class="attr">daemonize</span> <span class="string">yes </span></span><br><span class="line"><span class="comment"># 密码，设置后访问Redis必须输入密码</span></span><br><span class="line"><span class="attr">requirepass</span> <span class="string">123321</span></span><br></pre></td></tr></table></figure>
+
+<p>Redis的其它常见配置：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 监听的端口</span></span><br><span class="line"><span class="attr">port</span> <span class="string">6379</span></span><br><span class="line"><span class="comment"># 工作目录，默认是当前目录，也就是运行redis-server时的命令，日志、持久化等文件会保存在这个目录</span></span><br><span class="line"><span class="attr">dir</span> <span class="string">.</span></span><br><span class="line"><span class="comment"># 数据库数量，设置为1，代表只使用1个库，默认有16个库，编号0~15</span></span><br><span class="line"><span class="attr">databases</span> <span class="string">1</span></span><br><span class="line"><span class="comment"># 设置redis能够使用的最大内存</span></span><br><span class="line"><span class="attr">maxmemory</span> <span class="string">512mb</span></span><br><span class="line"><span class="comment"># 日志文件，默认为空，不记录日志，可以指定日志文件名</span></span><br><span class="line"><span class="attr">logfile</span> <span class="string">&quot;redis.log&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>启动Redis：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入redis安装目录 </span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/src/redis-6.2.6</span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">redis-server redis.conf</span><br></pre></td></tr></table></figure>
+
+<p>停止服务：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 利用redis-cli来执行 shutdown 命令，即可停止 Redis 服务，</span></span><br><span class="line"><span class="comment"># 因为之前配置了密码，因此需要通过 -u 来指定密码</span></span><br><span class="line">redis-cli -u 123321 shutdown</span><br></pre></td></tr></table></figure>
+
+<h3 id="133开机自启">1.3.3.开机自启</h3>
+<p>我们也可以通过配置来实现开机自启。</p>
+<p>首先，新建一个系统服务文件：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vi /etc/systemd/system/redis.service</span><br></pre></td></tr></table></figure>
+
+<p>内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=redis-server</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=/usr/local/bin/redis-server /usr/local/src/redis-6.2.6/redis.conf</span><br><span class="line">PrivateTmp=true</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>然后重载系统服务：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p>现在，我们可以用下面这组命令来操作redis了：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 启动</span></span><br><span class="line">systemctl start redis</span><br><span class="line"><span class="comment"># 停止</span></span><br><span class="line">systemctl stop redis</span><br><span class="line"><span class="comment"># 重启</span></span><br><span class="line">systemctl restart redis</span><br><span class="line"><span class="comment"># 查看状态</span></span><br><span class="line">systemctl status redis</span><br></pre></td></tr></table></figure>
+
+<p>执行下面的命令，可以让redis开机自启：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> redis</span><br></pre></td></tr></table></figure>
+
+<h2 id="2redis客户端">2.Redis客户端</h2>
+<p>安装完成Redis，我们就可以操作Redis，实现数据的CRUD了。这需要用到Redis客户端，包括：</p>
+<ul>
+<li>命令行客户端</li>
+<li>图形化桌面客户端</li>
+<li>编程客户端</li>
+</ul>
+<h3 id="21-redis命令行客户端">2.1 Redis命令行客户端</h3>
+<p>Redis安装完成后就自带了命令行客户端：redis-cli，使用方式如下：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">redis-cli [options] [commonds]</span><br></pre></td></tr></table></figure>
+
+<p>其中常见的options有：</p>
+<ul>
+<li><code>-h 127.0.0.1</code>：指定要连接的redis节点的IP地址，默认是127.0.0.1</li>
+<li><code>-p 6379</code>：指定要连接的redis节点的端口，默认是6379</li>
+<li><code>-a 123321</code>：指定redis的访问密码</li>
+</ul>
+<p>其中的commonds就是Redis的操作命令，例如：</p>
+<ul>
+<li><code>ping</code>：与redis服务端做心跳测试，服务端正常会返回<code>pong</code></li>
+</ul>
+<p>不指定commond时，会进入<code>redis-cli</code>的交互控制台：</p>
+<p><img src="https://bu.dusays.com/2025/09/08/68be433e7c3d2.png" alt="image-20211211110439353"></p>
+<h3 id="22-通用命令">2.2 通用命令</h3>
+<p>通用指令是部分数据类型的，都可以使用的指令，常见的有：</p>
+<ul>
+<li>KEYS：查看符合模板的所有key</li>
+<li>DEL：删除一个指定的key</li>
+<li>EXISTS：判断key是否存在</li>
+<li>EXPIRE：给一个key设置有效期，有效期到期时该key会被自动删除</li>
+<li>TTL：查看一个KEY的剩余有效期</li>
+</ul>
+<p>通过help [command] 可以查看一个命令的具体用法，例如：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看keys命令的帮助信息：</span></span><br><span class="line">127.0.0.1:6379&gt; <span class="built_in">help</span> keys</span><br><span class="line"></span><br><span class="line">KEYS pattern</span><br><span class="line">summary: Find all keys matching the given pattern</span><br><span class="line">since: 1.0.0</span><br><span class="line">group: generic</span><br></pre></td></tr></table></figure>
+
+<h3 id="23-string类型">2.3 String类型</h3>
+<p>String类型，也就是字符串类型，是Redis中最简单的存储类型。</p>
+<p>其value是字符串，不过根据字符串的格式不同，又可以分为3类：</p>
+<ul>
+<li>string：普通字符串</li>
+<li>int：整数类型，可以做自增、自减操作</li>
+<li>float：浮点类型，可以做自增、自减操作</li>
+</ul>
+<p>不管是哪种格式，底层都是字节数组形式存储，只不过是编码方式不同。字符串类型的最大空间不能超过512m.</p>
+<h4 id="221string的常见命令">2.2.1.String的常见命令</h4>
+<p>String的常见命令有：</p>
+<ul>
+<li>SET：添加或者修改已经存在的一个String类型的键值对</li>
+<li>GET：根据key获取String类型的value</li>
+<li>MSET：批量添加多个String类型的键值对</li>
+<li>MGET：根据多个key获取多个String类型的value</li>
+<li>INCR：让一个整型的key自增1</li>
+<li>INCRBY:让一个整型的key自增并指定步长，例如：incrby num 2
+让num值自增2</li>
+<li>INCRBYFLOAT：让一个浮点类型的数字自增并指定步长</li>
+<li>SETNX：添加一个String类型的键值对，前提是这个key不存在，否则不执行</li>
+<li>SETEX：添加一个String类型的键值对，并且指定有效期</li>
+</ul>
+<h4 id="222-key类型">2.2.2 Key类型</h4>
+<p>Redis没有类似MySQL中的Table的概念，我们该如何区分不同类型的key呢？</p>
+<p>例如，需要存储用户、商品信息到redis，有一个用户id是1，有一个商品id恰好也是1，此时如果使用id作为key，那就会冲突了，该怎么办？</p>
+<p>我们可以通过给key添加前缀加以区分，不过这个前缀不是随便加的，有一定的规范：</p>
+<p>Redis的key允许有多个单词形成层级结构，多个单词之间用’:’隔开，格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">项目名:业务名:类型:id</span><br></pre></td></tr></table></figure>
+
+<p>这个格式并非固定，也可以根据自己的需求来删除或添加词条。这样以来，我们就可以把不同类型的数据区分开了。从而避免了key的冲突问题。</p>
+<p>例如我们的项目名称叫
+heima，有user和product两种不同类型的数据，我们可以这样定义key：</p>
+<ul>
+<li>user相关的key：<strong>heima:user:1</strong></li>
+<li>product相关的key：<strong>heima:product:1</strong></li>
+</ul>
+<p>如果Value是一个Java对象，例如一个User对象，则可以将对象序列化为JSON字符串后存储：</p>
+<table>
+<thead>
+<tr>
+<th><strong>KEY</strong></th>
+<th><strong>VALUE</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>heima:user:1</td>
+<td>{“id”:1, “name”: “Jack”, “age”: 21}</td>
+</tr>
+<tr>
+<td>heima:product:1</td>
+<td>{“id”:1, “name”: “小米11”, “price”: 4999}</td>
+</tr>
+</tbody>
+</table>
+<p>并且，在Redis的桌面客户端中，还会以相同前缀作为层级结构，让数据看起来层次分明，关系清晰：</p>
+<h3 id="24-hash类型">2.4 Hash类型</h3>
+<p>Hash类型，也叫散列，其value是一个无序字典，类似于Java中的HashMap结构。</p>
+<p>String结构是将对象序列化为JSON字符串后存储，当需要修改对象某个字段时很不方便（要删除更新插入）：</p>
+<p><img src="https://bu.dusays.com/2025/09/08/68be76700423d.png" alt="image-20250908142343793"></p>
+<p>Hash结构可以将对象中的每个字段独立存储，可以针对单个字段做CRUD：</p>
+<p><img src="https://bu.dusays.com/2025/09/08/68be76834bf5a.png" alt="image-20250908142403217"></p>
+<p>Hash的常见命令有：</p>
+<ul>
+<li>HSET key field value：添加或者修改hash类型key的field的值</li>
+<li>HGET key field：获取一个hash类型key的field的值</li>
+<li>HMSET：批量添加多个hash类型key的field的值</li>
+<li>HMGET：批量获取多个hash类型key的field的值</li>
+<li>HGETALL：获取一个hash类型的key中的所有的field和value</li>
+<li>HKEYS：获取一个hash类型的key中的所有的field</li>
+<li>HINCRBY:让一个hash类型key的字段值自增并指定步长</li>
+<li>HSETNX：添加一个hash类型的key的field值，前提是这个field不存在，否则不执行</li>
+</ul>
+<p>eg：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; Hset heima:user:<span class="number">2</span> name Rose</span><br><span class="line">(integer) <span class="number">1</span></span><br><span class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; Hset heima:user:<span class="number">2</span> age <span class="number">18</span></span><br><span class="line">(integer) <span class="number">1</span></span><br><span class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://bu.dusays.com/2025/09/08/68be77b487aee.png" alt="image-20250908142908672"></p>
+<p>eg2:</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; HMSET heima:user:<span class="number">3</span> name LiLei age <span class="number">20</span> sex <span class="built_in">man</span></span><br><span class="line">OK</span><br><span class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; HMGET heima:user:<span class="number">3</span> name age sex</span><br><span class="line"><span class="number">1</span>) <span class="string">&quot;LiLei&quot;</span></span><br><span class="line"><span class="number">2</span>) <span class="string">&quot;20&quot;</span></span><br><span class="line"><span class="number">3</span>) <span class="string">&quot;man&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="25list类型">2.5.List类型</h3>
+<p>Redis中的List类型与Java中的LinkedList类似，可以看做是一个双向链表结构。既可以支持正向检索和也可以支持反向检索。(评论，点赞)</p>
+<p>特征也与LinkedList类似：</p>
+<ul>
+<li>有序</li>
+<li>元素可以重复</li>
+<li>插入和删除快</li>
+<li>查询速度一般</li>
+</ul>
+<p>常用来存储一个有序数据，例如：朋友圈点赞列表，评论列表等。</p>
+<p>List的常见命令有：</p>
+<ul>
+<li>LPUSH key element … ：向列表左侧插入一个或多个元素</li>
+<li>LPOP key：移除并返回列表左侧的第一个元素，没有则返回nil</li>
+<li>RPUSH key element … ：向列表右侧插入一个或多个元素</li>
+<li>RPOP key：移除并返回列表右侧的第一个元素</li>
+<li>LRANGE key star end：返回一段角标范围内的所有元素</li>
+<li>BLPOP和BRPOP：与LPOP和RPOP类似，只不过在没有元素时等待指定时间，而不是直接返回nil</li>
+</ul>
+<h3 id="26set类型">2.6.Set类型</h3>
+<p>Redis的Set结构与Java中的HashSet类似，可以看做是一个value为null的HashMap。因为也是一个hash表，因此具备与HashSet类似的特征：</p>
+<ul>
+<li>无序</li>
+<li>元素不可重复</li>
+<li>查找快</li>
+<li>支持交集、并集、差集等功能</li>
+</ul>
+<p>Set的常见命令有：</p>
+<ul>
+<li>SADD key member … ：向set中添加一个或多个元素</li>
+<li>SREM key member … : 移除set中的指定元素</li>
+<li>SCARD key： 返回set中元素的个数</li>
+<li>SISMEMBER key member：判断一个元素是否存在于set中</li>
+<li>SMEMBERS：获取set中的所有元素</li>
+<li>SINTER key1 key2 … ：求key1与key2的交集</li>
+</ul>
+<p>例如两个集合：s1和s2:</p>
+<p>求交集：SINTER s1 s2</p>
+<p>求s1与s2的不同：SDIFF s1 s2</p>
+<p>练习：</p>
+<ol type="1">
+<li>将下列数据用Redis的Set集合来存储：</li>
+</ol>
+<ul>
+<li>张三的好友有：李四、王五、赵六</li>
+<li>李四的好友有：王五、麻子、二狗</li>
+</ul>
+<ol type="1">
+<li>利用Set的命令实现下列功能：</li>
+</ol>
+<ul>
+<li>计算张三的好友有几人</li>
+<li>计算张三和李四有哪些共同好友</li>
+<li>查询哪些人是张三的好友却不是李四的好友</li>
+<li>查询张三和李四的好友总共有哪些人</li>
+<li>判断李四是否是张三的好友</li>
+<li>判断张三是否是李四的好友</li>
+<li>将李四从张三的好友列表中移除</li>
+</ul>
+<h3 id="27sortedset类型">2.7.SortedSet类型</h3>
+<p>Redis的SortedSet是一个可排序的set集合，与Java中的TreeSet有些类似，但底层数据结构却差别很大。SortedSet中的每一个元素都带有一个score属性，可以基于score属性对元素排序，底层的实现是一个跳表（SkipList）加
+hash表。</p>
+<p>SortedSet具备下列特性：</p>
+<ul>
+<li>可排序</li>
+<li>元素不重复</li>
+<li>查询速度快</li>
+</ul>
+<p>因为SortedSet的可排序特性，经常被用来实现排行榜这样的功能。</p>
+<p>SortedSet的常见命令有：</p>
+<ul>
+<li>ZADD key score member：添加一个或多个元素到sorted set
+，如果已经存在则更新其score值</li>
+<li>ZREM key member：删除sorted set中的一个指定元素</li>
+<li>ZSCORE key member : 获取sorted set中的指定元素的score值</li>
+<li>ZRANK key member：获取sorted set 中的指定元素的排名</li>
+<li>ZCARD key：获取sorted set中的元素个数</li>
+<li>ZCOUNT key min max：统计score值在给定范围内的所有元素的个数</li>
+<li>ZINCRBY key increment member：让sorted
+set中的指定元素自增，步长为指定的increment值</li>
+<li>ZRANGE key min max：按照score排序后，获取指定排名范围内的元素</li>
+<li>ZRANGEBYSCORE key min
+max：按照score排序后，获取指定score范围内的元素</li>
+<li>ZDIFF、ZINTER、ZUNION：求差集、交集、并集</li>
+</ul>
+<p>注意：所有的排名默认都是升序，如果要降序则在命令的Z后面添加REV即可，例如：</p>
+<ul>
+<li><strong>升序</strong>获取sorted set 中的指定元素的排名：ZRANK key
+member</li>
+<li><strong>降序</strong>获取sorted set 中的指定元素的排名：ZREVRANK key
+memeber</li>
+</ul>
+<p>练习题：</p>
+<p>将班级的下列学生得分存入Redis的SortedSet中：</p>
+<p>Jack 85, Lucy 89, Rose 82, Tom 95, Jerry 78, Amy 92, Miles 76</p>
+<p>并实现下列功能：</p>
+<ul>
+<li>删除Tom同学</li>
+<li>获取Amy同学的分数</li>
+<li>获取Rose同学的排名</li>
+<li>查询80分以下有几个学生</li>
+<li>给Amy同学加2分</li>
+<li>查出成绩前3名的同学</li>
+<li>查出成绩80分以下的所有同学</li>
+</ul>
+<h1 id="二-实战篇">二、 实战篇</h1>
+<h2 id="1-短信登录">1. 短信登录</h2>
+<p><img src="https://bu.dusays.com/2025/09/08/68be8c45365e1.png" alt="image-20250908155653058"></p>
+<h3 id="11-缓存">1.1 缓存</h3>
+<h4 id="111-缓存更新策略">1.1.1 缓存更新策略</h4>
+<p><img src="https://bu.dusays.com/2025/09/09/68bfcb1fccc33.png" alt="image-20250909143718999"></p>
+<p><img src="https://bu.dusays.com/2025/09/09/68bfd0f7e02e2.png" alt="image-20250909150215174"></p>
+<h4 id="112-缓存穿透">1.1.2 缓存穿透</h4>
+<p><strong>缓存穿透</strong>是指客户端请求的数据在缓存中和数据库中都不存在，这样缓存永远不会生效，这些请求都会打到数据库。</p>
+<p>常见解决方式：</p>
+<ul>
+<li>缓存空对象（将空数据缓存起来）
+<ul>
+<li>优点： 实现简单，维护方便</li>
+<li>缺点：
+<ol type="1">
+<li>造成额外消耗（可以设置很短的有效期，这样不会带来特别大的内存消耗，短期的垃圾数据能识别）</li>
+<li>可能造成短期的不一致</li>
+</ol></li>
+</ul></li>
+<li>布隆过滤（在客户端与Redis中间插入布隆过滤器，当请求传入时，先去请求布隆过滤器，当不存在时直接拒绝，存在时才会去Redis中查询）
+<ul>
+<li>优点：内存占用少，没有多余Key</li>
+<li>缺点：实现复杂，存在误判</li>
+</ul></li>
+</ul>
+<h4 id="113-缓存雪崩">1.1.3 缓存雪崩</h4>
+<p><strong>缓存雪崩</strong>是指在同一时段大量的缓存key同时失效或者Redis服务宕机，导致大量请求到达数据库，带来巨大压力。</p>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
       </tags>
   </entry>
 </search>
