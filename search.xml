@@ -12094,7 +12094,21 @@ UNION 会自动删除重复的行。</p>
   <entry>
     <title>Redis黑马版</title>
     <url>/posts/11096/</url>
-    <content><![CDATA[<h1 id="一redis安装">一、Redis安装</h1>
+    <content><![CDATA[<div calss="anzhiyu-tag-link"><a class="tag-Link" target="_blank" href="https://github.com/lyay23/hmdp">
+    <div class="tag-link-tips">引用站外地址</div>
+    <div class="tag-link-bottom">
+        <div class="tag-link-left" style="background-image: url(https://bu.dusays.com/2025/03/20/67dc235380f8f.gif)">
+          <i class="anzhiyufont anzhiyu-icon-link" style="display: none"></i>
+        </div>
+        <div class="tag-link-right">
+            <div class="tag-link-title">Redis实战</div>
+            <div class="tag-link-sitename">GitHub</div>
+        </div>
+        <i class="anzhiyufont anzhiyu-icon-angle-right"></i>
+    </div>
+    </a></div>
+
+<h1 id="一redis安装">一、Redis安装</h1>
 <h2 id="1-指定配置启动">1. 指定配置启动</h2>
 <p>如果要让Redis以<code>后台</code>方式启动，则必须修改Redis配置文件，就在我们之前解压的redis安装包下（<code>/usr/local/src/redis-6.2.6</code>），名字叫redis.conf：</p>
 <p><img src="https://bu.dusays.com/2025/09/08/68be43004b3bf.png" alt="image-20211211082225509"></p>
@@ -12379,6 +12393,99 @@ memeber</li>
 </ul>
 <h4 id="113-缓存雪崩">1.1.3 缓存雪崩</h4>
 <p><strong>缓存雪崩</strong>是指在同一时段大量的缓存key同时失效或者Redis服务宕机，导致大量请求到达数据库，带来巨大压力。</p>
+<p>解决方法：</p>
+<ul>
+<li>给不同的Key的TTL添加随机值</li>
+<li>利用Redis集群提高服务的可用性</li>
+<li>给缓存业务添加降级限流策略</li>
+<li>给业务添加多级缓存</li>
+</ul>
+<h4 id="114-缓存击穿">1.1.4 缓存击穿</h4>
+<p><strong>缓存击穿问题</strong>也叫热点Key问题，就是一个被<strong>高并发访问</strong>并且<strong>缓存重建业务较复杂</strong>的key突然失效了，无数的请求访问会在瞬间给数据库带来巨大的冲击。</p>
+<p><img src="https://bu.dusays.com/2025/09/10/68c0c5f22aaef.png" alt="image-20250910082729613"></p>
+<p>常见解决方案：</p>
+<ul>
+<li>互斥锁</li>
+<li>逻辑过期</li>
+</ul>
+<p><img src="https://bu.dusays.com/2025/09/10/68c0c786accb9.png" alt="image-20250910083413912"></p>
+<h2 id="2-超卖问题">2. 超卖问题</h2>
+<h3 id="21-悲观锁与乐观锁">2.1 悲观锁与乐观锁</h3>
+<p><strong>悲观锁</strong>：认为线程安全问题一定会发生，因此在<strong>操作数据之前</strong>先获取锁，确保线程串行执行。</p>
+<p><strong>乐观锁</strong>：认为线程安全问题不一定会发生，因此不加锁，只是在<strong>更新数据时</strong>去判断有没有其它线程对数据做了修改。</p>
+<ul>
+<li>如果没有修改则认为是安全的，自己才更新数据。</li>
+<li>如果已经被其它线程修改说明发生了安全问题，此时可以重试或异常。</li>
+</ul>
+<h4 id="211-乐观锁">2.1.1 乐观锁</h4>
+<p>版本号法：</p>
+<p><img src="https://bu.dusays.com/2025/09/10/68c1326b9654d.png" alt="image-20250910161019483"></p>
+<p>当有多线程时第一个线程先查询版本号（1），假设来了第二个线程也在这时查询了版本号（1），线程1先扣减库存，并且将版本号<code>+1</code>，只有在版本号为与查询到的版本号一致时才执行，这时线程2更新时发现版本变成了2，就无法完成更新</p>
+<p>CSA方法：</p>
+<p><img src="https://bu.dusays.com/2025/09/10/68c133a959143.png" alt="image-20250910161536536"></p>
+<p>与版本号法思路一致</p>
+<h3 id="22-分布式锁">2.2 分布式锁</h3>
+<p>分布式锁:满足分布式系统或集群模式下多进程可见并且互斥的锁。</p>
+<p><img src="https://bu.dusays.com/2025/09/10/68c1510fe85ae.png" alt="image-20250910182103793"></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>MySQL</th>
+<th>Redis</th>
+<th>Zookeeper</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>互斥</td>
+<td>利用mysql本身的互斥锁机制</td>
+<td>利用setnx这样的互斥命令</td>
+<td>利用节点的唯一性和有序性实现互斥</td>
+</tr>
+<tr>
+<td>高可用</td>
+<td>好</td>
+<td>好</td>
+<td>好</td>
+</tr>
+<tr>
+<td>高性能</td>
+<td>一般</td>
+<td>好</td>
+<td>一般</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>利用节点的唯一性和有序性实现互斥</td>
+<td>利用节点的唯一性和有序性实现互斥</td>
+<td>临时节点，断开连接自动释放</td>
+</tr>
+</tbody>
+</table>
+<h4 id="基于redis的分布锁">基于Redis的分布锁</h4>
+<p><img src="https://bu.dusays.com/2025/09/10/68c15f23b9d3b.png" alt="image-20250910192107928"></p>
+<p>实现分布式锁时需要实现的两个基本方法:</p>
+<ul>
+<li><p>获取锁︰</p>
+<ul>
+<li><p>·互斥:确保只能有一个线程获取锁</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#添加锁，利用setnx的互斥特性,NX是互斥，EX是设置超时时间</span></span><br><span class="line"></span><br><span class="line">SETNX lock thread1 NX EX <span class="number">10</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul></li>
+<li><p>释放锁:</p>
+<ul>
+<li><p>·手动释放</p></li>
+<li><p>·超时释放:获取锁时添加一个超时时间</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#释放锁，删除即可</span></span><br><span class="line"><span class="built_in">DEL</span> key</span><br></pre></td></tr></table></figure>
+</li>
+</ul></li>
+</ul>
+<p><img src="https://bu.dusays.com/2025/09/11/68c2670fca539.png" alt="image-20250911140702838"></p>
+<h3 id="redisson">Redisson</h3>
+<p>Redisson是一个在Redis的基础上实现的Java驻内存数据网格（In-Memory Data
+Grid)。它不仅提供了一系列的分布式的Java常用对象，还提供了许多分布式服务，其中就包含了各种分布式锁的实现。</p>
+<p><img src="https://bu.dusays.com/2025/09/11/68c26c7948980.png" alt="image-20250911143011837"></p>
 ]]></content>
       <categories>
         <category>java</category>
