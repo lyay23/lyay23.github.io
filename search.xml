@@ -12107,42 +12107,54 @@ UNION 会自动删除重复的行。</p>
         <i class="anzhiyufont anzhiyu-icon-angle-right"></i>
     </div>
     </a></div>
-<h1>一、Redis安装</h1>
+
+<h1 id="一redis安装">一、Redis安装</h1>
 <h2 id="1-指定配置启动">1. 指定配置启动</h2>
 <p>如果要让Redis以<code>后台</code>方式启动，则必须修改Redis配置文件，就在我们之前解压的redis安装包下（<code>/usr/local/src/redis-6.2.6</code>），名字叫redis.conf：</p>
 <p><img src="https://bu.dusays.com/2025/09/08/68be43004b3bf.png" alt="image-20211211082225509"></p>
 <p>我们先将这个配置文件备份一份：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp redis.conf redis.conf.bck</span><br></pre></td></tr></table></figure>
+
 <p>然后修改redis.conf文件中的一些配置：</p>
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 允许访问的地址，默认是127.0.0.1，会导致只能在本地访问。修改为0.0.0.0则可以在任意IP访问，生产环境不要设置为0.0.0.0</span></span><br><span class="line"><span class="attr">bind</span> <span class="string">0.0.0.0</span></span><br><span class="line"><span class="comment"># 守护进程，修改为yes后即可后台运行</span></span><br><span class="line"><span class="attr">daemonize</span> <span class="string">yes </span></span><br><span class="line"><span class="comment"># 密码，设置后访问Redis必须输入密码</span></span><br><span class="line"><span class="attr">requirepass</span> <span class="string">123321</span></span><br></pre></td></tr></table></figure>
+
 <p>Redis的其它常见配置：</p>
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 监听的端口</span></span><br><span class="line"><span class="attr">port</span> <span class="string">6379</span></span><br><span class="line"><span class="comment"># 工作目录，默认是当前目录，也就是运行redis-server时的命令，日志、持久化等文件会保存在这个目录</span></span><br><span class="line"><span class="attr">dir</span> <span class="string">.</span></span><br><span class="line"><span class="comment"># 数据库数量，设置为1，代表只使用1个库，默认有16个库，编号0~15</span></span><br><span class="line"><span class="attr">databases</span> <span class="string">1</span></span><br><span class="line"><span class="comment"># 设置redis能够使用的最大内存</span></span><br><span class="line"><span class="attr">maxmemory</span> <span class="string">512mb</span></span><br><span class="line"><span class="comment"># 日志文件，默认为空，不记录日志，可以指定日志文件名</span></span><br><span class="line"><span class="attr">logfile</span> <span class="string">&quot;redis.log&quot;</span></span><br></pre></td></tr></table></figure>
+
 <p>启动Redis：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入redis安装目录 </span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/src/redis-6.2.6</span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">redis-server redis.conf</span><br></pre></td></tr></table></figure>
+
 <p>停止服务：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 利用redis-cli来执行 shutdown 命令，即可停止 Redis 服务，</span></span><br><span class="line"><span class="comment"># 因为之前配置了密码，因此需要通过 -u 来指定密码</span></span><br><span class="line">redis-cli -u 123321 shutdown</span><br></pre></td></tr></table></figure>
-<h3 id="1-3-3-开机自启">1.3.3.开机自启</h3>
+
+<h3 id="133开机自启">1.3.3.开机自启</h3>
 <p>我们也可以通过配置来实现开机自启。</p>
 <p>首先，新建一个系统服务文件：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vi /etc/systemd/system/redis.service</span><br></pre></td></tr></table></figure>
+
 <p>内容如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=redis-server</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=/usr/local/bin/redis-server /usr/local/src/redis-6.2.6/redis.conf</span><br><span class="line">PrivateTmp=true</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
 <p>然后重载系统服务：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
 <p>现在，我们可以用下面这组命令来操作redis了：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 启动</span></span><br><span class="line">systemctl start redis</span><br><span class="line"><span class="comment"># 停止</span></span><br><span class="line">systemctl stop redis</span><br><span class="line"><span class="comment"># 重启</span></span><br><span class="line">systemctl restart redis</span><br><span class="line"><span class="comment"># 查看状态</span></span><br><span class="line">systemctl status redis</span><br></pre></td></tr></table></figure>
+
 <p>执行下面的命令，可以让redis开机自启：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> redis</span><br></pre></td></tr></table></figure>
-<h2 id="2-Redis客户端">2.Redis客户端</h2>
+
+<h2 id="2redis客户端">2.Redis客户端</h2>
 <p>安装完成Redis，我们就可以操作Redis，实现数据的CRUD了。这需要用到Redis客户端，包括：</p>
 <ul>
 <li>命令行客户端</li>
 <li>图形化桌面客户端</li>
 <li>编程客户端</li>
 </ul>
-<h3 id="2-1-Redis命令行客户端">2.1 Redis命令行客户端</h3>
+<h3 id="21-redis命令行客户端">2.1 Redis命令行客户端</h3>
 <p>Redis安装完成后就自带了命令行客户端：redis-cli，使用方式如下：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">redis-cli [options] [commonds]</span><br></pre></td></tr></table></figure>
+
 <p>其中常见的options有：</p>
 <ul>
 <li><code>-h 127.0.0.1</code>：指定要连接的redis节点的IP地址，默认是127.0.0.1</li>
@@ -12155,7 +12167,7 @@ UNION 会自动删除重复的行。</p>
 </ul>
 <p>不指定commond时，会进入<code>redis-cli</code>的交互控制台：</p>
 <p><img src="https://bu.dusays.com/2025/09/08/68be433e7c3d2.png" alt="image-20211211110439353"></p>
-<h3 id="2-2-通用命令">2.2 通用命令</h3>
+<h3 id="22-通用命令">2.2 通用命令</h3>
 <p>通用指令是部分数据类型的，都可以使用的指令，常见的有：</p>
 <ul>
 <li>KEYS：查看符合模板的所有key</li>
@@ -12166,7 +12178,8 @@ UNION 会自动删除重复的行。</p>
 </ul>
 <p>通过help [command] 可以查看一个命令的具体用法，例如：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看keys命令的帮助信息：</span></span><br><span class="line">127.0.0.1:6379&gt; <span class="built_in">help</span> keys</span><br><span class="line"></span><br><span class="line">KEYS pattern</span><br><span class="line">summary: Find all keys matching the given pattern</span><br><span class="line">since: 1.0.0</span><br><span class="line">group: generic</span><br></pre></td></tr></table></figure>
-<h3 id="2-3-String类型">2.3 String类型</h3>
+
+<h3 id="23-string类型">2.3 String类型</h3>
 <p>String类型，也就是字符串类型，是Redis中最简单的存储类型。</p>
 <p>其value是字符串，不过根据字符串的格式不同，又可以分为3类：</p>
 <ul>
@@ -12175,7 +12188,7 @@ UNION 会自动删除重复的行。</p>
 <li>float：浮点类型，可以做自增、自减操作</li>
 </ul>
 <p>不管是哪种格式，底层都是字节数组形式存储，只不过是编码方式不同。字符串类型的最大空间不能超过512m.</p>
-<h4 id="2-2-1-String的常见命令">2.2.1.String的常见命令</h4>
+<h4 id="221string的常见命令">2.2.1.String的常见命令</h4>
 <p>String的常见命令有：</p>
 <ul>
 <li>SET：添加或者修改已经存在的一个String类型的键值对</li>
@@ -12183,19 +12196,22 @@ UNION 会自动删除重复的行。</p>
 <li>MSET：批量添加多个String类型的键值对</li>
 <li>MGET：根据多个key获取多个String类型的value</li>
 <li>INCR：让一个整型的key自增1</li>
-<li>INCRBY:让一个整型的key自增并指定步长，例如：incrby num 2 让num值自增2</li>
+<li>INCRBY:让一个整型的key自增并指定步长，例如：incrby num 2
+让num值自增2</li>
 <li>INCRBYFLOAT：让一个浮点类型的数字自增并指定步长</li>
 <li>SETNX：添加一个String类型的键值对，前提是这个key不存在，否则不执行</li>
 <li>SETEX：添加一个String类型的键值对，并且指定有效期</li>
 </ul>
-<h4 id="2-2-2-Key类型">2.2.2  Key类型</h4>
+<h4 id="222-key类型">2.2.2 Key类型</h4>
 <p>Redis没有类似MySQL中的Table的概念，我们该如何区分不同类型的key呢？</p>
 <p>例如，需要存储用户、商品信息到redis，有一个用户id是1，有一个商品id恰好也是1，此时如果使用id作为key，那就会冲突了，该怎么办？</p>
 <p>我们可以通过给key添加前缀加以区分，不过这个前缀不是随便加的，有一定的规范：</p>
-<p>Redis的key允许有多个单词形成层级结构，多个单词之间用’:'隔开，格式如下：</p>
+<p>Redis的key允许有多个单词形成层级结构，多个单词之间用’:’隔开，格式如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">项目名:业务名:类型:id</span><br></pre></td></tr></table></figure>
+
 <p>这个格式并非固定，也可以根据自己的需求来删除或添加词条。这样以来，我们就可以把不同类型的数据区分开了。从而避免了key的冲突问题。</p>
-<p>例如我们的项目名称叫 heima，有user和product两种不同类型的数据，我们可以这样定义key：</p>
+<p>例如我们的项目名称叫
+heima，有user和product两种不同类型的数据，我们可以这样定义key：</p>
 <ul>
 <li>user相关的key：<strong>heima:user:1</strong></li>
 <li>product相关的key：<strong>heima:product:1</strong></li>
@@ -12220,7 +12236,7 @@ UNION 会自动删除重复的行。</p>
 </tbody>
 </table>
 <p>并且，在Redis的桌面客户端中，还会以相同前缀作为层级结构，让数据看起来层次分明，关系清晰：</p>
-<h3 id="2-4-Hash类型">2.4 Hash类型</h3>
+<h3 id="24-hash类型">2.4 Hash类型</h3>
 <p>Hash类型，也叫散列，其value是一个无序字典，类似于Java中的HashMap结构。</p>
 <p>String结构是将对象序列化为JSON字符串后存储，当需要修改对象某个字段时很不方便（要删除更新插入）：</p>
 <p><img src="https://bu.dusays.com/2025/09/08/68be76700423d.png" alt="image-20250908142343793"></p>
@@ -12239,10 +12255,12 @@ UNION 会自动删除重复的行。</p>
 </ul>
 <p>eg：</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; Hset heima:user:<span class="number">2</span> name Rose</span><br><span class="line">(integer) <span class="number">1</span></span><br><span class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; Hset heima:user:<span class="number">2</span> age <span class="number">18</span></span><br><span class="line">(integer) <span class="number">1</span></span><br><span class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://bu.dusays.com/2025/09/08/68be77b487aee.png" alt="image-20250908142908672"></p>
 <p>eg2:</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; HMSET heima:user:<span class="number">3</span> name LiLei age <span class="number">20</span> sex <span class="built_in">man</span></span><br><span class="line">OK</span><br><span class="line"><span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6379</span>&gt; HMGET heima:user:<span class="number">3</span> name age sex</span><br><span class="line"><span class="number">1</span>) <span class="string">&quot;LiLei&quot;</span></span><br><span class="line"><span class="number">2</span>) <span class="string">&quot;20&quot;</span></span><br><span class="line"><span class="number">3</span>) <span class="string">&quot;man&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="2-5-List类型">2.5.List类型</h3>
+
+<h3 id="25list类型">2.5.List类型</h3>
 <p>Redis中的List类型与Java中的LinkedList类似，可以看做是一个双向链表结构。既可以支持正向检索和也可以支持反向检索。(评论，点赞)</p>
 <p>特征也与LinkedList类似：</p>
 <ul>
@@ -12261,7 +12279,7 @@ UNION 会自动删除重复的行。</p>
 <li>LRANGE key star end：返回一段角标范围内的所有元素</li>
 <li>BLPOP和BRPOP：与LPOP和RPOP类似，只不过在没有元素时等待指定时间，而不是直接返回nil</li>
 </ul>
-<h3 id="2-6-Set类型">2.6.Set类型</h3>
+<h3 id="26set类型">2.6.Set类型</h3>
 <p>Redis的Set结构与Java中的HashSet类似，可以看做是一个value为null的HashMap。因为也是一个hash表，因此具备与HashSet类似的特征：</p>
 <ul>
 <li>无序</li>
@@ -12282,14 +12300,14 @@ UNION 会自动删除重复的行。</p>
 <p>求交集：SINTER s1 s2</p>
 <p>求s1与s2的不同：SDIFF s1 s2</p>
 <p>练习：</p>
-<ol>
+<ol type="1">
 <li>将下列数据用Redis的Set集合来存储：</li>
 </ol>
 <ul>
 <li>张三的好友有：李四、王五、赵六</li>
 <li>李四的好友有：王五、麻子、二狗</li>
 </ul>
-<ol>
+<ol type="1">
 <li>利用Set的命令实现下列功能：</li>
 </ol>
 <ul>
@@ -12301,8 +12319,9 @@ UNION 会自动删除重复的行。</p>
 <li>判断张三是否是李四的好友</li>
 <li>将李四从张三的好友列表中移除</li>
 </ul>
-<h3 id="2-7-SortedSet类型">2.7.SortedSet类型</h3>
-<p>Redis的SortedSet是一个可排序的set集合，与Java中的TreeSet有些类似，但底层数据结构却差别很大。SortedSet中的每一个元素都带有一个score属性，可以基于score属性对元素排序，底层的实现是一个跳表（SkipList）加 hash表。</p>
+<h3 id="27sortedset类型">2.7.SortedSet类型</h3>
+<p>Redis的SortedSet是一个可排序的set集合，与Java中的TreeSet有些类似，但底层数据结构却差别很大。SortedSet中的每一个元素都带有一个score属性，可以基于score属性对元素排序，底层的实现是一个跳表（SkipList）加
+hash表。</p>
 <p>SortedSet具备下列特性：</p>
 <ul>
 <li>可排序</li>
@@ -12312,21 +12331,26 @@ UNION 会自动删除重复的行。</p>
 <p>因为SortedSet的可排序特性，经常被用来实现排行榜这样的功能。</p>
 <p>SortedSet的常见命令有：</p>
 <ul>
-<li>ZADD key score member：添加一个或多个元素到sorted set ，如果已经存在则更新其score值</li>
+<li>ZADD key score member：添加一个或多个元素到sorted set
+，如果已经存在则更新其score值</li>
 <li>ZREM key member：删除sorted set中的一个指定元素</li>
 <li>ZSCORE key member : 获取sorted set中的指定元素的score值</li>
 <li>ZRANK key member：获取sorted set 中的指定元素的排名</li>
 <li>ZCARD key：获取sorted set中的元素个数</li>
 <li>ZCOUNT key min max：统计score值在给定范围内的所有元素的个数</li>
-<li>ZINCRBY key increment member：让sorted set中的指定元素自增，步长为指定的increment值</li>
+<li>ZINCRBY key increment member：让sorted
+set中的指定元素自增，步长为指定的increment值</li>
 <li>ZRANGE key min max：按照score排序后，获取指定排名范围内的元素</li>
-<li>ZRANGEBYSCORE key min max：按照score排序后，获取指定score范围内的元素</li>
+<li>ZRANGEBYSCORE key min
+max：按照score排序后，获取指定score范围内的元素</li>
 <li>ZDIFF、ZINTER、ZUNION：求差集、交集、并集</li>
 </ul>
 <p>注意：所有的排名默认都是升序，如果要降序则在命令的Z后面添加REV即可，例如：</p>
 <ul>
-<li><strong>升序</strong>获取sorted set 中的指定元素的排名：ZRANK key member</li>
-<li><strong>降序</strong>获取sorted set 中的指定元素的排名：ZREVRANK key memeber</li>
+<li><strong>升序</strong>获取sorted set 中的指定元素的排名：ZRANK key
+member</li>
+<li><strong>降序</strong>获取sorted set 中的指定元素的排名：ZREVRANK key
+memeber</li>
 </ul>
 <p>练习题：</p>
 <p>将班级的下列学生得分存入Redis的SortedSet中：</p>
@@ -12341,14 +12365,14 @@ UNION 会自动删除重复的行。</p>
 <li>查出成绩前3名的同学</li>
 <li>查出成绩80分以下的所有同学</li>
 </ul>
-<h1>二、 实战篇</h1>
+<h1 id="二-实战篇">二、 实战篇</h1>
 <h2 id="1-短信登录">1. 短信登录</h2>
 <p><img src="https://bu.dusays.com/2025/09/08/68be8c45365e1.png" alt="image-20250908155653058"></p>
-<h3 id="1-1-缓存">1.1 缓存</h3>
-<h4 id="1-1-1-缓存更新策略">1.1.1 缓存更新策略</h4>
+<h3 id="11-缓存">1.1 缓存</h3>
+<h4 id="111-缓存更新策略">1.1.1 缓存更新策略</h4>
 <p><img src="https://bu.dusays.com/2025/09/09/68bfcb1fccc33.png" alt="image-20250909143718999"></p>
 <p><img src="https://bu.dusays.com/2025/09/09/68bfd0f7e02e2.png" alt="image-20250909150215174"></p>
-<h4 id="1-1-2-缓存穿透">1.1.2 缓存穿透</h4>
+<h4 id="112-缓存穿透">1.1.2 缓存穿透</h4>
 <p><strong>缓存穿透</strong>是指客户端请求的数据在缓存中和数据库中都不存在，这样缓存永远不会生效，这些请求都会打到数据库。</p>
 <p>常见解决方式：</p>
 <ul>
@@ -12356,21 +12380,18 @@ UNION 会自动删除重复的行。</p>
 <ul>
 <li>优点： 实现简单，维护方便</li>
 <li>缺点：
-<ol>
+<ol type="1">
 <li>造成额外消耗（可以设置很短的有效期，这样不会带来特别大的内存消耗，短期的垃圾数据能识别）</li>
 <li>可能造成短期的不一致</li>
-</ol>
-</li>
-</ul>
-</li>
+</ol></li>
+</ul></li>
 <li>布隆过滤（在客户端与Redis中间插入布隆过滤器，当请求传入时，先去请求布隆过滤器，当不存在时直接拒绝，存在时才会去Redis中查询）
 <ul>
 <li>优点：内存占用少，没有多余Key</li>
 <li>缺点：实现复杂，存在误判</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h4 id="1-1-3-缓存雪崩">1.1.3 缓存雪崩</h4>
+<h4 id="113-缓存雪崩">1.1.3 缓存雪崩</h4>
 <p><strong>缓存雪崩</strong>是指在同一时段大量的缓存key同时失效或者Redis服务宕机，导致大量请求到达数据库，带来巨大压力。</p>
 <p>解决方法：</p>
 <ul>
@@ -12379,7 +12400,7 @@ UNION 会自动删除重复的行。</p>
 <li>给缓存业务添加降级限流策略</li>
 <li>给业务添加多级缓存</li>
 </ul>
-<h4 id="1-1-4-缓存击穿">1.1.4 缓存击穿</h4>
+<h4 id="114-缓存击穿">1.1.4 缓存击穿</h4>
 <p><strong>缓存击穿问题</strong>也叫热点Key问题，就是一个被<strong>高并发访问</strong>并且<strong>缓存重建业务较复杂</strong>的key突然失效了，无数的请求访问会在瞬间给数据库带来巨大的冲击。</p>
 <p><img src="https://bu.dusays.com/2025/09/10/68c0c5f22aaef.png" alt="image-20250910082729613"></p>
 <p>常见解决方案：</p>
@@ -12389,21 +12410,21 @@ UNION 会自动删除重复的行。</p>
 </ul>
 <p><img src="https://bu.dusays.com/2025/09/10/68c0c786accb9.png" alt="image-20250910083413912"></p>
 <h2 id="2-超卖问题">2. 超卖问题</h2>
-<h3 id="2-1-悲观锁与乐观锁">2.1 悲观锁与乐观锁</h3>
+<h3 id="21-悲观锁与乐观锁">2.1 悲观锁与乐观锁</h3>
 <p><strong>悲观锁</strong>：认为线程安全问题一定会发生，因此在<strong>操作数据之前</strong>先获取锁，确保线程串行执行。</p>
 <p><strong>乐观锁</strong>：认为线程安全问题不一定会发生，因此不加锁，只是在<strong>更新数据时</strong>去判断有没有其它线程对数据做了修改。</p>
 <ul>
 <li>如果没有修改则认为是安全的，自己才更新数据。</li>
 <li>如果已经被其它线程修改说明发生了安全问题，此时可以重试或异常。</li>
 </ul>
-<h4 id="2-1-1-乐观锁">2.1.1 乐观锁</h4>
+<h4 id="211-乐观锁">2.1.1 乐观锁</h4>
 <p>版本号法：</p>
 <p><img src="https://bu.dusays.com/2025/09/10/68c1326b9654d.png" alt="image-20250910161019483"></p>
 <p>当有多线程时第一个线程先查询版本号（1），假设来了第二个线程也在这时查询了版本号（1），线程1先扣减库存，并且将版本号<code>+1</code>，只有在版本号为与查询到的版本号一致时才执行，这时线程2更新时发现版本变成了2，就无法完成更新</p>
 <p>CSA方法：</p>
 <p><img src="https://bu.dusays.com/2025/09/10/68c133a959143.png" alt="image-20250910161536536"></p>
 <p>与版本号法思路一致</p>
-<h3 id="2-2-分布式锁">2.2  分布式锁</h3>
+<h3 id="22-分布式锁">2.2 分布式锁</h3>
 <p>分布式锁:满足分布式系统或集群模式下多进程可见并且互斥的锁。</p>
 <p><img src="https://bu.dusays.com/2025/09/10/68c1510fe85ae.png" alt="image-20250910182103793"></p>
 <table>
@@ -12442,49 +12463,49 @@ UNION 会自动删除重复的行。</p>
 </tr>
 </tbody>
 </table>
-<h4 id="基于Redis的分布锁">基于Redis的分布锁</h4>
+<h4 id="基于redis的分布锁">基于Redis的分布锁</h4>
 <p><img src="https://bu.dusays.com/2025/09/10/68c15f23b9d3b.png" alt="image-20250910192107928"></p>
 <p>实现分布式锁时需要实现的两个基本方法:</p>
 <ul>
-<li>
-<p>获取锁︰</p>
+<li><p>获取锁︰</p>
 <ul>
-<li>
-<p>·互斥:确保只能有一个线程获取锁</p>
+<li><p>·互斥:确保只能有一个线程获取锁</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#添加锁，利用setnx的互斥特性,NX是互斥，EX是设置超时时间</span></span><br><span class="line"></span><br><span class="line">SETNX lock thread1 NX EX <span class="number">10</span></span><br></pre></td></tr></table></figure>
 </li>
-</ul>
-</li>
-<li>
-<p>释放锁:</p>
+</ul></li>
+<li><p>释放锁:</p>
 <ul>
-<li>
-<p>·手动释放</p>
-</li>
-<li>
-<p>·超时释放:获取锁时添加一个超时时间</p>
+<li><p>·手动释放</p></li>
+<li><p>·超时释放:获取锁时添加一个超时时间</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#释放锁，删除即可</span></span><br><span class="line"><span class="built_in">DEL</span> key</span><br></pre></td></tr></table></figure>
 </li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p><img src="https://bu.dusays.com/2025/09/11/68c2670fca539.png" alt="image-20250911140702838"></p>
-<h3 id="Redisson">Redisson</h3>
-<p>Redisson是一个在Redis的基础上实现的Java驻内存数据网格（In-Memory Data Grid)。它不仅提供了一系列的分布式的Java常用对象，还提供了许多分布式服务，其中就包含了各种分布式锁的实现。</p>
+<h3 id="redisson">Redisson</h3>
+<p>Redisson是一个在Redis的基础上实现的Java驻内存数据网格（In-Memory Data
+Grid)。它不仅提供了一系列的分布式的Java常用对象，还提供了许多分布式服务，其中就包含了各种分布式锁的实现。</p>
 <p><img src="https://bu.dusays.com/2025/09/11/68c26c7948980.png" alt="image-20250911143011837"></p>
 <p><img src="https://bu.dusays.com/2025/09/11/68c29b28a94d0.png" alt="image-20250911174927148"></p>
-<h4 id="Redisson分布式锁解决主从一致的问题">Redisson分布式锁解决主从一致的问题</h4>
+<h4 id="redisson分布式锁解决主从一致的问题">Redisson分布式锁解决主从一致的问题</h4>
 <p><img src="https://bu.dusays.com/2025/09/11/68c2ae8da4daf.png" alt="image-20250911191211918"></p>
-<h4 id="面试题：Redisson的分布式锁为什么使用Lua脚本实现而不是使用事务？">面试题：Redisson的分布式锁为什么使用Lua脚本实现而不是使用事务？</h4>
-<ol>
-<li><strong>原子性更强</strong>：Lua 脚本作为整体执行，中间不会被打断，确保复杂锁逻辑（如判断 + 操作）的原子性；事务是 “最终一致性”，可能被插入其他命令。</li>
+<h4 id="面试题redisson的分布式锁为什么使用lua脚本实现而不是使用事务">面试题：Redisson的分布式锁为什么使用Lua脚本实现而不是使用事务？</h4>
+<ol type="1">
+<li><strong>原子性更强</strong>：Lua
+脚本作为整体执行，中间不会被打断，确保复杂锁逻辑（如判断 +
+操作）的原子性；事务是 “最终一致性”，可能被插入其他命令。</li>
 <li><strong>支持复杂逻辑</strong>：可包含条件判断、循环等，满足锁的判断归属、续约等需求；事务仅能批量执行命令，无逻辑处理能力。</li>
-<li><strong>减少网络交互</strong>：使用 Lua 脚本可以将多个命令打包成一个请求发送到 Redis，大幅减少客户端与 Redis 服务器之间的网络往返次数，提升性能；事务实现相同逻辑需更多网络通信。</li>
-<li><strong>安全释放锁</strong>：释放锁时需要先判断锁是否属于当前线程，再执行删除操作。这个 “判断 - 删除” 的过程必须原子化，否则可能误删其他线程的锁。用 Lua 脚本可以轻松实现这一点，而事务难以保证这种条件操作的原子性。</li>
+<li><strong>减少网络交互</strong>：使用 Lua
+脚本可以将多个命令打包成一个请求发送到 Redis，大幅减少客户端与 Redis
+服务器之间的网络往返次数，提升性能；事务实现相同逻辑需更多网络通信。</li>
+<li><strong>安全释放锁</strong>：释放锁时需要先判断锁是否属于当前线程，再执行删除操作。这个
+“判断 - 删除” 的过程必须原子化，否则可能误删其他线程的锁。用 Lua
+脚本可以轻松实现这一点，而事务难以保证这种条件操作的原子性。</li>
 </ol>
 <h2 id="3-优惠券秒杀">3. 优惠券秒杀</h2>
-<h3 id="3-1-Redis消息队列">3.1 Redis消息队列</h3>
-<p>消息队列(Message Queue)，字面意思就是存放消息的队列。最简单的消息队列模型包括3个角色:</p>
+<h3 id="31-redis消息队列">3.1 Redis消息队列</h3>
+<p>消息队列(Message
+Queue)，字面意思就是存放消息的队列。最简单的消息队列模型包括3个角色:</p>
 <ul>
 <li>消息队列:存储和管理消息，也被称为消息代理(Message Broker)</li>
 <li>生产者:发送消息到消息队列</li>
@@ -12496,11 +12517,11 @@ UNION 会自动删除重复的行。</p>
 <li>PubSub:基本的点对点消息模型</li>
 <li>Stream:比较完善的消息队列模型</li>
 </ul>
-<h4 id="List结构的消息队列">List结构的消息队列</h4>
-<p>队列是入口和出口不在一边，因此我们可以利用:LPUSH结合RPOP、或者RPUSH结合LPOP来实现。<br>
+<h4 id="list结构的消息队列">List结构的消息队列</h4>
+<p>队列是入口和出口不在一边，因此我们可以利用:LPUSH结合RPOP、或者RPUSH结合LPOP来实现。
 不过要注意的是，当队列中没有消息时RPOP或LPOP操作会返回null，并不像JVM的阻塞队列那样会阻塞并等待消息。因此这里应该使用<code>BRPOP</code>或者<code>BLPOP</code>来实现阻塞效果。</p>
 <p><img src="https://bu.dusays.com/2025/09/12/68c3b2f7334cc.png" alt="image-20250912134319176"></p>
-<h4 id="PubSub结构的消息队列">PubSub结构的消息队列</h4>
+<h4 id="pubsub结构的消息队列">PubSub结构的消息队列</h4>
 <p>PubSub(发布订阅）是Redis2.0版本引入的消息传递模型。顾名思义，消费者可以订阅一个或多个channel，生产者向对应channel发送消息后，所有订阅者都能收到相关消息。</p>
 <ul>
 <li>SUBSCRIBE channel [channel]:订阅一个或多个频道</li>
@@ -12508,12 +12529,14 @@ UNION 会自动删除重复的行。</p>
 <li>PSUBSCRIBE pattern[pattern]:订阅与pattern格式匹配的所有频道</li>
 </ul>
 <p><img src="https://bu.dusays.com/2025/09/12/68c3b5d5aa825.png" alt="image-20250912135533467"></p>
-<h4 id="Stream的消息队列">Stream的消息队列</h4>
-<p>Stream是 Redis 5.0引入的一种新数据类型，可以实现一个功能非常完善的消息队列。</p>
+<h4 id="stream的消息队列">Stream的消息队列</h4>
+<p>Stream是 Redis
+5.0引入的一种新数据类型，可以实现一个功能非常完善的消息队列。</p>
 <p><img src="https://bu.dusays.com/2025/09/12/68c3ca349da94.png" alt="image-20250912152228092"></p>
 <p><img src="https://bu.dusays.com/2025/09/12/68c3cc017f3c9.png" alt="image-20250912153009050"></p>
-<h4 id="Stream消息队列-消费组">Stream消息队列-消费组</h4>
-<p>消费者组(Consumer Group)∶将多个消费者划分到一个组中，监听同一个队列。具备下列特点:</p>
+<h4 id="stream消息队列-消费组">Stream消息队列-消费组</h4>
+<p>消费者组(Consumer
+Group)∶将多个消费者划分到一个组中，监听同一个队列。具备下列特点:</p>
 <p><img src="https://bu.dusays.com/2025/09/12/68c3cdb71e5b6.png" alt="image-20250912153726196"></p>
 <p>创建消费者组</p>
 <p><img src="https://bu.dusays.com/2025/09/12/68c3ce51d26f9.png" alt="image-20250912154001113"></p>
@@ -12523,25 +12546,23 @@ UNION 会自动删除重复的行。</p>
 <p><img src="https://bu.dusays.com/2025/09/12/68c3d095bbb6f.png" alt="image-20250912154941290"></p>
 <p>总结</p>
 <p><img src="https://bu.dusays.com/2025/09/12/68c3d536e00c2.png" alt="image-20250912160926414"></p>
-<h2 id="4-Feed流">4. Feed流</h2>
+<h2 id="4-feed流">4. Feed流</h2>
 <p>Feed流产品有两种常见模式:</p>
 <ul>
 <li>Timeline:不做内容筛选，简单的按照内容发布时间排序，常用于好友或关注。例如朋友圈
 <ul>
 <li>优点:信息全面，不会有缺失。并且实现也相对简单</li>
 <li>缺点:信息噪音较多，用户不一定感兴趣，内容获取效率低</li>
-</ul>
-</li>
+</ul></li>
 <li>智能排序:利用智能算法屏蔽掉违规的、用户不感兴趣的内容。推送用户感兴趣信息来吸引用户
 <ul>
 <li>优点:投喂用户感兴趣信息，用户粘度很高，容易沉迷</li>
 <li>缺点:如果算法不精准，可能起到反作用</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="4-1-TimeLine模式">4.1 TimeLine模式</h3>
+<h3 id="41-timeline模式">4.1 TimeLine模式</h3>
 <p><img src="https://bu.dusays.com/2025/09/14/68c629fb42de8.png" alt="image-20250914103538493"></p>
-<h2 id="5-GEO数据结构">5. GEO数据结构</h2>
+<h2 id="5-geo数据结构">5. GEO数据结构</h2>
 <p>GEO就是Geolocation的简写形式，代表地理坐标。Redis在3.2版本中加入了对GEO的支持，允许存储地理坐标信息，帮助我们根据经纬度来检索数据。常见的命令有:</p>
 <p><code>GEOADD</code>:添加一个地理空间信息，包含:经度（longitude)、纬度(latitude)、值(member)</p>
 <p><code>GEODIST</code>:计算指定的两个点之间的距离并返回</p>
@@ -12549,9 +12570,25 @@ UNION 会自动删除重复的行。</p>
 <p><code>GEOPOS</code>:返回指定member的坐标</p>
 <p><code>GEORADIUS</code>:指定圆心、半径，找到该圆内包含的所有member，并按照与圆心之间的距离排序后返回。6.2以后已废弃</p>
 <p><code>GEOSEARCH</code>:在指定范围内搜索member，并按照与指定点之间的距离排序后返回。范围可以是圆形或矩形。6.2.新功能</p>
-<p><code>GEOSEARCHSTORE</code>	:与GEOSEARCH功能一致，不过可以把结果存储到一个指定的key。6.2.新功能</p>
+<p><code>GEOSEARCHSTORE</code>
+:与GEOSEARCH功能一致，不过可以把结果存储到一个指定的key。6.2.新功能</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">GEOADD g1 <span class="number">116.378248</span> <span class="number">39.865275</span> bjn <span class="number">116.42803</span> <span class="number">39.903738</span> bjz <span class="number">116.322287</span> <span class="number">39.893729</span> bjx</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://bu.dusays.com/2025/09/14/68c671852e719.png" alt="image-20250914154053067"></p>
+<h2 id="6-bitmap">6. BitMap</h2>
+<p>把每一个bit位对应当月的每一天，形成了映射关系。用O和1标示业务状态，这种思路就称为位图(BitMap)</p>
+<p>Redis中是利用string类型数据结构实现BitMap，因此最大上限是512M，转换为bit则是2^32个bit位。</p>
+<h4 id="bitmap用法">BitMap用法</h4>
+<p>BitMap的操作命令有:</p>
+<ul>
+<li>SETBIT:向指定位置（offset)存入一个0或1</li>
+<li>GETBIT:获取指定位置( offset)的bit值</li>
+<li>BITCOUNT:统计BitMap中值为1的bit位的数量</li>
+<li>BITFIELD:操作（查询、修改、自增）BitMap中bit数组中的指定位置（offset)的值</li>
+<li>BITFIELD_RO:获取BitMap中bit数组，并以十进制形式返回</li>
+<li>BITOP∶将多个BitMap的结果做位运算(与、或、异或)</li>
+<li>BITPOS:查找bit数组中指定范围内第一个0或1出现的位置</li>
+</ul>
 ]]></content>
       <categories>
         <category>java</category>
@@ -12567,8 +12604,190 @@ UNION 会自动删除重复的行。</p>
 <p>求其上,得其中;求其中,得其下,求其下,必败</p>
 <p><em>——《孙子兵法》</em></p>
 </blockquote>
-<h3 id="一-redis">一 、Redis</h3>
-<h4></h4>
+<h4 id="一-redis">一 、Redis</h4>
+<h5 id="1-我看你在项目中使用了redis你最近在哪些场景中使用了redis呢">1.
+我看你在项目中使用了Redis，你最近在哪些场景中使用了Redis呢？</h5>
+<p>我在项目中使用Redis缓存医生排班、药品库存等热点数据，通过Redisson分布式锁解决挂号并发问题，确保号源分配的原子性操作。</p>
+<h6 id="redis的缓存在项目中的使用">Redis的缓存在项目中的使用？</h6>
+<ol type="1">
+<li><p>医生排班信息缓存</p>
+<p>将医生的排班表、可预约时间段、剩余号源数量等数据缓存到Redis中，设置合理的过期时间（如1小时）。当挂号员查询医生排班时，优先从Redis获取数据，避免频繁查询数据库，提升响应速度。</p></li>
+<li><p>用户登录状态管理</p>
+<p>使用Redis存储用户的JWT
+Token和会话信息，设置Token过期时间与JWT保持一致。当用户访问需要认证的接口时，从Redis中验证Token有效性，实现快速的身份验证。</p></li>
+<li><p>药品库存信息缓存</p>
+<p>将常用药品的库存数量、价格、规格等信息缓存到Redis，挂号员和医生查询药品信息时直接从缓存获取，减少数据库压力。</p></li>
+<li><p>患者挂号记录缓存</p>
+<p>将当天的挂号记录、已预约号源等信息缓存到Redis，方便快速查询和更新挂号状态。</p></li>
+</ol>
+<h6 id="为什么使用redisson分布式锁">为什么使用Redisson分布式锁？</h6>
+<ol type="1">
+<li><p>挂号并发问题</p>
+<p>当多个挂号员同时为同一医生同一时间段挂号时，可能出现超卖问题。比如某医生上午10点只有5个号源，但6个挂号员同时操作，可能导致6个患者都成功挂号，造成号源超卖。</p></li>
+<li><p>分布式锁的必要性</p>
+<p>使用Redisson分布式锁，在挂号操作前先获取锁，确保同一时间只有一个挂号员能操作该医生的号源，操作完成后释放锁，保证号源分配的原子性。</p></li>
+</ol>
+<h5 id="2-那么你是怎么解决缓存穿透的问题呢">2.
+那么你是怎么解决缓存穿透的问题呢？</h5>
+<p>嗯，我想一下。缓存穿透是指查询一个一定不存在的数据，由于存储层查不到数据因此不写入缓存，这将导致这个不存在的数据每次请求都要到
+数据库去查询，可能导致 数据库
+挂掉。这种情况大概率是遭到了攻击。解决方案的话一般有两种方式方案一呢是采用缓存空数据的方式，方案二就是采用布隆过滤器，我们通常都会用布隆过滤器来解决它。</p>
+<h5 id="3-你能介绍一下布隆过滤器吗">3. 你能介绍一下布隆过滤器吗？</h5>
+<p>嗯，是这样的。布隆过滤器主要是用于检索一个元素是否在一个集合中。我们当时使用的是Redisson实现的布隆过滤器。它的底层原理是，先初始化一个比较大的数组，里面存放的是二进制0或1。一开始都是0，当一个key来了之后，经过3次hash计算，模数组长度找到数据的下标，然后把数组中原来的0改为1。这样，三个数组的位置就能标明一个key的存在。查找的过程也是一样的。当然，布隆过滤器有可能会产生一定的误判，我们一般可以设置这个误判率，大概不会超过5%。其实这个误判是必然存在的，要不就得增加数组的长度。5%以内的误判率一般的项目也能接受，不至于高并发下压倒数据库。</p>
+<h5 id="4-什么是缓存击穿怎么解决">4. 什么是缓存击穿？怎么解决</h5>
+<p>嗯！缓存击穿的意思是，对于设置了过期时间的key，缓存在某个时间点过期的时候，恰好这个时间点对这个Key有大量的并发请求过来。这些请求发现缓存过期，一般都会从后端
+DB 加载数据并回设到缓存，这个时候大并发的请求可能会瞬间把 DB 压垮。</p>
+<p>解决方案有两种方式：第一，可以使用互斥锁：当缓存失效时，不立即去load
+db，先使用如 Redis 的 <code>SETNX</code>
+去设置一个互斥锁。当操作成功返回时，再进行 load
+db的操作并回设缓存，否则重试get缓存的方法。第二种方案是设置当前key逻辑过期，大概思路如下：</p>
+<ol type="1">
+<li>在设置key的时候，设置一个过期时间字段一块存入缓存中，不给当前key设置过期时间；</li>
+<li>当查询的时候，从redis取出数据后判断时间是否过期；</li>
+<li>如果过期，则开通另外一个线程进行数据同步，当前线程正常返回数据，这个数据可能不是最新的。</li>
+</ol>
+<p>两种方案各有利弊：</p>
+<p>如果选择数据的强一致性，建议使用分布式锁的方案，但性能上可能没那么高，且有可能产生死锁的问题。</p>
+<p>如果选择key的逻辑删除，则优先考虑高可用性，性能比较高，但数据同步这块做不到强一致。</p>
+<h5 id="5-什么是缓存雪崩怎么解决">5. 什么是缓存雪崩，怎么解决？</h5>
+<p>嗯！缓存雪崩意思是，设置缓存时采用了相同的过期时间，导致缓存在某一时刻同时失效，请求全部转发到DB，DB瞬时压力过重而雪崩。与缓存击穿的区别是：雪崩是很多key，而击穿是某一个key缓存。解决方案主要是，可以将缓存失效时间分散开。比如，可以在原有的失效时间基础上增加一个随机值，比如1-5分钟随机。这样，每一个缓存的过期时间的重复率就会降低，就很难引发集体失效的事件。</p>
+<h5 id="6-redis作为缓存mysql与redis数据如何进行同步呢双写一致">6.
+Redis作为缓存，Mysql与Redis数据如何进行同步呢（双写一致）</h5>
+<p>我们当时是将医生排班信息，用户的一些信息缓存到数据库，这些数据实时要求性并没有这么高，所以我们当时采用的是异步的方案同步数据
+我们当时采用的阿里的canal组件实现数据同步:不需要更改业务代码，部署一个canal服务。canal服务把自己伪装成mysql的一个从节点，当mysql数据更新以后，canal会读取binlog数据，然后在通过canal的客户端获取到数据，更新缓存即可。</p>
+<h5 id="7-redis作为缓存数据持久化是怎么做的">7.
+Redis作为缓存，数据持久化是怎么做的</h5>
+<p>在Redis中提供了两种数据持久化的方式：1) RDB；2) AOF。</p>
+<h5 id="8-这两种持久化方式有什么区别呢">8.
+这两种持久化方式有什么区别呢？</h5>
+<p>RDB是一个快照文件。它是把redis内存存储的数据写到磁盘上。当redis实例宕机恢复数据的时候，可以从RDB的快照文件中恢复数据。AOF的含义是追加文件。当redis执行写命令的时候，都会存储到这个文件中。当redis实例宕机恢复数据的时候，会从这个文件中再次执行一遍命令来恢复数据。</p>
+<h5 id="9-这两种方式哪种恢复的比较快呢">9.
+这两种方式，哪种恢复的比较快呢？</h5>
+<p>RDB因为是二进制文件，保存时体积也比较小，所以它恢复得比较快。但它有可能会丢数据。我们通常在项目中也会使用AOF来恢复数据。虽然AOF恢复的速度慢一些，但它丢数据的风险要小很多。在AOF文件中可以设置刷盘策略。我们当时设置的就是每秒批量写入一次命令</p>
+<h5 id="10-redis的过期策略有哪些">10. Redis的过期策略有哪些</h5>
+<p>嗯~，在redis中提供了两种数据过期删除策略。第一种是惰性删除。在设置该key过期时间后，我们不去管它。当需要该key时，我们检查其是否过期。如果过期，我们就删掉它；反之，返回该key。第二种是定期删除。就是说，每隔一段时间，我们就对一些key进行检查，并删除里面过期的key。定期清理的两种模式是：1)
+SLOW模式，是定时任务，执行频率默认为10hz，每次不超过25ms，可以通过修改配置文件redis.conf的hz选项来调整这个次数；2)
+FAST模式，执行频率不固定，每次事件循环会尝试执行，但两次间隔不低于2ms，每次耗时不超过1ms。Redis的过期删除策略是：惰性删除
++ 定期删除两种策略配合使用。</p>
+<h5 id="11-数据淘汰策略有哪些">11. 数据淘汰策略有哪些</h5>
+<p>嗯，这个在redis中提供了很多种，默认是noeviction，不删除任何数据，内部不足时直接报错。这个可以在redis的配置文件中进行设置。里面有两个非常重要的概念：一个是LRU，另外一个是LFU。LRU的意思就是最少最近使用。它会用当前时间减去最后一次访问时间。这个值越大，则淘汰优先级越高。LFU的意思是最少频率使用。它会统计每个key的访问频率。值越小，淘汰优先级越高。我们在项目中设置的是allkeys-lru，它会挑选最近最少使用的数据进行淘汰，把一些经常访问的key留在redis中。</p>
+<h5 id="12-数据库有1000万数据redis只能缓存20w数据如何保证redis中的数据都是热点数据">12.
+数据库有1000万数据，Redis只能缓存20w数据。如何保证Redis中的数据都是热点数据？</h5>
+<p>嗯，我想一下()。可以使用allkeys-lru（挑选最近最少使用的数据淘汰）淘汰策略。那留下来的都是经常访问的热点数据。</p>
+<h5 id="13-redis的内存用完了会发生什么">13.
+Redis的内存用完了会发生什么？</h5>
+<p>嗯~，这个要看redis的数据淘汰策略是什么。如果是默认的配置，redis内存用完以后则直接报错。我们当时设置的是allkeys-lru策略，把最近最常访问的数据留在缓存中。</p>
+<h5 id="14-redis的分布式锁是如何实现的呢">14.
+Redis的分布式锁是如何实现的呢</h5>
+<p>我们当时使用的是Redisson来实现分布式锁。在挂号业务中，当多个挂号员同时为同一医生同一时间段挂号时，可能会出现号源超卖的问题。底层使用的是setnx和lua脚本来保证原子性</p>
+<h5 id="15-redis实现分布式锁如何合理控制锁的时长">15.
+Redis实现分布式锁如何合理控制锁的时长</h5>
+<p>嗯，的确。redis的<code>SETNX</code>指令不好控制这个问题。我们当时采用的是redis的一个框架Redisson实现的。在Redisson中需要手动加锁，并且可以控制锁的失效时间和等待时间。当锁住的一个业务还没有执行完成的时候，Redisson会引入一个看门狗机制。就是说，每隔一段时间就检查当前业务是否还持有锁。如果持有，就增加加锁的持有时间。当业务执行完成之后，需要使用释放锁就可以了。还有一个好处就是，在高并发下，一个业务有可能会执行很快。客户1持有锁的时候，客户2来了以后并不会马上被拒绝。它会自旋不断尝试获取锁。如果客户1释放之后，客户2就可以马上持有锁，性能也得到了提升。</p>
+<h5 id="16-redisson实现分布式锁是可重用的吗">16.
+Redisson实现分布式锁是可重用的吗</h5>
+<p>嗯，是可以重入的。这样做是为了避免死锁的产生。这个重入其实在内部就是判断是否是当前线程持有的锁，如果是当前线程持有的锁就会计数，如果释放锁就会在计数上减一。在存储数据的时候采用的hash结构，大key可以按照自己的业务进行定制，其中小key是当前线程的唯一标识，value是当前线程重入的次数。</p>
+<h5 id="17-redisson可以解决主从一致的问题吗">17.
+Redisson可以解决主从一致的问题吗</h5>
+<p>这个是不能的。比如，当线程1加锁成功后，master节点数据会异步复制到slave节点，此时如果当前持有Redis锁的master节点宕机，slave节点被提升为新的master节点，假如现在来了一个线程2，再次加锁，会在新的master节点上加锁成功，这个时候就会出现两个节点同时持有一把锁的问题。我们可以利用Redisson提供的红锁来解决这个问题，它的主要作用是，不能只在一个Redis实例上创建锁，应该是在多个Redis实例上创建锁，并且要求在大多数Redis节点上都成功创建锁，红锁中要求是Redis的节点数量要过半。这样就能避免线程1加锁成功后master节点宕机导致线程2成功加锁到新的master节点上的问题了。</p>
+<p>但是，如果使用了红锁，因为需要同时在多个节点上都添加锁，性能就变得非常低，并且运维维护成本也非常高，所以，我们一般在项目中也不会直接使用红锁，并且官方也暂时废弃了这个红锁。</p>
+<h5 id="18-如果业务非要保证数据的强一致性这个该怎么解决呢">18.
+如果业务非要保证数据的强一致性，这个该怎么解决呢？</h5>
+<p>嗯~，Redis本身就是支持高可用的，要做到强一致性，就非常影响性能，所以，如果有强一致性要求高的业务，建议使用ZooKeeper实现的分布式锁，它是可以保证强一致性的。</p>
+<hr>
+<h5 id="19-redis集群有哪些方案知道吗">19.
+Redis集群有哪些方案，知道吗？</h5>
+<p>嗯~~，在Redis中提供的集群方案总共有三种：主从复制、哨兵模式、Redis分片集群。</p>
+<h5 id="20-那你来介绍一下主从同步">20. 那你来介绍一下主从同步</h5>
+<p>嗯，是这样的，单节点Redis的并发能力是有上限的，要进一步提高Redis的并发能力，可以搭建主从集群，实现读写分离。一般都是一主多从，主节点负责写数据，从节点负责读数据，主节点写入数据之后，需要把数据同步到从节点中。</p>
+<h5 id="21-能说一下主从同步数据的流程吗">21.
+能说一下，主从同步数据的流程吗？</h5>
+<p>嗯~~，好！主从同步分为了两个阶段，一个是全量同步，一个是增量同步。</p>
+<p>全量同步是指从节点第一次与主节点建立连接的时候使用全量同步，流程是这样的：</p>
+<p>第一：从节点请求主节点同步数据，其中从节点会携带自己的replication
+id和offset偏移量。</p>
+<p>第二：主节点判断是否是第一次请求，主要判断的依据就是，主节点与从节点是否是同一个replication
+id，如果不是，就说明是第一次同步，那主节点就会把自己的replication
+id和offset发送给从节点，让从节点与主节点的信息保持一致。</p>
+<p>第三：在同时主节点会执行<code>BGSAVE</code>，生成RDB文件后，发送给从节点去执行，从节点先把自己的数据清空，然后执行主节点发送过来的RDB文件，这样就保持了一致。</p>
+<p>当然，如果在RDB生成执行期间，依然有请求到了主节点，而主节点会以命令的方式记录到缓冲区，缓冲区是一个日志文件，最后把这个日志文件发送给从节点，这样就能保证主节点与从节点完全一致了，后期再同步数据的时候，都是依赖于这个日志文件，这个就是全量同步。</p>
+<p>增量同步指的是，当从节点服务重启之后，数据就不一致了，所以这个时候，从节点会请求主节点同步数据，主节点还是判断不是第一次请求，不是第一次就获取从节点的offset值，然后主节点从命令日志中获取offset值之后的数据，发送给从节点进行数据同步。</p>
+<h5 id="22-怎么保证redis的高并发高可用">22.
+怎么保证Redis的高并发高可用？</h5>
+<p>首先可以搭建主从集群，再加上使用Redis中的哨兵模式，哨兵模式可以实现主从集群的自动故障恢复，里面就包含了对主从服务的监控、自动故障恢复、通知；如果master故障，Sentinel会将一个slave提升为master。当故障实例恢复后也以新的master为主；同时Sentinel也充当Redis客户端的服务发现来源，当集群发生故障转移时，会将最新信息推送给Redis的客户端，所以一般项目都会采用哨兵的模式来保证Redis的高并发高可用。</p>
+<h5 id="23-你们使用redis是单点还是集群哪种集群">23.
+你们使用Redis是单点还是集群，哪种集群？</h5>
+<p>嗯！我们当时使用的是主从（1主1从）加哨兵。一般单节点不超过10G内存，如果Redis内存不足则可以给不同服务分配独立的Redis主从节点。尽量不做分片集群。因为集群维护起来比较麻烦，并且集群之间的心跳检测和数据通信会消耗大量的网络带宽，也没有办法使用Lua脚本和事务。</p>
+<h5 id="24-redis集群脑该怎么解决呢">24. Redis集群脑，该怎么解决呢？</h5>
+<p>嗯！这个在项目中很少见，不过脑裂的问题是这样的，我们现在用的是Redis的哨兵模式集群的。</p>
+<p>有的时候由于网络等原因可能会出现脑裂的情况，就是说，由于Redis
+master节点和Redis
+slave节点和Sentinel处于不同的网络分区，使得Sentinel没有能够心跳感知到master，所以通过选举的方式提升了一个slave为master，这样就存在了两个master，就像大脑分裂了一样，这样会导致客户端还在old
+master那里写入数据，新节点无法同步数据，当网络恢复后，Sentinel会将old
+master降为slave，这时再从新master同步数据，这会导致old
+master中的大量数据丢失。</p>
+<p>关于解决的话，我记得在Redis的配置中可以设置：第一可以设置最少的slave节点个数，比如设置至少要有一个从节点才能同步数据，第二个可以设置主从数据复制和同步的延迟时间，达不到要求就拒绝请求，就可以避免大量的数据丢失。</p>
+<h5 id="25-redis的分片集群有什么作用">25. Redis的分片集群有什么作用</h5>
+<p>分片集群主要解决的是海量数据存储的问题，集群中有多个master，每个master保存不同数据，并且还可以给每个master设置多个slave节点，就可以继续增大集群的高并发能力。同时每个master之间通过ping监测彼此健康状态，就类似于哨兵模式了。当客户端请求可以访问集群任意节点，最终都会被转发到正确节点。</p>
+<h5 id="26-redis分片集群中数据是怎么存储和读取的">26.
+Redis分片集群中数据是怎么存储和读取的？</h5>
+<p>嗯~，在Redis集群中是这样的：</p>
+<p>Redis 集群引入了哈希槽的概念，有 16384
+个哈希槽，集群中每个主节点绑定了一定范围的哈希槽范围，key通过CRC16校验后对16384取模来决定放置哪个槽，通过槽找到对应的节点进行存储。取值的逻辑是一样的。</p>
+<h5 id="27-redis是单线程的但是为什么还那么快">27.
+Redis是单线程的，但是为什么还那么快？</h5>
+<p>嗯，这个有几个原因吧~~~</p>
+<ol type="1">
+<li>完全基于内存的，C语言编写。</li>
+<li>采用单线程，避免不必要的上下文切换和竞争条件。</li>
+<li>使用多路I/O复用模型，非阻塞IO。</li>
+</ol>
+<p>例如：<code>BGSAVE</code>和<code>BGREWRITEAOF</code>都是在后台执行操作，不影响主线程的正常使用，不会产生阻塞。</p>
+<h5 id="28-能解释一下io多路复用模型简历还我">28.
+能解释一下I/O多路复用模型？（简历还我）</h5>
+<p>嗯~~，I/O多路复用是指利用单个线程来同时监听多个Socket，并且在某个Socket可读、可写时得到通知，从而避免无效的等待，充分利用CPU资源。目前的I/O多路复用都是采用的epoll模式实现，它会在通知用户进程Socket就绪的同时，把已就绪的Socket写入用户空间，不需要挨个遍历Socket来判断是否就绪，提升了性能。</p>
+<p>其中Redis的网络模型就是使用I/O多路复用结合事件的处理器来应对多个Socket请求，比如，提供了连接应答处理器、命令回复处理器，命令请求处理器；</p>
+<p>在Redis6.0之后，为了提升更好的性能，在命令回复处理器使用了多线程来处理回复事件，在命令请求处理器中，将命令的转换使用了多线程，增加命令转换速度，在命令执行的时候，依然是单线程</p>
+<h4 id="二mysql">二、MySQL</h4>
+<h5 id="1-在mysql中如何定位慢查询呢">1.
+在MySQL中，如何定位慢查询呢？</h5>
+<p>嗯，我们当时在做压力测试时发现有些接口响应时间非常慢，压测的结果大概是5秒钟，我们在MySQL中开启了，慢日志查询，设置的值就是2秒，一但SQL的执行时间超过2秒就会记录到日志中</p>
+<h5 id="2-那这个sql语句执行很慢如何分析呢">2.
+那这个SQL语句执行很慢，如何分析呢？</h5>
+<p>如果一条SQL执行很慢，我们通常会使用MySQL的<code>EXPLAIN</code>命令来分析这条SQL的执行情况。通过<code>key</code>和<code>key_len</code>可以检查是否命中了索引，如果已经添加了索引，也可以判断索引是否有效。通过<code>type</code>字段可以查看SQL是否有优化空间，比如是否存在全索引扫描或全表扫描。通过<code>extra</code>建议可以判断是否出现回表情况，如果出现，可以尝试添加索引或修改返回字段来优化。</p>
+<h5 id="3-那你了解过索引吗什么是索引">3.
+那你了解过索引吗？什么是索引</h5>
+<p>嗯，索引在项目中非常常见，它是一种帮助MySQL高效获取数据的数据结构，主要用来提高数据检索效率，降低数据库的I/O成本。同时，索引列可以对数据进行排序，降低数据排序的成本，也能减少CPU的消耗。</p>
+<h5 id="4-索引的底层数据结构了解过吗">4.
+索引的底层数据结构了解过吗？</h5>
+<p>MySQL的默认存储引擎InnoDB使用的是B+树作为索引的存储结构。选择B+树的原因包括：节点可以有更多子节点，路径更短；磁盘读写代价更低，非叶子节点只存储键值和指针，叶子节点存储数据；B+树适合范围查询和扫描，因为叶子节点形成了一个双向链表。</p>
+<h5 id="5-b树与b树的区别是什么">5. B+树与B树的区别是什么？</h5>
+<ol type="1">
+<li>B树的非叶子节点和叶子节点都存放数据，而B+树的所有数据只出现在叶子节点，这使得B+树在查询时效率更稳定。</li>
+<li>B+树在进行范围查询时效率更高，因为所有数据都在叶子节点，并且叶子节点之间形成了双向链表。</li>
+</ol>
+<h5 id="6-什么是聚簇索引什么是非聚簇索引">6.
+什么是聚簇索引什么是非聚簇索引</h5>
+<p>好的~聚簇索引是指数据与索引放在一起，B+树的叶子节点保存了整行数据，通常只有一个聚簇索引，一般是由主键构成。</p>
+<p>非聚簇索引则是数据与索引分开存储，B+树的叶子节点保存的是主键值，可以有多个非聚簇索引，通常我们自定义的索引都是非聚簇索引。</p>
+<h5 id="7-什么是回表查询呢">7. 什么是回表查询呢</h5>
+<p>嗯，其实跟刚才介绍的聚簇索引和非聚簇索引是有关系的，回表的意思就是通过二级索引找到对应的主键值，然后再通过主键值找到聚集索引中所对应的整行数据，这个过程就是回表
+【备注:如果面试官直接问回表，则需要先介绍聚簇索引和非聚簇索引】</p>
+<h5 id="8-知道什么是覆盖索引吗">8. 知道什么是覆盖索引吗？</h5>
+<p>嗯~，清楚的
+覆盖索引是指select查询语句使用了索引，在返回的列，必须在索引中全部能够找到，如果我们使用id查询，它会直接走聚集索引查询，一次索引扫描，直接返回数据，性能高。
+如果按照二级索引查询数据的时候，返回的列中没有创建索引，有可能会触发回表查询，尽量避免使用select*，尽量在返回的列中都包含添加索引的字段</p>
+<h5 id="9-mysql超大分页怎么处理">9. MySQL超大分页怎么处理</h5>
+<p>嗯，超大分页通常发生在数据量大的情况下，使用<code>LIMIT</code>分页查询且需要排序时效率较低。可以通过覆盖索引和子查询来解决。首先查询数据的ID字段进行分页，然后根据ID列表用子查询来过滤只查询这些ID的数据，因为查询ID时使用的是覆盖索引，所以效率可以提升。</p>
+<h5 id="10-索引的创建原则有哪些">10. 索引的创建原则有哪些</h5>
+<p>嗯，这个情况有很多，不过都有一个大前提，就是表中的数据要超过10万以上，我们才会创建索引，并且添加索引的字段是查询比较频繁的字段，一般也是像作为查询条件，排序字段或分组的字段这些。
+还有就是，我们通常创建索引的时候都是使用复合索引来创建，一条SQL的返回值，尽量使用覆盖索引，如果字段的区分度不高的话，我们也会把它放在组合索引后面的字段。
+如果某一个字段的内容较长，我们会考虑使用前缀索引来使用，当然并不是所有的字段都要添加索引，这个索引的数量也要控制，因为添加索引也会导致新增改的速度变慢。</p>
+<h5 id="11-什么情况下索引会失效">11. 什么情况下索引会失效</h5>
+<p>嗯，这个情况比较多，我说一些自己的经验，以前遇到过的
+比如，索引在使用的时候没有遵循最左匹配法则，第二个是，模糊查询，如果%号在前面也会导致索引失效。如果在添加索引的字段上进行了运算操作或者类型转换也都会导致索引失效。
+我们之前还遇到过一个就是，如果使用了复合索引，中间使用了范围查询，右边的条件索引也会失效所以，通常情况下，想要判断出这条sql是否有索引失效的情况，可以使用explain执行计划来分析</p>
+<h5 id="12-谈一谈你对sql优化的经验面试常见">12.
+谈一谈你对SQL优化的经验？（面试常见）</h5>
 ]]></content>
       <categories>
         <category>java</category>
