@@ -12788,6 +12788,255 @@ Redis是单线程的，但是为什么还那么快？</h5>
 我们之前还遇到过一个就是，如果使用了复合索引，中间使用了范围查询，右边的条件索引也会失效所以，通常情况下，想要判断出这条sql是否有索引失效的情况，可以使用explain执行计划来分析</p>
 <h5 id="12-谈一谈你对sql优化的经验面试常见">12.
 谈一谈你对SQL优化的经验？（面试常见）</h5>
+<p>候选人:嗯，这个在项目还是挺常见的，当然如果直说sql优化的话，我们会从这几方面考虑，比如建表的时候、使用索引、sql语句的编写、主从复制，读写分离，还有一个是如果量比较大的话，可以考虑分库分表</p>
+<h5 id="13-创建表的时候你们是如何优化的呢">13.
+创建表的时候，你们是如何优化的呢？</h5>
+<p>创建表时，我们主要参考阿里云的开发手册，选择字段类型时结合字段内容，比如如果是数值的话，像tinyint、int、bigint这些类型，要根据实际情况选择。如果是字符串类型，也是结合存储的内容来选择char和varchar或者text类型</p>
+<h5 id="14-在使用索引的时候是如何优化呢">14.
+在使用索引的时候，是如何优化呢？</h5>
+<p>在使用索引时，我们遵循索引创建原则，确保索引字段是查询频繁的，使用复合索引覆盖SQL返回值，避免在索引字段上进行运算或类型转换，以及控制索引数量。</p>
+<h5 id="15-你平时对sql语句做了哪些优化呢">15.
+你平时对SQL语句做了哪些优化呢？</h5>
+<p>嗯，这个也有很多，比如SELECT语句务必指明字段名称，不要直接使用select*，还有就是要注意SQL语句避免造成索引失效的写法;如果是聚合查询，尽量使用<code>UNION ALL</code>代替<code>UNION</code>，表关联时优先使用<code>INNER JOIN</code>，以及在必须使用<code>LEFT JOIN</code>或<code>RIGHT JOIN</code>时，确保小表作为驱动表。</p>
+<h5 id="16-事务的特征是什么可以详细说一下吗">16.
+事务的特征是什么，可以详细说一下吗</h5>
+<p>事务的特性是ACID，即原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）、持久性（Durability）。例如，A向B转账500元，这个操作要么都成功，要么都失败，体现了原子性。转账过程中数据要保持一致，A扣除了500元，B必须增加500元。隔离性体现在A向B转账时，不受其他事务干扰。持久性体现在事务提交后，数据要被持久化存储。</p>
+<h5 id="17--并发事务带来哪些问题">17 . 并发事务带来哪些问题？</h5>
+<p>并发事务可能导致脏读、不可重复读和幻读。脏读是指一个事务读到了另一个事务未提交的“脏数据”。不可重复读是指在一个事务内多次读取同一数据，由于其他事务的修改导致数据不一致。幻读是指一个事务读取到了其他事务插入的“幻行”。</p>
+<h5 id="18-怎么解决这些问题呢-mysql的默认隔离级别是">18.
+怎么解决这些问题呢？ MySQL的默认隔离级别是</h5>
+<p>MySQL,支持四种隔离级别，分别有: 第一个是，未提交读(read
+uncommitted）它解决不了刚才提出的所有问题，一般项目中也不用这个。第二个是读已提交(read
+committed）它能解决脏读的问题的，但是解决不了不可重复读和幻读。第三个是可重复读（repeatable
+read）它能解决脏读和不可重复读，但是解决不了幻读，这个也是mysql默认的隔离级别。第四个是串行化(serializable)它可以解决刚才提出来的所有问题，但是由于让是事务串行执行的，性能比较低。所以，我们一般使用的都是mysql默认的隔离级别:可重复读</p>
+<h5 id="19-undo-log和redo-log-的区别">19. undo log和redo log 的区别</h5>
+<p>好的，其中redo
+log日志记录的是数据页的物理变化，服务宕机可用来同步数据，而undo
+log不同，它主要记录的是逻辑日志，当事务回滚时，通过逆操作恢复原来的数据，比如我们删除一条数据的时候，就会在undo
+log日志文件中新增一条delete语句，如果发生回滚就执行逆操作; redo
+log保证了事务的持久性，undo log保证了事务的原子性和一致性</p>
+<h5 id="20-事务中的隔离性是如何保障的呢请你解释一下mvcc面试常考">20.
+事务中的隔离性是如何保障的呢？（请你解释一下MVCC）[面试常考]</h5>
+<p>事务的隔离性是由锁和mvcc实现的。
+其中mwcc的意思是多版本并发控制。指维护一个数据的多个版本，使得读写操作没有冲突，它的底层实现主要是分为了三个部分，第一个是隐藏字段，第二个是undo
+log日志，第三个是readView读视图隐藏字段是指:在mysql中给每个表都设置了隐藏字段，有一个是trx_id(事务id)，记录每一次操作的事务id，是自增的;另一个字段是roll_pointer(回滚指针)，指向上一个版本的事务版本记录地址
+undo
+log主要的作用是记录回滚日志，存储老版本数据，在内部会形成一个版本链，在多个事务并行操作某一行记录，记录不同事务修改数据的版本，通过roll_pointer指针形成一个链表
+readView解决的是一个事务查询选择版本的问题，在内部定义了一些匹配规则和当前的一些事务id判断该访问那个版本的数据，不同的隔离级别快照读是不一样的，最终的访问的结果不一样。如果是rc隔离级别，每一次执行快照读时生成ReadView，如果是rr隔离级别仅在事务中第一次执行快照读时生成ReadView，后续复用</p>
+<p>简洁版：</p>
+<p>事务的隔离性通过锁和多版本并发控制（MVCC）来保证。MVCC通过维护数据的多个版本来避免读写冲突。底层实现包括隐藏字段、<code>undo log</code>和<code>read view</code>。隐藏字段包括<code>trx_id</code>和<code>roll_pointer</code>。<code>undo log</code>记录了不同版本的数据，通过<code>roll_pointer</code>形成版本链。<code>read view</code>定义了不同隔离级别下的快照读，决定了事务访问哪个版本的数据。</p>
+<h5 id="21-主从复制的原理是什么">21. 主从复制的原理是什么</h5>
+<p>MySQL主从复制的核心是二进制日志（Binlog）。步骤如下：</p>
+<ol type="1">
+<li>主库在事务提交时记录数据变更到Binlog。</li>
+<li>从库读取主库的Binlog并写入中继日志（Relay Log）。</li>
+<li>从库重做中继日志中的事件，反映到自己的数据中。</li>
+</ol>
+<h5 id="22-你们项目用过mysql的分库分表吗">22.
+你们项目用过MySQL的分库分表吗？</h5>
+<p>我们采用微服务架构，每个微服务对应一个数据库，是根据业务进行拆分的，这个其实就是垂直拆分。</p>
+<h5 id="23-那你之前使用过水平分库吗">23. 那你之前使用过水平分库吗？</h5>
+<p>使用过。当时业务发展迅速，某个表数据量超过1000万，单库优化后性能仍然很慢，因此采用了水平分库。我们首先部署了3台服务器和3个数据库，使用mycat进行数据分片。旧数据也按照ID取模规则迁移到了各个数据库中，这样各个数据库可以分摊存储和读取压力，解决了性能问题。</p>
+<h4 id="三-框架篇">三、 框架篇</h4>
+<h5 id="1-spring框架中的单例bean是线程安全的吗">1.
+Spring框架中的单例bean是线程安全的吗？</h5>
+<p>不是线程安全的。当多用户同时请求一个服务时，容器会给每个请求分配一个线程，这些线程会并发执行业务逻辑。如果处理逻辑中包含对单例状态的修改，比如修改单例的成员属性，就必须考虑线程同步问题。Spring框架本身并不对单例bean进行线程安全封装，线程安全和并发问题需要开发者自行处理。</p>
+<p>通常在项目中使用的Spring
+bean是不可变状态（如Service类和DAO类），因此在某种程度上可以说Spring的单例bean是线程安全的。如果bean有多种状态（如ViewModel对象），就需要自行保证线程安全。最简单的解决办法是将单例bean的作用域由“singleton”变更为“prototype”。</p>
+<h5 id="2-什么是aop">2. 什么是AOP？</h5>
+<p>AOP，即面向切面编程，在Spring中用于将那些与业务无关但对多个对象产生影响的公共行为和逻辑抽取出来，实现公共模块复用，降低耦合。常见的应用场景包括公共日志保存和事务处理。</p>
+<h5 id="3-你们项目中有没有使用到aop">3. 你们项目中有没有使用到AOP</h5>
+<p>我们之前在后台管理系统中使用AOP来记录系统操作日志。主要思路是使用AOP的环绕通知和切点表达式，找到需要记录日志的方法，然后通过环绕通知的参数获取请求方法的参数，例如类信息、方法信息、注解、请求方式等，并将这些参数保存到数据库。</p>
+<h5 id="4-spring的事务是如何实现的">4. Spring的事务是如何实现的</h5>
+<p>Spring实现事务的本质是利用AOP完成的。它对方法前后进行拦截，在执行方法前开启事务，在执行完目标方法后根据执行情况提交或回滚事务。</p>
+<h5 id="5-spring的事务失效的场景有哪些">5.
+Spring的事务失效的场景有哪些</h5>
+<p>在项目中，我遇到过几种导致事务失效的场景：</p>
+<ol type="1">
+<li>有一次我们在方法内部捕获并处理了异常，没有将异常抛出，会导致事务失效。因此，处理异常后应该确保异常能够被抛出。</li>
+<li>如果方法抛出检查型异常（checked
+exception），并且没有在<code>@Transactional</code>注解上配置<code>rollbackFor</code>属性为<code>Exception</code>，那么异常发生时事务可能不会回滚。</li>
+<li>如果事务注解的方法不是公开（public）修饰的，也可能导致事务失效。</li>
+</ol>
+<h5 id="6-spring的bean的生命周期易考">6.
+Spring的bean的生命周期（易考）</h5>
+<p>Spring中bean的生命周期包括以下步骤：</p>
+<ol type="1">
+<li>通过<code>BeanDefinition</code>获取bean的定义信息。</li>
+<li>调用构造函数实例化bean。</li>
+<li>进行bean的依赖注入，例如通过setter方法或<code>@Autowired</code>注解。</li>
+<li>处理实现了<code>Aware</code>接口的bean。通过Aware接口可以获取到bean的一些基本信息,比如bean的名称
+bean的工厂和ApplicationContext</li>
+<li>执行<code>BeanPostProcessor</code>的前置处理器。</li>
+<li>调用初始化方法，如实现了<code>InitializingBean</code>接口或自定义的<code>init-method</code>。</li>
+<li>执行<code>BeanPostProcessor</code>的后置处理器，可能在这里产生代理对象。</li>
+<li>最后是销毁bean。</li>
+</ol>
+<h5 id="7-spring中的循环引用问题">7. Spring中的循环引用问题</h5>
+<p>循环依赖发生在两个或两个以上的bean互相持有对方，形成闭环。Spring框架允许循环依赖存在，并通过三级缓存解决大部分循环依赖问题：</p>
+<ol type="1">
+<li>一级缓存：单例池，缓存已完成初始化的bean对象。</li>
+<li>二级缓存：缓存尚未完成生命周期的早期bean对象。</li>
+<li>三级缓存：缓存<code>ObjectFactory</code>，用于创建bean对象。</li>
+</ol>
+<h5 id="8-你能说一说具体流程吗">8. 你能说一说具体流程吗</h5>
+<p>解决循环依赖的流程如下：</p>
+<ol type="1">
+<li>实例化A对象，并创建<code>ObjectFactory</code>存入三级缓存。</li>
+<li>A在初始化时需要B对象，开始B的创建逻辑。</li>
+<li>B实例化完成，也创建<code>ObjectFactory</code>存入三级缓存。</li>
+<li>B需要注入A，通过三级缓存获取<code>ObjectFactory</code>生成A对象，存入二级缓存。</li>
+<li>B通过二级缓存获得A对象后，B创建成功，存入一级缓存。</li>
+<li>A对象初始化时，由于B已创建完成，可以直接注入B，A创建成功存入一级缓存。</li>
+<li>清除二级缓存中的临时对象A。</li>
+</ol>
+<h5 id="9-构造方法出现了循环依赖怎么解决">9.
+构造方法出现了循环依赖怎么解决</h5>
+<p>由于构造函数是bean生命周期中最先执行的，Spring框架无法解决构造方法的循环依赖问题。可以使用<code>@Lazy</code>懒加载注解，延迟bean的创建直到实际需要时。</p>
+<h5 id="10-springmvc的执行流程知道吗">10. SpringMVC的执行流程知道吗</h5>
+<p>SpringMVC的执行流程包括以下步骤：</p>
+<ol type="1">
+<li>用户发送请求到前端控制器<code>DispatcherServlet</code>。</li>
+<li><code>DispatcherServlet</code>调用<code>HandlerMapping</code>找到具体处理器。</li>
+<li><code>HandlerMapping</code>返回处理器对象及拦截器（如果有）给<code>DispatcherServlet</code>。</li>
+<li><code>DispatcherServlet</code>调用<code>HandlerAdapter</code>(处理器适配器)。</li>
+<li><code>HandlerAdapter</code>适配并调用具体处理器（Controller）。</li>
+<li>在方法上添加了@ResponseBody注解</li>
+<li>通过HttpMessageConverter来返回结果转换为JSON并且响应</li>
+</ol>
+<h5 id="11-springboot的自动装配原理易考">11.
+SpringBoot的自动装配原理（易考）</h5>
+<p>Spring
+Boot的自动配置原理基于<code>@SpringBootApplication</code>注解，它封装了<code>@SpringBootConfiguration</code>、<code>@EnableAutoConfiguration</code>和<code>@ComponentScan</code>。<code>@EnableAutoConfiguration</code>是核心，它通过<code>@Import</code>导入配置选择器，读取<code>META-INF/spring.factories</code>文件中的类名，根据条件注解决定是否将配置类中的Bean导入到Spring容器中。</p>
+<h5 id="12-spring框架常见注解">12. spring框架常见注解</h5>
+<p>Spring的常见注解包括：</p>
+<ol type="1">
+<li>声明Bean的注解：<code>@Component</code>、<code>@Service</code>、<code>@Repository</code>、<code>@Controller</code>。</li>
+<li>依赖注入相关注解：<code>@Autowired</code>、<code>@``Qualifier</code>、<code>@Resource</code>。</li>
+<li>设置作用域的注解：<code>@Scope</code>。</li>
+<li>配置相关注解：<code>@Configuration</code>、<code>@ComponentScan</code>、<code>@Bean</code>。</li>
+<li>AOP相关注解：<code>@Aspect</code>、<code>@Before</code>、<code>@After</code>、<code>@Around</code>、<code>@Pointcut</code>。</li>
+</ol>
+<h5 id="13-springmvc的常见注解">13. SpringMVC的常见注解</h5>
+<p>SpringMVC的常见注解有：</p>
+<ul>
+<li><code>@RequestMapping</code>：映射请求路径。</li>
+<li><code>@RequestBody</code>：接收HTTP请求的JSON数据。</li>
+<li><code>@RequestParam</code>：指定请求参数名称。</li>
+<li><code>@PathVariable</code>：从请求路径中获取参数。</li>
+<li><code>@ResponseBody</code>：将Controller方法返回的对象转化为JSON。</li>
+<li><code>@RequestHeader</code>：获取请求头数据。</li>
+<li><code>@PostMapping</code>、<code>@GetMapping</code>等。</li>
+</ul>
+<h5 id="14-springboot的常见注解">14. Springboot的常见注解</h5>
+<p>Spring Boot的常见注解包括：</p>
+<ul>
+<li><code>@SpringBootApplication</code>：由<code>@``SpringBootConfiguration</code>、<code>@``EnableAutoConfiguration</code>和<code>@``ComponentScan</code>组成。</li>
+<li>其他注解如<code>@RestController</code>、<code>@GetMapping</code>、<code>@PostMapping</code>等，用于简化Spring
+MVC的配置。</li>
+</ul>
+<h5 id="15spring和springboot之间有什么区别">15.Spring和SpringBoot之间有什么区别？</h5>
+<p>Spring 和 Spring Boot 的区别在于它们的目标和用途不同。Spring
+是一个轻量级的开源框架，它提供了一种简单的方式来构建企业级应用程序。Spring
+Boot 则是 Spring
+框架的延伸和扩展，它提供了一种快速构建应用程序的方式。开发人员可以通过使用
+Spring Boot Starter
+来快速集成常用的第三方库和框架，使得开发人员可以快速构建出一个可运行的应用程序。</p>
+<h5 id="16-请你描述一下spring的di和ioc">16.
+请你描述一下Spring的DI和IOC、</h5>
+<p>IoC 和 DI 都是 Spring 框架中的核心概念，它们的区别在于:</p>
+<ul>
+<li><strong>IoC（Inverse of
+Control，控制反转）</strong>：它是一种思想，主要解决程序设计中的对象依赖关系管理问题。在
+IoC
+思想中，对象的创建权反转给第三方容器，由容器进行对象的创建及依赖关系的管理。</li>
+<li><strong>DI（Dependency Injection，依赖注入）</strong>：它是 IoC
+思想的具体实现方式之一，用于实现 IoC。在 Spring
+中，依赖注入是指:在对象创建时，由容器自动将依赖对象注入到需要依赖的对象中。</li>
+</ul>
+<p>简单来说，它们的关系是：</p>
+<ul>
+<li>IoC 是一种思想、理念，定义了对象创建和依赖关系处理的方式。</li>
+<li>DI 是 IoC
+思想的具体实现方式之一，实际提供对象依赖关系的注入功能。</li>
+</ul>
+<p>例如在 Spring 框架中：</p>
+<ul>
+<li>IoC 体现为 Spring 容器承担了对象创建及依赖关系管理的控制权。</li>
+<li>DI 体现为 Spring 容器通过构造方法注入、Setter
+方法注入等方式，将依赖对象注入到需要依赖的对象中。</li>
+</ul>
+<h5 id="17jdk动态代理和cglib动态代理有什么区别">17.JDK动态代理和CGLIB动态代理有什么区别？</h5>
+<p>JDK 动态代理和 CGLIB
+动态代理都是常见的动态代理实现技术，但它们有以下区别：</p>
+<ul>
+<li>JDK 动态代理基于接口，要求目标对象实现接口；CGLIB
+动态代理基于类，可以代理没有实现接口的目标对象。</li>
+<li>JDK 动态代理使用 java.lang.reflect.Proxy 和
+java.lang.reflect.InvocationHandler 来生成代理对象；CGLIB 动态代理使用
+CGLIB 库来生成代理对象。</li>
+<li>JDK 动态代理生成的代理对象是目标对象的接口实现；CGLIB
+动态代理生成的代理对象是目标对象的子类。</li>
+<li>JDK 动态代理性能相对较高，生成代理对象速度较快；CGLIB
+动态代理性能相对较低，生成代理对象速度较慢。</li>
+<li>CGLIB 动态代理无法代理 final 类和 final 方法；JDK
+动态代理可以代理任意类</li>
+</ul>
+<h5 id="18拦截器和过滤器有什么区别">18.拦截器和过滤器有什么区别</h5>
+<p>拦截器和过滤器的区别主要体现在以下 5 点：</p>
+<ol type="1">
+<li><strong>出身不同</strong>：过滤器来自于 Servlet，而拦截器来自于
+Spring 框架；</li>
+<li><strong>触发时机不同</strong>：请求的执行顺序是：请求进入容器 &gt;
+进入过滤器 &gt; 进入 Servlet &gt; 进入拦截器 &gt;
+执行控制器（Controller），所以过滤器和拦截器的执行时机，是过滤器会先执行，然后才会执行拦截器，最后才会进入真正的要调用的方法；</li>
+<li><strong>底层实现不同</strong>：过滤器是基于方法回调实现的，拦截器是基于动态代理（底层是反射）实现的；</li>
+<li><strong>支持的项目类型不同</strong>：过滤器是 Servlet
+规范中定义的，所以过滤器要依赖 Servlet 容器，它只能用在 Web
+项目中；而拦截器是 Spring 中的一个组件，因此拦截器既可以用在 Web
+项目中，同时还可以用在 Application 或 Swing 程序中；</li>
+<li><strong>使用的场景不同</strong>：因为拦截器更接近业务系统，所以拦截器主要用来实现项目中的业务判断的，比如：登录判断、权限判断、日志记录等业务；而过滤器通常是用来实现通用功能过滤的，比如：敏感词过滤、字符集编码设置、响应数据压缩等功能。</li>
+</ol>
+<h5 id="19-autowired-和-resource-有什么不同">19. <strong>@Autowired 和
+@Resource</strong> 有什么不同</h5>
+<p>@Autowired 和 @Resource 都是用来实现依赖注入的注解（在 Spring/Spring
+Boot 项目中），但二者却有着 5 点不同：</p>
+<ol type="1">
+<li>来源不同：@Autowired 来自 Spring 框架，而 @Resource
+来自于（Java）JSR-250；</li>
+<li>依赖查找的顺序不同：@Autowired 先根据类型再根据名称查询，而
+@Resource 先根据名称再根据类型查询；</li>
+<li>支持的参数不同：@Autowired 只支持设置 1 个参数，而 @Resource
+支持设置 7 个参数；</li>
+<li>依赖注入的用法支持不同：@Autowired
+既支持构造方法注入，又支持属性注入和 Setter 注入，而 @Resource
+只支持属性注入和 Setter 注入；</li>
+<li>编译器 IDEA 的提示不同：当注入 Mapper 对象时，使用 @Autowired
+注解编译器会提示错误，而使用 @Resource 注解则不会提示错误</li>
+</ol>
+<h5 id="20-mybatis的执行流程是什么">20. MyBatis的执行流程是什么</h5>
+<p>MyBatis的执行流程如下：</p>
+<ol type="1">
+<li>读取MyBatis配置文件<code>mybatis-config.xml</code>。</li>
+<li>构造会话工厂<code>SqlSessionFactory</code>。</li>
+<li>会话工厂创建<code>SqlSession</code>对象。</li>
+<li>操作数据库的接口，<code>Executor</code>执行器。</li>
+<li><code>Executor</code>执行方法中的<code>MappedStatement</code>参数。</li>
+<li>输入参数映射。</li>
+<li>输出结果映射。</li>
+</ol>
+<h5 id="21-mybatis是否支持延迟加载">21. Mybatis是否支持延迟加载？</h5>
+<p>MyBatis支持延迟加载，即在需要用到数据时才加载。可以通过配置文件中的<code>lazyLoadingEnabled</code>配置启用或禁用延迟加载。</p>
+<h5 id="22-延迟加载的底层原理知道吗">22. 延迟加载的底层原理知道吗？</h5>
+<p>延迟加载的底层原理主要使用CGLIB动态代理实现：</p>
+<ol type="1">
+<li>使用CGLIB创建目标对象的代理对象。</li>
+<li>调用目标方法时，如果发现是null值，则执行SQL查询。</li>
+<li>获取数据后，设置属性值并继续查询目标方法。</li>
+</ol>
+<h5 id="23-mybatis的一级二级缓存用过吗">23.
+Mybatis的一级、二级缓存用过吗？</h5>
+<p>MyBatis的一级缓存是基于<code>Perpetual``Cache</code>的HashMap本地缓存，作用域为Session，默认开启。二级缓存需要单独开启，作用域为Namespace或mapper，默认也是采用<code>PerpetualCache</code>，HashMap存储。</p>
 ]]></content>
       <categories>
         <category>java</category>
