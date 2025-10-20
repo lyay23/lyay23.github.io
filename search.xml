@@ -14665,29 +14665,21 @@ ID，然后通过定义好的 Feign 客户端调用用户服务的接口，传�
     <content><![CDATA[<blockquote>
 <p>实习公司要求使用postgreSQL以此系统学习一下</p>
 </blockquote>
-<h1 id="一安装">一、安装</h1>
-<p>Linux用户使用docker一键部署</p>
+<h1 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h1><p>Linux用户使用docker一键部署</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">docker run \</span><br><span class="line">  <span class="literal">--name</span> postgres \</span><br><span class="line">  <span class="literal">-e</span> POSTGRES_USER=postgres \  </span><br><span class="line">  <span class="literal">-e</span> POSTGRES_PASSWORD=abc123 \  </span><br><span class="line">  <span class="literal">-e</span> POSTGRES_DB=mydb \  </span><br><span class="line">  <span class="literal">-v</span> postgres<span class="literal">-data</span>:/var/lib/postgresql/<span class="keyword">data</span> \  </span><br><span class="line">  <span class="literal">-p</span> <span class="number">5432</span>:<span class="number">5432</span> \  </span><br><span class="line">  <span class="literal">--restart</span>=always \  </span><br><span class="line">  <span class="literal">-d</span> \ </span><br><span class="line">  postgres:<span class="number">14</span>  </span><br></pre></td></tr></table></figure>
-
 <p>注意：navicat15版本连接pg会报错，建议升级为16版本</p>
-<h1 id="二使用">二、使用</h1>
-<h4 id="1-使用docker连接pg">1. 使用Docker连接pg</h4>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">docker exec <span class="literal">-it</span> postgres psql <span class="literal">-U</span> postgres <span class="literal">-W</span></span><br></pre></td></tr></table></figure>
-
+<h1 id="二、使用"><a href="#二、使用" class="headerlink" title="二、使用"></a>二、使用</h1><h4 id="1-使用Docker连接pg"><a href="#1-使用Docker连接pg" class="headerlink" title="1. 使用Docker连接pg"></a>1. 使用Docker连接pg</h4><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">docker exec <span class="literal">-it</span> postgres psql <span class="literal">-U</span> postgres <span class="literal">-W</span></span><br></pre></td></tr></table></figure>
 <p>退出可以使用<code>\q</code></p>
-<h4 id="2-使用navicat操作数据库">2. 使用navicat操作数据库</h4>
-<p>直接连接ip即可</p>
-<h2 id="三pg介绍">三、pg介绍</h2>
-<p><img src="https://bu.dusays.com/2025/10/02/68de68f6d6897.png" alt="image-20251002195846021"></p>
+<h4 id="2-使用navicat操作数据库"><a href="#2-使用navicat操作数据库" class="headerlink" title="2. 使用navicat操作数据库"></a>2. 使用navicat操作数据库</h4><p>直接连接ip即可</p>
+<h2 id="三、pg介绍"><a href="#三、pg介绍" class="headerlink" title="三、pg介绍"></a>三、pg介绍</h2><p><img src="https://bu.dusays.com/2025/10/02/68de68f6d6897.png" alt="image-20251002195846021"></p>
 <p><img src="https://bu.dusays.com/2025/10/02/68de6959a4c8c.png" alt="image-20251002200026205"></p>
-<h2 id="安装postgis">安装postgis</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name my_postgis \</span><br><span class="line">  -e POSTGRES_USER=postgres \       </span><br><span class="line">  -e POSTGRES_PASSWORD=abc123 \     </span><br><span class="line">  -e POSTGRES_DB=gisdb \            </span><br><span class="line">  -p 5432:5432 \                    </span><br><span class="line">  -v postgis_data:/var/lib/postgresql/data \  </span><br><span class="line">  postgis/postgis:14-3.4</span><br></pre></td></tr></table></figure>
+<h2 id="安装postgis"><a href="#安装postgis" class="headerlink" title="安装postgis"></a>安装postgis</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name my_postgis \</span><br><span class="line">  -e POSTGRES_USER=postgres \       </span><br><span class="line">  -e POSTGRES_PASSWORD=abc123 \     </span><br><span class="line">  -e POSTGRES_DB=gisdb \            </span><br><span class="line">  -p 5432:5432 \                    </span><br><span class="line">  -v postgis_data:/var/lib/postgresql/data \  </span><br><span class="line">  postgis/postgis:14-3.4</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>实习篇</category>
+        <category>实习</category>
       </categories>
       <tags>
-        <tag>实习篇</tag>
+        <tag>实习</tag>
       </tags>
   </entry>
   <entry>
