@@ -15080,8 +15080,8 @@ WKT（Well-Known Text）创建几何对象。</h6>
     <content><![CDATA[<blockquote>
 <p>啊啊啊啊，马上就要实习工作了，但是我的Mysql之类的一直没有怎么学过，工作肯定要用gg了，来打基础来了</p>
 </blockquote>
-<h3 id="一mysql">一、MySQL</h3>
-<h4 id="1dql">1.DQL</h4>
+<h2 id="一mysql">一、MySQL</h2>
+<h3 id="1dql">1.DQL</h3>
 <p><img src="https://bu.dusays.com/2025/09/30/68db4fcf30610.png" alt="image-20250930113431637"></p>
 <h5 id="11-分组查询-group-by">1.1 分组查询 group by</h5>
 <p><img src="https://bu.dusays.com/2025/09/30/68db517b9f820.png" alt="image-20250930114147353"></p>
@@ -15089,7 +15089,7 @@ WKT（Well-Known Text）创建几何对象。</h6>
 
 <h5 id="12-排序-order-by">1.2 排序 order by</h5>
 <p><img src="https://bu.dusays.com/2025/09/30/68db54a92de6e.png" alt="image-20250930115521070"></p>
-<h4 id="2-多表查询">2. 多表查询</h4>
+<h3 id="2-多表查询">2. 多表查询</h3>
 <h5 id="21-多表查询">2.1 多表查询</h5>
 <p><img src="https://bu.dusays.com/2025/09/30/68dba83995775.png" alt="image-20250930175153784"></p>
 <h5 id="22-内连接-查询两表的交集部分">2.2 内连接
@@ -15151,7 +15151,188 @@ a.managerid = b.id;</p>
 <h6 id="4-表子查询">4. 表子查询</h6>
 <p><img src="https://bu.dusays.com/2025/10/02/68de264bdda8d.png" alt="image-20251002151420162"></p>
 <p><img src="https://bu.dusays.com/2025/10/02/68de26f2afd30.png" alt="image-20251002151706973"></p>
-<h3 id="二mybatisplus">二、MyBatisPlus</h3>
+<h3 id="3-窗口函数">3. 窗口函数</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">窗口函数([参数]) OVER (</span><br><span class="line">  [PARTITION BY &lt;分组列&gt;] </span><br><span class="line">  [ORDER BY &lt;排序列 ASC/DESC&gt;]</span><br><span class="line">  [ROWS BETWEEN 开始行 AND 结束行]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>PARTITION BY</code>
+子句用于指定分组列，关键字：<code>PARTITION BY</code> 。</li>
+<li><code>ORDER BY</code>
+子句用于指定排序列，关键字<code>ORDER BY</code> 。</li>
+<li><code>ROWS BETWEEN</code>
+子句用于指定窗口的范围，关键字<code>ROWS BETWEEN</code>
+即[开始行]、[结束行]（这部分在“补充与总结”小节中作补充详细说明）。</li>
+</ul>
+<p>其中，<code>ROWS BETWEEN</code>
+子句在实际中可能用得相对少一些，因此有部分参考资料的语法描述省略了<code>ROWS BETWEEN</code>
+子句，主要侧重于<code>PARTITION BY</code>分组与<code>ORDER BY</code>排序：</p>
+<h4 id="31-聚合窗口函数">3.1 聚合窗口函数</h4>
+<p>许多窗口函数的教程，通常将常用的窗口函数分为两大类：聚合窗口函数 与
+专用窗口函数。聚合窗口函数的函数名与普通常用聚合函数一致，功能也一致。从使用的角度来讲，与普通聚合函数的区别在于提供了窗口函数的专属子句，来使得数据的分析与获取更简便。主要有如下几个：</p>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUM</td>
+<td>求和</td>
+</tr>
+<tr>
+<td>AVG</td>
+<td>求平均值</td>
+</tr>
+<tr>
+<td>COUNT</td>
+<td>求数量</td>
+</tr>
+<tr>
+<td>MAX</td>
+<td>求最大值</td>
+</tr>
+<tr>
+<td>MIN</td>
+<td>求最小值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>普通聚合函数</strong></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">	t1.<span class="operator">*</span>, </span><br><span class="line">	t2.avg_revenue <span class="keyword">FROM</span> sales t1 </span><br><span class="line">  <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> (</span><br><span class="line">		<span class="keyword">SELECT</span> category, <span class="built_in">AVG</span>(revenue) <span class="keyword">AS</span> avg_revenue </span><br><span class="line">		<span class="keyword">FROM</span> sales  </span><br><span class="line">		<span class="keyword">GROUP</span> <span class="keyword">BY</span> category</span><br><span class="line">  ) t2 <span class="keyword">ON</span> t1.category <span class="operator">=</span> t2.category <span class="keyword">ORDER</span> <span class="keyword">BY</span> t1.category</span><br></pre></td></tr></table></figure>
+
+<p><strong>聚合窗口函数</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT</span><br><span class="line">  sales.*,</span><br><span class="line">  AVG( revenue ) OVER ( PARTITION BY category ) AS avg_revenue </span><br><span class="line">FROM</span><br><span class="line">	sales</span><br></pre></td></tr></table></figure>
+
+<h4 id="32-专用窗口函数">3.2 专用窗口函数</h4>
+<p>常见的专用窗口函数</p>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>分类</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RANK</td>
+<td>排序函数</td>
+<td>类似于排名，并列的结果序号可以重复，序号不连续</td>
+</tr>
+<tr>
+<td>DENSE_RANK</td>
+<td>排序函数</td>
+<td>类似于排名，并列的结果序号可以重复，序号连续</td>
+</tr>
+<tr>
+<td>ROW_NUMBER</td>
+<td>排序函数</td>
+<td>对该分组下的所有结果作一个排序，基于该分组给一个行数</td>
+</tr>
+<tr>
+<td>PERCENT_RANK</td>
+<td>分布函数</td>
+<td>每行按照公式 <code>(rank-1) / (rows-1)</code> 进行计算</td>
+</tr>
+<tr>
+<td>CUME_DIST</td>
+<td>分布函数</td>
+<td>分组内小于、等于当前 rank 值的行数 / 分组内总行数</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>涵义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.begtut.com/mysql/mysql-window-functions/mysql-cume_dist-function/">CUME_DIST</a></td>
+<td>计算一组值中值的累积分布。</td>
+</tr>
+<tr>
+<td><a href="https://www.begtut.com/mysql/mysql-window-functions/mysql-dense_rank-function/">DENSE_RANK</a></td>
+<td>根据ORDER BY子句为其分区中的每一行分配一个排名。
+它为具有相同值的行分配相同的排名。
+如果两行或更多行具有相同的等级，则排序值序列中将没有间隙。</td>
+</tr>
+<tr>
+<td><a href="https://www.begtut.com/mysql/mysql-window-functions/mysql-first_value-function/">FIRST_VALUE</a></td>
+<td>返回指定表达式相对于窗口框架中第一行的值。</td>
+</tr>
+<tr>
+<td><a href="https://www.begtut.com/mysql/mysql-window-functions/mysql-lag-function/">LAG</a></td>
+<td>返回分区中当前行之前的第N行的值。
+如果不存在前一行，则返回NULL。</td>
+</tr>
+<tr>
+<td><a href="https://www.begtut.com/mysql/mysql-window-functions/mysql-last_value-function/">LAST_VALUE</a></td>
+<td>返回指定表达式相对于窗口框架中最后一行的值。</td>
+</tr>
+<tr>
+<td><a href="https://www.begtut.com/mysql/mysql-window-functions/mysql-lead-function/">LEAD</a></td>
+<td>返回分区中当前行之后的第N行的值。
+如果不存在后续行，则返回NULL。</td>
+</tr>
+<tr>
+<td><a href="https://www.begtut.com/mysql/mysql-window-functions/mysql-nth_value-function/">NTH_VALUE</a></td>
+<td>返回窗口框架第N行的参数值</td>
+</tr>
+<tr>
+<td><a href="https://www.begtut.com/mysql/mysql-window-functions/mysql-ntile-function/">NTILE</a></td>
+<td>将每个窗口分区的行分配到指定数量的已排名组中。</td>
+</tr>
+<tr>
+<td><a href="https://www.begtut.com/mysql/mysql-window-functions/mysql-percent_rank-function/">PERCENT_RANK</a></td>
+<td>计算分区或结果集中行的百分位数</td>
+</tr>
+<tr>
+<td><a href="https://www.begtut.com/mysql/mysql-window-functions/mysql-rank-function/">RANK</a></td>
+<td>与DENSE_RANK（）函数类似，只是当两行或更多行具有相同的排名时，排序值序列中存在间隙。</td>
+</tr>
+<tr>
+<td><a href="https://www.begtut.com/mysql/mysql-window-functions/mysql-row_number-function/">ROW_NUMBER</a></td>
+<td>为其分区中的每一行分配一个连续整数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="例题力扣178分数排名">例题：力扣178分数排名</h4>
+<p><img src="https://bu.dusays.com/2025/11/05/690abc50a5d11.png" alt="05"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    score,</span><br><span class="line">    <span class="built_in">DENSE_RANK</span>() <span class="keyword">OVER</span>(<span class="keyword">ORDER</span> <span class="keyword">BY</span> score <span class="keyword">DESC</span>) <span class="keyword">AS</span> `rank`</span><br><span class="line"><span class="keyword">FROM</span> Scores </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> score <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-零碎知识点">4. 零碎知识点</h3>
+<h4 id="41-关键字in的用法">4.1 关键字IN的用法</h4>
+<p>在 SQL 中，<code>IN</code>
+关键字主要用于判断某个值是否在一个指定的集合（可以是值列表、子查询结果等）中，起到过滤数据的作用，以下是其详细用法：</p>
+<h5 id="1-与值列表配合使用">1. 与值列表配合使用</h5>
+<p>语法：<code>column IN (value1, value2, ..., valuen)</code>作用：判断列
+<code>column</code> 的值是否是 <code>value1</code> 到
+<code>valuen</code> 中的某一个。示例：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询部门 ID 为 1 或 2 的员工信息</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Employee </span><br><span class="line"><span class="keyword">WHERE</span> DepartmentId <span class="keyword">IN</span> (<span class="number">1</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-与子查询配合使用">2. 与子查询配合使用</h5>
+<p>语法：<code>column IN (subquery)</code>作用：判断列
+<code>column</code> 的值是否在子查询返回的结果集中。示例：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询薪资等于各部门最高薪资的员工信息（结合子查询）</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Employee e</span><br><span class="line"><span class="keyword">WHERE</span> (e.Salary, e.DepartmentId) <span class="keyword">IN</span> (<span class="keyword">SELECT</span> <span class="built_in">MAX</span>(Salary), DepartmentId <span class="keyword">FROM</span> Employee <span class="keyword">GROUP</span> <span class="keyword">BY</span> DepartmentId);</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-in-与-not-结合使用">3. <code>IN</code> 与 <code>NOT</code>
+结合使用</h5>
+<p>语法：<code>column NOT IN (value1, value2, ..., valuen)</code> 或
+<code>column NOT IN (subquery)</code>作用：判断列 <code>column</code>
+的值<strong>不在</strong>指定的集合或子查询结果集中。示例：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 查询部门 ID 不是 1 或 2 的员工信息</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Employee </span><br><span class="line"><span class="keyword">WHERE</span> DepartmentId <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="number">1</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，当 <code>IN</code>
+配合的子查询返回空结果集时，<code>column IN (subquery)</code> 会返回
+<code>FALSE</code>；而 <code>column NOT IN (subquery)</code>
+会因为逻辑判断的特殊性（空值参与时结果可能不符合预期），建议谨慎使用，或通过其他方式（如
+<code>LEFT JOIN + IS NULL</code>）替代。</p>
+<h2 id="二mybatisplus">二、MyBatisPlus</h2>
 <h4 id="21-常见注解">2.1 常见注解</h4>
 <p><code>@TableName</code>:用来指定表名</p>
 <p><code>@TableId</code>:用来指定表中的字段信息</p>
