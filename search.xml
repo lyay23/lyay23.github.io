@@ -16160,4 +16160,43 @@ Stream 流。</p>
         <tag>实习</tag>
       </tags>
   </entry>
+  <entry>
+    <title>跳槽准备之力扣算法</title>
+    <url>/posts/34307/</url>
+    <content><![CDATA[<h1>一、面试150道</h1>
+<h3 id="169-多数元素">169. 多数元素</h3>
+<p>给定一个大小为 <code>n</code> 的数组 <code>nums</code> ，返回其中的多数元素。多数元素是指在数组中出现次数 <strong>大于</strong> <code>⌊ n/2 ⌋</code> 的元素。</p>
+<p>你可以假设数组是非空的，并且给定的数组总是存在多数元素。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">输入：nums = [3,2,3]</span><br><span class="line">输出：3</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">输入：nums = [2,2,1,1,1,2,2]</span><br><span class="line">输出：2</span><br></pre></td></tr></table></figure>
+<h4 id="1-算法思想：摩尔投票法">1. 算法思想：摩尔投票法</h4>
+<p>摩尔投票算法（Moore’s Voting Algorithm）是一种用于在数组中寻找多数元素的有效方法。所谓多数元素，是指在数组中出现次数超过一半以上的元素。最经典的例子就是用于众数的寻找。</p>
+<p>摩尔投票算法的基本思想很简单，它通过消除不同元素之间的对抗来找到可能的多数元素。算法遍历数组并维护两个变量：候选元素和其对应的票数。开始时，候选元素为空，票数为0。然后对于数组中的每个元素，执行以下步骤：</p>
+<ol>
+<li>如果票数为0，将当前元素设为候选元素，并将票数设置为1。</li>
+<li>如果当前元素等于候选元素，则票数加1。</li>
+<li>如果当前元素不等于候选元素，则票数减1。</li>
+</ol>
+<p><strong>这样做的效果是，相同元素的票数会相互抵消，不同元素的对抗也会导致票数减少。由于多数元素的出现次数超过一半以上，所以最终留下的候选元素就很有可能是多数元素。</strong></p>
+<p>遍历完整个数组后，候选元素即为多数元素的候选者。然后我们需要进一步验证候选元素是否真的是多数元素，因为可能存在没有多数元素的情况。我们再次遍历数组，统计候选元素的出现次数，如果发现它的出现次数超过了一半以上，则确认它为多数元素；否则，表示没有多数元素。</p>
+<h4 id="2-题解：">2. 题解：</h4>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">majorityElement</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">maj</span> <span class="operator">=</span> nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (maj == nums[i]) &#123;</span><br><span class="line">                count++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                count--;</span><br><span class="line">                <span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="comment">// 当计数归0时，将当前元素设为新候选者，重置计数为1</span></span><br><span class="line">                    maj = nums[i];</span><br><span class="line">                    count = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maj;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>通过一个计数器<code>count</code>初始化出现数量为1，初始化<code>maj</code>为数组首元素。</li>
+<li>遍历数组：若当前元素与 <code>maj</code> 相同，<code>count++</code>；不同就<code>count--</code>；</li>
+<li>当 <code>count == 0</code> 时，将<strong>当前元素</strong>设为新的 <code>maj</code>，并重置 <code>count = 1</code>（因为当前元素是新候选者，至少出现一次）。</li>
+<li>最终 <code>maj</code> 就是多数元素。</li>
+</ol>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">示例验证（以 nums = [2,2,1,1,1,2,2] 为例）</span><br><span class="line">初始：maj=2，count=1。</span><br><span class="line">i=1（元素 2）：相同，count=2。</span><br><span class="line">i=2（元素 1）：不同，count=1。</span><br><span class="line">i=3（元素 1）：不同，count=0 → 重置 maj=1，count=1。</span><br><span class="line">i=4（元素 1）：相同，count=2。</span><br><span class="line">i=5（元素 2）：不同，count=1。</span><br><span class="line">i=6（元素 2）：不同，count=0 → 重置 maj=2，count=1。</span><br><span class="line">最终返回 2（正确，2 是多数元素）。</span><br></pre></td></tr></table></figure>
+<p>喵嗷嗷</p>
+]]></content>
+      <categories>
+        <category>实习</category>
+      </categories>
+      <tags>
+        <tag>实习</tag>
+      </tags>
+  </entry>
 </search>
