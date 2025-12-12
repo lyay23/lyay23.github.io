@@ -16324,7 +16324,26 @@ n-1）。</li>
     <content><![CDATA[<blockquote>
 <p>劳资要拿省一</p>
 </blockquote>
-<h3 id="1-Hash哈希"><a href="#1-Hash哈希" class="headerlink" title="1. Hash哈希"></a>1. Hash哈希</h3>]]></content>
+<h2 id="一、题目"><a href="#一、题目" class="headerlink" title="一、题目"></a>一、题目</h2><h3 id="97-K倍区间"><a href="#97-K倍区间" class="headerlink" title="97. K倍区间"></a>97. K倍区间</h3><p><strong>题目描述</strong></p>
+<p>给定一个长度为 N<em>N</em> 的数列，A1,A2,⋯AN<em>A</em>1,<em>A</em>2,⋯<em>A**N</em>，如果其中一段连续的子序列 Ai,Ai+1,⋯Aj<em>A**i</em>,<em>A**i</em>+1,⋯<em>A**j</em> ( i≤j<em>i</em>≤<em>j</em> ) 之和是 K<em>K</em> 的倍数，我们就称这个区间 [i,j][<em>i</em>,<em>j</em>] 是 K 倍区间。</p>
+<p>你能求出数列中总共有多少个 K<em>K</em> 倍区间吗？</p>
+<p><strong>输入描述</strong></p>
+<p>第一行包含两个整数 N<em>N</em> 和 K<em>K</em>( 1≤N,K≤1051≤<em>N</em>,<em>K</em>≤105 )。</p>
+<p>以下 N 行每行包含一个整数 Ai<em>A**i</em> ( 1≤Ai≤1051≤<em>A**i</em>≤105 )</p>
+<p><strong>输出描述</strong></p>
+<p>输出一个整数，代表 K 倍区间的数目。</p>
+<p><strong>输入输出样例</strong></p>
+<blockquote>
+<p>输入</p>
+</blockquote>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">5 2</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出</p>
+</blockquote>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">6</span><br></pre></td></tr></table></figure>
+<hr>
+<p>掏你猴子，不是吧蓝桥杯难度这么大啊，简单题第一题我直接读不懂题目ccc</p>
+]]></content>
       <categories>
         <category>java</category>
       </categories>
